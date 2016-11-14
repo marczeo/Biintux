@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Laravel',
+    'name' => 'Biintux',
 
     /*
     |--------------------------------------------------------------------------
@@ -78,6 +78,11 @@ return [
     */
 
     'locale' => 'en',
+
+    'locales' => [
+        'en' => 'English',
+        'es' => 'Español'
+    ],
 
     /*
     |--------------------------------------------------------------------------

@@ -20,5 +20,19 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 
 
-/**Rutas ciclovía*/
+/*
+|--------------------------------------------------------------------------
+| Language
+|--------------------------------------------------------------------------
+*/
+Route::get('/english','LanguageController@english');
+Route::get('/spanish','LanguageController@spanish');
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Ciclovía
+|--------------------------------------------------------------------------
+*/
 Route::get('/ciclovia', 'CicloviaController@index');

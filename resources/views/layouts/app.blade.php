@@ -42,16 +42,33 @@
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
+                    <!-- Authentication Links -->
+                    @if (Auth::check())
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        <li><a href="ciclovias">{{trans('navbar.bikeway')}}</a></li>
                     </ul>
+                    @endif
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
+                        <!--Dropdown to change languaje-->
+                        <li class="dropdown">
+                            <a href="languaje" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                {{ trans('navbar.language') }} <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="/spanish">{{ trans('navbar.spanish') }}</a>
+                                </li>
+                                <li>
+                                    <a href="/english">{{ trans('navbar.english') }}</a>
+                                </li>
+                            </ul>
+                        </li><!--End language-->
                         <!-- Authentication Links -->
                         @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}">Login</a></li>
-                            <li><a href="{{ url('/register') }}">Register</a></li>
+                            <li><a href="{{ url('/login') }}">{{trans('navbar.login')}}</a></li>
+                            <li><a href="{{ url('/register') }}">{{trans('navbar.register')}}</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -72,7 +89,7 @@
                                     </li>
                                 </ul>
                             </li>
-                        @endif
+                        @endif                            
                     </ul>
                 </div>
             </div>

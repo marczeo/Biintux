@@ -18,3 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+
+/**Rutas ciclovía*/
+Route::get('/ciclovia', 'CicloviaController@index');

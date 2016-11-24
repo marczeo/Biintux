@@ -35,4 +35,5 @@ Route::get('/spanish','LanguageController@spanish');
 | Ciclovía
 |--------------------------------------------------------------------------
 */
-Route::get('/ciclovias', 'CicloviaController@index');
+//Route::get('/ciclovias', 'CicloviaController@index');
+Route::resource('ciclovia', 'CicloviaController');

@@ -19,5 +19,5 @@ return [
     'bikeway'   => 'Ciclovía',    
     'login'     => 'Iniciar sesión',
     'register'  => 'Registrar',
-
+    'add'       => 'Agregar',
 ];

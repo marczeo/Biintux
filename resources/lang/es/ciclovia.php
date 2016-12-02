@@ -4,20 +4,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Navbar Language Lines
+    | Ciclovia Language Lines
     |--------------------------------------------------------------------------
     |
-    | The following language lines are used during navbar interaction for various
+    | The following language lines are used during bikeway(ciclovia) interaction for various
     | options that we need to display to the user. You are free to modify
     | these language lines according to your application's requirements.
     |
     */
 
-    'language'  => 'Idioma',
-    'spanish'   => 'Español',
-    'english'   => 'Inglés',
-    'bikeway'   => 'Ciclovía',    
-    'login'     => 'Iniciar sesión',
-    'register'  => 'Registrar',
-    'add'       => 'Agregar',
+    'bikeway'  => 'Ciclovía',
+    'name'   => 'Nombre',
+    'from'   => 'Origen',
+    'to'   => 'Destino',
+    'distance'=>'Distancia',
 ];

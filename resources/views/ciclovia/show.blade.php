@@ -5,10 +5,10 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Panel</div>
+                <div class="panel-heading">Ciclovía</div>
 
                 <div class="panel-body">
-                    {{trans('auth.loginSuccess')}}
+                    C I C L O V Í A
                 </div>
             </div>
         </div>

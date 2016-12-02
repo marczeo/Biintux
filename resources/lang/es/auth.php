@@ -18,5 +18,9 @@ return [
     'login'  => 'Iniciar sesión',
     'email'   => 'Correo electrónico',
     'password'   => 'Contraseña',
+    'rememberMe' => 'Recordarme',
+    'enter' => 'Entrar',
+    'forgotPassword' => '¿Olvidaste tu contraseña?',
+    'loginSuccess' => '¡Ha iniciado sesión!',
 
 ];

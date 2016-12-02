@@ -18,5 +18,9 @@ return [
     'login'  => 'Login',
     'email'   => 'E-Mail Address',
     'password'   => 'Password',
+    'rememberMe' => 'Remember Me',
+    'enter' => 'Enter',
+    'forgotPassword' => 'Forgot Your Password?',
+    'loginSuccess' => 'You are logged in!',
 
 ];

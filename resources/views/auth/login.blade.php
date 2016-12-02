@@ -54,6 +54,7 @@
                             <div class="col-md-8 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{trans('auth.Btn_login')}}
+                                    
                                 </button>
 
                                 <a class="btn btn-link" href="{{ url('/password/reset') }}">

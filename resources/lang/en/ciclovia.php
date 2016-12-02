@@ -17,4 +17,5 @@ return [
     'name'   => 'Name',
     'from'   => 'From',
     'to'   => 'To',
+    'distance'=>'Distance',
 ];

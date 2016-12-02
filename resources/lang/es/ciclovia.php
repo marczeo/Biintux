@@ -17,4 +17,5 @@ return [
     'name'   => 'Nombre',
     'from'   => 'Origen',
     'to'   => 'Destino',
+    'distance'=>'Distancia',
 ];

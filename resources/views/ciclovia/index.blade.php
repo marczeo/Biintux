@@ -14,7 +14,9 @@
                     C I C L O V Í A S
                     <div class="form-group">
                     @foreach ($ciclovias as $ciclovia)
-                        {{$ciclovia->name}}
+                        <a href="ciclovia/{{$ciclovia->id}}">
+                            {{$ciclovia->name}}
+                            </a><br>
                     @endforeach
                     </div>
                 </div>

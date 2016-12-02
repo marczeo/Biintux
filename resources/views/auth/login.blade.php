@@ -42,7 +42,9 @@
                             <div class="col-md-6 col-md-offset-4">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="remember">{{trans('auth.rememberMe')}}
+
+                                        <input type="checkbox" name="remember"> {{trans('auth.remember_me')}}
+
                                     </label>
                                 </div>
                             </div>
@@ -51,7 +53,8 @@
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{trans('auth.enter')}}
+                                    {{trans('auth.Btn_login')}}
+                                    
                                 </button>
 
                                 <a class="btn btn-link" href="{{ url('/password/reset') }}">

@@ -1,3 +1,4 @@
+
 <?php
 
 return [
@@ -18,9 +19,9 @@ return [
     'login'  => 'Iniciar sesión',
     'email'   => 'Correo electrónico',
     'password'   => 'Contraseña',
-    'rememberMe' => 'Recordarme',
-    'enter' => 'Entrar',
-    'forgotPassword' => '¿Olvidaste tu contraseña?',
-    'loginSuccess' => '¡Ha iniciado sesión!',
+
+    'Btn_login' => 'Acceder',
+    'remember_me' => 'Recordarme',
+    'forgot_password' => '¿Ha olvidado su contraseña?',
 
 ];

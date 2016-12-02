@@ -37,3 +37,12 @@ Route::get('/spanish','LanguageController@spanish');
 */
 //Route::get('/ciclovias', 'CicloviaController@index');
 Route::resource('ciclovia', 'CicloviaController');
+
+/*
+|--------------------------------------------------------------------------
+| Perfil
+|--------------------------------------------------------------------------
+*/
+Route::get('perfil', function() {
+    return view('profile');
+})->middleware('auth');

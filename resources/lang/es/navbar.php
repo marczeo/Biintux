@@ -20,4 +20,7 @@ return [
     'login'     => 'Iniciar sesión',
     'register'  => 'Registrar',
     'add'       => 'Agregar',
+    'profile'   => 'Perfil',
+    'route'     => 'Ruta',
+    'user'      => 'Usuario',
 ];

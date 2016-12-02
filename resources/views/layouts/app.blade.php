@@ -46,6 +46,8 @@
                     @if (Auth::check())
                     <ul class="nav navbar-nav">
                         <li><a href="/ciclovia">{{trans('navbar.bikeway')}}</a></li>
+                        <li><a href="">{{trans('navbar.route')}}</a></li>
+                        <li><a href="/users">{{trans('navbar.user')}}</a></li>
                     </ul>
                     @endif
 
@@ -76,6 +78,7 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
+                                    <li><a href="/perfil">{{trans('navbar.profile')}}</a></li>
                                     <li>
                                         <a href="{{ url('/logout') }}"
                                             onclick="event.preventDefault();

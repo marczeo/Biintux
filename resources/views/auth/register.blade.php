@@ -60,6 +60,10 @@
                             </div>
                         </div>
 
+                        <div hidden="true">
+                            <input type="number" name="role_id" id="role_id" value="{{ !Auth::check() ? 4 : 0 }}" >
+                        </div>
+
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">

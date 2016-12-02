@@ -20,5 +20,7 @@ return [
     'login'     => 'Login',
     'register'  => 'Register',
     'add'       =>  'Add',
-
+    'profile'   => 'Profile',
+    'route'     => 'Route',
+    'user'      => 'User',
 ];

@@ -19,5 +19,6 @@ return [
     'bikeway'   => 'Bikeway',
     'login'     => 'Login',
     'register'  => 'Register',
+    'add'       =>  'Add',
 
 ];

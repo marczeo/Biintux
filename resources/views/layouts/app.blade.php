@@ -45,7 +45,7 @@
                     <!-- Authentication Links -->
                     @if (Auth::check())
                     <ul class="nav navbar-nav">
-                        <li><a href="ciclovias">{{trans('navbar.bikeway')}}</a></li>
+                        <li><a href="/ciclovia">{{trans('navbar.bikeway')}}</a></li>
                     </ul>
                     @endif
 

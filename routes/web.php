@@ -36,3 +36,16 @@ Route::get('/spanish','LanguageController@spanish');
 |--------------------------------------------------------------------------
 */
 Route::get('/ciclovias', 'CicloviaController@index');
+
+
+/*
+|--------------------------------------------------------------------------
+| miBici
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/mibici', 'MibiciController@index');
+
+//Route::get('/ciclovias', 'CicloviaController@index');
+Route::resource('ciclovia', 'CicloviaController');
+

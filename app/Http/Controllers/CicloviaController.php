@@ -15,7 +15,7 @@ class CicloviaController extends Controller
      */
     public function index()
     { 
-        $ciclovias = Ciclovia::all();    
+        $ciclovias = Ciclovia::orderBy('id','asc')->get();    
         return view('ciclovia.index',compact('ciclovias'));
     }
 

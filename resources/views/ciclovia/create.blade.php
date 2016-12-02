@@ -45,6 +45,11 @@
                             <input type="hidden" id="markerFromLat" name="markerFromLat" value="">
                             <input type="hidden" id="markerToLang" name="markerToLang" value="">
                             <input type="hidden" id="markerToLat" name="markerToLat" value="">
+
+                            <label for="distance" class="col-md-1">{{trans('ciclovia.distance')}}</label>
+                            <div class="col-md-9">
+                                <input id="distance" type="text" class="form-control" name="distance" value="{{ old('name') }}" placeholder="{{trans('ciclovia.distance')}}">
+                            </div>
                             <div class="col-md-2 text-center">
                                 <button type="submit" class="btn btn-primary">
                                     {{trans('navbar.add')}}

@@ -56,6 +56,6 @@ Route::get('/mibici', 'MibiciController@index');
 | Perfil
 |--------------------------------------------------------------------------
 */
-//Route::get('perfil', function() {
-    //return view('profile');
-//})->middleware('auth');
+Route::get('perfil', function() {
+    return view('profile');
+})->middleware('auth');

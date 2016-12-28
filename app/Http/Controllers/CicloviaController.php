@@ -20,6 +20,17 @@ class CicloviaController extends Controller
     }
 
     /**
+     * Show the bikeway dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getAll()
+    { 
+        $ciclovias = Ciclovia::orderBy('id','asc')->select('encodepath')->get();    
+        return $ciclovias;
+    }
+
+    /**
      * Add a bikeway to database
      *
      * @return \Illuminate\Http\Response
@@ -43,6 +54,7 @@ class CicloviaController extends Controller
         $ciclovia->name=$request->name;
         $ciclovia->start_nodo=$ciclovia_nodo_start->id;
         $ciclovia->end_nodo=$ciclovia_nodo_end->id;
+        $ciclovia->encodepath=$request->encodePath;
         $ciclovia->save();
 
         return redirect('/ciclovia');

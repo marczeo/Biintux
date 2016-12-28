@@ -36,8 +36,9 @@ Route::get('/spanish','LanguageController@spanish');
 |--------------------------------------------------------------------------
 */
 
-Route::get('/ciclovias', 'CicloviaController@index');
-
+//Route::get('/ciclovias', 'CicloviaController@index');
+Route::get('/getAll','CicloviaController@getAll');
+Route::resource('ciclovia', 'CicloviaController');
 
 /*
 |--------------------------------------------------------------------------
@@ -47,12 +48,7 @@ Route::get('/ciclovias', 'CicloviaController@index');
 
 Route::get('/mibici', 'MibiciController@index');
 
-//Route::get('/ciclovias', 'CicloviaController@index');
-Route::resource('ciclovia', 'CicloviaController');
 
-
-//Route::get('/ciclovias', 'CicloviaController@index');
-Route::resource('ciclovia', 'CicloviaController');
 
 
 /*
@@ -60,6 +56,6 @@ Route::resource('ciclovia', 'CicloviaController');
 | Perfil
 |--------------------------------------------------------------------------
 */
-Route::get('perfil', function() {
-    return view('profile');
-})->middleware('auth');
+//Route::get('perfil', function() {
+    //return view('profile');
+//})->middleware('auth');

@@ -18,6 +18,7 @@ class CreateCicloviasTable extends Migration
             $table->string('name');
             $table->integer('start_nodo');
             $table->integer('end_nodo');
+            $table->string('encodepath');
             $table->timestamps();
         });
     }

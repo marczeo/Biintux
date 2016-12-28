@@ -17,4 +17,5 @@ elixir((mix) => {
     mix.sass('app.scss');
        //.webpack('app.js');
      mix.scripts('map_ciclovia.js','public/js/ciclovia.js');
+     mix.scripts('map_ciclovia_index.js','public/js/ciclovia-index.js');
 });

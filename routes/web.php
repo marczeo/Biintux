@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,16 +9,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
     return view('welcome');
 });
-
 Auth::routes();
-
 Route::get('/home', 'HomeController@index');
-
-
 /*
 |--------------------------------------------------------------------------
 | Language
@@ -27,35 +21,20 @@ Route::get('/home', 'HomeController@index');
 */
 Route::get('/english','LanguageController@english');
 Route::get('/spanish','LanguageController@spanish');
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Ciclovía
 |--------------------------------------------------------------------------
 */
-
-Route::get('/ciclovias', 'CicloviaController@index');
-
-
+//Route::get('/ciclovias', 'CicloviaController@index');
+Route::get('/getAll','CicloviaController@getAll');
+Route::resource('ciclovia', 'CicloviaController');
 /*
 |--------------------------------------------------------------------------
 | miBici
 |--------------------------------------------------------------------------
 */
-
 Route::get('/mibici', 'MibiciController@index');
-
-//Route::get('/ciclovias', 'CicloviaController@index');
-Route::resource('ciclovia', 'CicloviaController');
-
-//Route::get('/mibici', 'MibiciController@index');
-Route::resource('mibici', 'MibiciController');
-//Route::get('/ciclovias', 'CicloviaController@index');
-Route::resource('ciclovia', 'CicloviaController');
-
-
 /*
 |--------------------------------------------------------------------------
 | Perfil

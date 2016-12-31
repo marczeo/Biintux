@@ -1,4 +1,11 @@
-var geocoder = new google.maps.Geocoder();
+/**
+* @fileoverview Manipulating Google Maps API to create "bikeways"
+*
+* @author Marco Gómez
+* @version 0.1
+*/
+
+var geocoder;
 var map;
 var zap;
 var gdl;
@@ -6,70 +13,87 @@ var directionsService;
 var directionsDisplay;
 var stepDisplay;
 var markerArray=[];
-var or;
-var to;
+var origin;
+var destination;
 var myRoute;
+var leRoute;
+var flightPath;
+
+/**
+* Initialize map and default values
+* @param  {void}
+* @returns {boolean} Estado de la eliminación
+*/
 function initialize_ciclovia() {
-  gdl = { lat: 20.659699, lng: -103.349609 };
-  zap = { lat: 20.666196, lng: -103.314743 };
-  
+
+  //New instantiate map from google 
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 12,
     center: gdl
   });
 
-  // Instantiate an info window to hold step text.
+  //New instantiate Geocoder
+  geocoder = new google.maps.Geocoder();
+
+  //Instantiate an info window to hold step text.
   stepDisplay = new google.maps.InfoWindow();
 
 
-    // Instantiate a directions service.
-  directionsService = new google.maps.DirectionsService,
+  // Instantiate a directions service.
+  directionsService = new google.maps.DirectionsService;
   directionsDisplay = new google.maps.DirectionsRenderer({
-      map: map,
-      draggable:true,
-      suppressMarkers:true,
-    });
-   directionsDisplay.addListener('directions_changed', function() {
-    console.log("aqui");
+    map: map,
+    draggable:true,
+    suppressMarkers:true,
+  });
+  
+  directionsDisplay.addListener('directions_changed', function() {
     computeTotalDistance(directionsDisplay.getDirections());
   });
 
-  // Add two markers at the center of the map.
-  addMarker(gdl, map, "A", "markerFrom");
-  addMarker(zap, map, "B","markerTo");
+  //Latitude n longitudo two places
+  gdl = { lat: 20.659699, lng: -103.349609 };
+  zap = { lat: 20.666196, lng: -103.314743 };
+  origin={lat: gdl.lat, lng: gdl.lng};
+  destination={lat: zap.lat, lng: zap.lng};
+
+  //Add two markers at the center of the map.
+  addMarker(gdl, "A", "markerFrom");
+  addMarker(zap, "B","markerTo");
   getAddress(gdl, 'markerFromAddress');
   getAddress(zap, 'markerToAddress');
-  or={lat: parseFloat(document.getElementById('markerFromLat').value), lng: parseFloat(document.getElementById('markerFromLang').value)};
-  to={lat: parseFloat(document.getElementById('markerToLat').value), lng: parseFloat(document.getElementById('markerToLang').value)};
-  calculateAndDisplayRoute(directionsService, directionsDisplay, gdl, zap);
+  
+  //Initialize form inputs
   document.getElementById('markerFromLat').value = gdl.lat;
   document.getElementById('markerFromLang').value = gdl.lng;
   document.getElementById('markerToLat').value = zap.lat;
   document.getElementById('markerToLang').value = zap.lng;
 
+  //Create a initial route
+  calculateAndDisplayRoute(directionsService, directionsDisplay, origin, destination);
 }
 
-function handleEvent(event) {
-  var idMarker=this.myData;
-  
+
+function moveMarkerEvent(event) {
+  var idMarker=this.myData;  
+
+  //Update form inputs
   document.getElementById(idMarker+'Lat').value = event.latLng.lat();
   document.getElementById(idMarker+'Lang').value = event.latLng.lng();
   document.getElementById(idMarker+'Address').value = event.formatted_address;
 
   getAddress(event.latLng, idMarker+'Address');
-  or={lat: parseFloat(document.getElementById('markerFromLat').value), lng: parseFloat(document.getElementById('markerFromLang').value)};
-  to={lat: parseFloat(document.getElementById('markerToLat').value), lng: parseFloat(document.getElementById('markerToLang').value)};
-  calculateAndDisplayRoute(directionsService, directionsDisplay, or, to);
+
+  //Update values origin and destinitacion markers of form
+  origin={lat: parseFloat(document.getElementById('markerFromLat').value), lng: parseFloat(document.getElementById('markerFromLang').value)};
+  destination={lat: parseFloat(document.getElementById('markerToLat').value), lng: parseFloat(document.getElementById('markerToLang').value)};
+  
+  calculateAndDisplayRoute(directionsService, directionsDisplay, origin, destination);
   
 }
 
-function clickMarker(event) {
-  var idMarker=this.myData;
-  getAddress(event.latLng, idMarker+'Address');
-}
-
 // Adds a marker to the map.
-function addMarker(location, map, name,id) {
+function addMarker(location, name,id) {
   var marker = new google.maps.Marker({
     position: location,
     icon: '/images/cycling.png',
@@ -80,10 +104,7 @@ function addMarker(location, map, name,id) {
     myData: id,
     animation: google.maps.Animation.DROP
   });
-
-  //marker.addListener('drag', handleEvent);
-  marker.addListener('dragend', handleEvent);
-  marker.addListener('click', clickMarker);
+  marker.addListener('dragend', moveMarkerEvent);
 }
 
 //Get address string
@@ -103,9 +124,8 @@ function getAddress(latLng, idInput)
 function calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, pointB) {
   // First, clear out any existing markerArray
   // from previous calculations.
-  for (i = 0; i < markerArray.length; i++) {
-    markerArray[i].setMap(null);
-  }
+  clearMarkers();
+
   directionsService.route({
     origin: pointA,
     destination: pointB,
@@ -126,15 +146,10 @@ function showSteps(directionResult) {
   // can keep track of it and remove it when calculating new
   // routes.
   myRoute = directionResult.routes[0].legs[0];
+  console.log("showSteps");
+  console.log(myRoute);
 
-  for (var i = 0; i < myRoute.steps.length; i++) {
-      var marker = new google.maps.Marker({
-        position: myRoute.steps[i].start_point,
-        map: map
-      });
-      attachInstructionText(marker, myRoute.steps[i].instructions);
-      markerArray[i] = marker;
-  }
+  
 }
 function attachInstructionText(marker, text) {
   google.maps.event.addListener(marker, 'click', function() {
@@ -143,28 +158,59 @@ function attachInstructionText(marker, text) {
   });
 }
 function computeTotalDistance(result) {
+  var flightPlanCoordinates=[];
+  // First, clear out any existing markerArray
+  // from previous calculations.
+  console.log(markerArray.length);
+  clearMarkers();
   var total = 0;
-  var myroute = result.routes[0];
+  myroute = result.routes[0];
   for (var i = 0; i < myroute.legs.length; i++) {
     total += myroute.legs[i].distance.value;
   }
   total = total / 1000;
   document.getElementById('distance').value = total + ' km';
 
-  myRoute = result.routes[0].legs[0];
+  leRoute = result.routes[0].legs[0];
+  console.log(leRoute);
+  console.log("computeTotalDistance");
+  for (var i = 0; i < leRoute.steps.length; i++) {
+    console.log(leRoute.steps[i].start_point.latLng);
+    var marker = new google.maps.Marker({
+      position: leRoute.steps[i].start_point,
+      map: map
+    });
+    attachInstructionText(marker, leRoute.steps[i].instructions);
+    markerArray[i] = marker;
+    flightPlanCoordinates[i]=leRoute.steps[i].start_point;
+    console.log("tambor");
+  }
 
-  // First, clear out any existing markerArray
-  // from previous calculations.
+  
+  flightPath = new google.maps.Polyline({
+    path: flightPlanCoordinates,
+    geodesic: true,
+    strokeColor: '#FF0000',
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  });
+  var encodePath=google.maps.geometry.encoding.encodePath(flightPath.getPath());
+  console.log("paths"); 
+  console.log(flightPath);
+  console.log(encodePath);
+  document.getElementById('encodePath').value =encodePath.replace(/\\/g,"\\\\");
+  console.log("limpio");
+  console.log(document.getElementById('encodePath').value);
+
+  
+}
+
+function clearMarkers()
+{
   for (i = 0; i < markerArray.length; i++) {
     markerArray[i].setMap(null);
   }
-  for (var i = 0; i < myRoute.steps.length; i++) {
-      var marker = new google.maps.Marker({
-        position: myRoute.steps[i].start_point,
-        map: map
-      });
-      attachInstructionText(marker, myRoute.steps[i].instructions);
-      markerArray[i] = marker;
-  }
 }
 google.maps.event.addDomListener(window, 'load', initialize_ciclovia);
+
+

@@ -22,5 +22,6 @@ return [
     'add'       =>  'Add',
     'profile'   => 'Profile',
     'route'     => 'Route',
-    'user'      => 'User',
+    'user'      => 'User',   
+    'mibici'    => 'miBici',
 ];

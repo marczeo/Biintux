@@ -45,6 +45,7 @@
                             <input type="hidden" id="markerFromLat" name="markerFromLat" value="">
                             <input type="hidden" id="markerToLang" name="markerToLang" value="">
                             <input type="hidden" id="markerToLat" name="markerToLat" value="">
+                            <input type="hidden" id="encodePath" name="encodePath" value="">
 
                             <label for="distance" class="col-md-1">{{trans('ciclovia.distance')}}</label>
                             <div class="col-md-9">

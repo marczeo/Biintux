@@ -14,6 +14,7 @@
     <link href="/css/app.css" rel="stylesheet">
 
     <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript"></script>
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
@@ -48,6 +49,7 @@
                         <li><a href="/ciclovia">{{trans('navbar.bikeway')}}</a></li>
                         <li><a href="">{{trans('navbar.route')}}</a></li>
                         <li><a href="/users">{{trans('navbar.user')}}</a></li>
+                        <li><a href="/mibici">{{trans('navbar.mibici')}}</a></li>
                     </ul>
                     @endif
 

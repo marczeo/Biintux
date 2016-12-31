@@ -50,7 +50,8 @@ Route::get('/mibici', 'MibiciController@index');
 //Route::get('/ciclovias', 'CicloviaController@index');
 Route::resource('ciclovia', 'CicloviaController');
 
-
+//Route::get('/mibici', 'MibiciController@index');
+Route::resource('mibici', 'MibiciController');
 //Route::get('/ciclovias', 'CicloviaController@index');
 Route::resource('ciclovia', 'CicloviaController');
 

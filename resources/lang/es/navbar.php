@@ -23,4 +23,5 @@ return [
     'profile'   => 'Perfil',
     'route'     => 'Ruta',
     'user'      => 'Usuario',
+    'mibici'    => 'miBici',
 ];

@@ -19,6 +19,8 @@ return [
     'bikeway'   => 'Ciclovía',    
     'login'     => 'Iniciar sesión',
     'register'  => 'Registrar',
+    'destroy'   => 'Eliminar',
+    'edit'      => 'Editar',
     'add'       => 'Agregar',
     'profile'   => 'Perfil',
     'route'     => 'Ruta',

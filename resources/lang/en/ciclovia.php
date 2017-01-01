@@ -13,6 +13,7 @@ return [
     |
     */
 
+    'label' => 'B I K E W A Y S',
     'bikeway'  => 'Bikeway',
     'name'   => 'Name',
     'from'   => 'From',

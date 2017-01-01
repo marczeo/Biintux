@@ -13,6 +13,7 @@ return [
     |
     */
 
+    'label' => 'C I C L O V Í A S',
     'bikeway'  => 'Ciclovía',
     'name'   => 'Nombre',
     'from'   => 'Origen',

@@ -2,52 +2,36 @@
 
 @section('content')
 <!-- include "addresstogeo.blade.php";-->
-<div class="container-fluid">
+<div class= "container">
     <div class="row">
-        <div class="col-md-12 col-md-offset-0">
+        <div class="col-xs-12">
             <div class="panel panel-default">
-                <div class="panel-heading">{{trans('mibici.title')}}</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group">
-                            <div class="col-md-offset-1 col-md-2">
-                                <button type="submit" class="btn btn-primary">
-                                    {{trans('mibici.Btn_select')}}
-                                </button>
-                            </div>
-
-                            <div class="col-md-offset-1 col-md-2">
-                                <button type="submit" class="btn btn-primary">
-                                    {{trans('mibici.Btn_delete')}}
-                                </button>
-                            </div>
-
-                            <div class="col-md-offset-1 col-md-2">
-                                <button type="submit" class="btn btn-primary">
-                                    {{trans('mibici.Btn_update')}}
-                                </button>
-                            </div>
-
-                            <div class="col-md-offset-1 col-md-2">
-                                <button type="submit" class="btn btn-primary">
-                                    {{trans('mibici.Btn_update')}}
-                                </button>
-                            </div>
-
-                        </div>
-
-                    </form>
+                <div class="panel-heading">{{trans('mibici.title')}}
+                    | <a href="{{ url('/mibici/create') }}" class="btn  btn-success btn-xs">{{trans('navbar.add')}}
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true">
+                        </span>
+                    </a>
+                    | <a href="{{ url('/mibici/edit') }}" class="btn  btn-info btn-xs">{{trans('navbar.edit')}}
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true">
+                        </span>
+                    </a>
+                    | <a href="{{ url('/mibici/destroy') }}" class="btn  btn-danger btn-xs">{{trans('navbar.destroy')}}
+                        <span class="glyphicon glyphicon-minus" aria-hidden="true">
+                        </span>
+                    </a>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 col-md-offset-0">
-            <div class="panel panel-default">
-                <div class="custom_html">
-                    <iframe style="margin-bottom: 0px; overflow: hidden; height: 400px; width: 100%;" src="https://amg.bktbp.com/monitor.php" width="100%" height="500px" frameborder="0"></iframe>
+                <div class="panel-body">
+                    <div class="panel-body">{{trans('mibici.label')}}
+                        <div class="form-group">
+                        <!-- -->
+                            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCk3aVE_atNGMx06dHKbmU6RMCgAOMMWEQ&signed_in=true&libraries=geometry"></script>
+                            <script src="/js/mibici-index.js"></script>
+                            <div class="form-gr">
+                                <div id="map" style="height: 500px;">
+                                </div>                            
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

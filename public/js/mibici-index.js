@@ -1,18 +1,20 @@
-function initialize() {
+function initialize() 
+{
   var myLatLng = new google.maps.LatLng( 20.659699, -103.349609);
-  var mapOptions = {
+
+  var mapOptions = 
+  {
+
     zoom: 13,
     center: myLatLng,
     mapTypeId: google.maps.MapTypeId.TERRAIN
+    
   };
 
   var bermudaTriangle;
 
   var map = new google.maps.Map(document.getElementById('map'),
     mapOptions);
-
-
-  
 
   $.ajax(
     {
@@ -42,4 +44,3 @@ function initialize() {
     });
 }
 google.maps.event.addDomListener(window, 'load', initialize);
-//# sourceMappingURL=ciclovia-index.js.map

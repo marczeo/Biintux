@@ -18,8 +18,6 @@ return [
     'title_edit'    => 'Update Mibici Station',
     'title_destroy' => 'Delete Mibici Station',
     'name'          => 'Name',
-    'from'          => 'From',
-    'to'            => 'To',
-    'distance'      => 'Distance',
+    'from'          => 'Location',
 
 ];

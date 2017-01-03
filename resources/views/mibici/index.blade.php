@@ -23,8 +23,6 @@
                 <div class="panel-body">
                     <div class="panel-body">{{trans('mibici.label')}}
                         <div class="form-group">
-
-                        <!-- -->
                             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCk3aVE_atNGMx06dHKbmU6RMCgAOMMWEQ&signed_in=true&libraries=geometry"></script>
                             <script src="/js/mibici-index.js"></script>
                             <div class="form-gr">

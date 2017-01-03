@@ -14,17 +14,18 @@ return [
     |
     */
 
-    'failed'   => 'Estas credenciales no coinciden con nuestros registros.',
-    'throttle' => 'Demasiados intentos de acceso. Por favor intente nuevamente en :seconds segundos.',
-    'login'  => 'Iniciar sesión',
-    'email'   => 'Correo electrónico',
-    'password'   => 'Contraseña',
-    'Btn_login' => 'Acceder',
-    'remember_me' => 'Recordarme',
-    'forgot_password' => '¿Ha olvidado su contraseña?',
-    'rememberMe' => 'Recordarme',
-    'enter' => 'Entrar',
-    'forgotPassword' => '¿Olvidaste tu contraseña?',
-    'loginSuccess' => '¡Ha iniciado sesión!',
+    'failed'            => 'Estas credenciales no coinciden con nuestros registros.',
+    'throttle'          => 'Demasiados intentos de acceso. Por favor intente nuevamente en :seconds segundos.',
+    'login'             => 'Iniciar sesión',
+    'email'             => 'Correo electrónico',
+    'password'          => 'Contraseña',
+    'Btn_login'         => 'Acceder',
+    'remember_me'       => 'Recordarme',
+    'forgot_password'   => '¿Ha olvidado su contraseña?',
+    'rememberMe'        => 'Recordarme',
+    'enter'             => 'Entrar',
+    'forgotPassword'    => '¿Olvidaste tu contraseña?',
+    'loginSuccess'      => '¡Ha iniciado sesión!',
+    'welcome'           => 'Bienvenido',
 
 ];

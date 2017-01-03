@@ -10,9 +10,15 @@ return [
     |
     */
 
-    'label' => 'E S T A C I O N E S',
-    'title'  => 'Modulo de gestión miBici', 
-    'Btn_select' => 'Desplegar mapa',
-    'Btn_delete' => 'Borrar estación',
-    'Btn_update' => 'Actualizar estación',
+    'label'         => 'E S T A C I O N E S',
+    'title'         => 'Modulo de Gestión MiBici', 
+    'Btn_delete'    => 'Borrar Estación',
+    'Btn_update'    => 'Actualizar Estación',
+    'title_create'  => 'Crear Nueva Estación de Mibici',
+    'title_edit'    => 'Actualizar Estación de Mibici',
+    'title_destroy' => 'Eliminar Estación de Mibici',
+    'name'          => 'Nombre',
+    'from'          => 'Origen',
+    'to'            => 'Destino',
+    'distance'      => 'Distancia',
 ];

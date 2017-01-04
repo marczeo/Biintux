@@ -18,7 +18,7 @@ class CreateNodesTable extends Migration
           $table->string('description')->nullable();
           $table->float('longitude', 10, 6);
           $table->float('latitude', 10, 6);
-          $table->integer('type');
+          $table->string('type');
         });
     }
 

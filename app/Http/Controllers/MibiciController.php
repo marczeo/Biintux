@@ -42,16 +42,17 @@ class MibiciController extends Controller
     {
     }
 
-    public function store(Request $request)
+    public function post(Request $request)
     {
         $mibici = new Mibici;
         $mibici->latitude = $request->markerFromLat; 
         $mibici->longitude = $request->markerFromLang;
-        $mibici->description = $request->markerFromAddress;
-        $mibici->type = 1;//???????
-        $mibici->encodepath=$request->encodePath;
-        $mibici->save();
+        $mibici->description = $request->name;
+        $mibici->type = "mibici";
+        //$mibici->encodepath=$request->encodePath;
         //dd($mibici);
+        $mibici->save();
+
         return redirect('/mibici');
     }
 }

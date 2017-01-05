@@ -11,5 +11,5 @@ class Mibici extends Model
      *
      * @var string
      */
-    protected $table = 'mibicis';
+    protected $table = 'nodes';
 }

@@ -35,25 +35,12 @@ Route::resource('ciclovia', 'CicloviaController');
 |--------------------------------------------------------------------------
 */
 
-Route::group(['/mibici' => 'auth'], function () 
-{
-    Route::get('/mibici', function () 
-    {
-        return view('/mibici/index');
-    });
-    Route::get('/mibici/create', function () 
-    {
-        return view('/mibici/create');
-    });
-    Route::get('/mibici/edit', function () 
-    {
-        return view('/mibici/edit');
-    });
-    Route::get('/mibici/destroy', function () 
-    {
-        return view('/mibici/destroy');
-    });
-});
+Route::get('/getAll','MibiciController@getAll');
+Route::get('/mibici', 'MibiciController@index');
+Route::get('/mibici/create', 'MibiciController@create');
+Route::get('/mibici/destroy', 'MibiciController@destroy');
+Route::get('/mibici/edit', 'MibiciController@edit');
+Route::post('/mibici/store', 'MibiciController@store');
 
 /*
 |--------------------------------------------------------------------------

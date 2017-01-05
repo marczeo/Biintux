@@ -18,5 +18,5 @@ return [
     'title_edit'    => 'Actualizar Estación de Mibici',
     'title_destroy' => 'Eliminar Estación de Mibici',
     'name'          => 'Nombre',
-    'from'          => 'Locación,
+    'from'          => 'Locación',
 ];

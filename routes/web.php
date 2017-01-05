@@ -18,17 +18,18 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
+/*
+|--------------------------------------------------------------------------
+| LanguageController
+|--------------------------------------------------------------------------
+*/
+Route::get('/english','LanguageController@english');
+Route::get('/spanish','LanguageController@spanish');
+
 Route::group(['middleware' => 'auth'], function () 
 {
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | Language
-    |--------------------------------------------------------------------------
-    */
-    Route::get('/english','LanguageController@english');
-    Route::get('/spanish','LanguageController@spanish');
     /*
     |--------------------------------------------------------------------------
     | Ciclovía

@@ -10,15 +10,14 @@ use DB;
 class MibiciController extends Controller
 {
 	public function index()
-    {   
-        $mibicis = Mibici::orderBy('id','asc')->get(); 
-        //dd($mibicis);   
-        return view('mibici.index',compact('mibicis'));
+    {
+        return view('mibici.index');
     }
 
     public function getAll()
     { 
-        $mibicis = Mibici::orderBy('id','asc')->select('encodepath')->get();  
+        //$mibicis = Mibici::orderBy('id','asc')->select('encodepath')->get(); 
+        $mibicis = Mibici::all(); 
         //dd($mibicis);  
         return $mibicis;
     }
@@ -38,9 +37,15 @@ class MibiciController extends Controller
         return view('mibici.destroy');
     }
 
-    public function show()
+/*    public function show()
     {
-    }
+        $mibicis = Mibici::all();
+
+        foreach ($mibicis as $mibici) 
+        {
+            echo $mibici->latitude;
+        }
+    }*/
 
     public function post(Request $request)
     {

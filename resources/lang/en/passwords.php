@@ -21,5 +21,8 @@ return [
     'email_label'    => 'E-Mail Address',
     'reset_title'    => 'Reset Password',
     'Btn_reset_link' => 'Send Password Reset Link',
+    'Btn_reset'      => 'Change Password',
+    'password_label' => 'Password',
+    'confirm_label'  => 'Confirm',
 
 ];

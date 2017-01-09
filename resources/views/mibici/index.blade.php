@@ -22,13 +22,6 @@
                 </div>
                 <div class="panel-body">
                     {{trans('mibici.label')}}
-                    <div class="form-group">
-                    @foreach ($mibicis as $mibici)
-                        <a href="mibici/{{$mibici->id}}">
-                            {{$mibici->name}}
-                            </a><br>
-                    @endforeach
-                    </div>
                     <!--<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry"></script>-->
                     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCk3aVE_atNGMx06dHKbmU6RMCgAOMMWEQ&signed_in=true&libraries=geometry"></script>
                     <script src="/js/mibici-index.js"></script>

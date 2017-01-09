@@ -27,7 +27,7 @@
                             
                         </div>
                         <div class="form-group">
-                            <label for="markerFromAddresss" class="col-md-1 text-left">{{trans('mibici.from')}}</label>
+                            <label for="markerFromAddress" class="col-md-1 text-left">{{trans('mibici.from')}}</label>
                             <div class="col-xs-9">
                                 <input id="markerFromAddress" type="text" class="form-control" name="from" value="{{ old('name') }}" placeholder="{{trans('mibici.from')}}">
                             </div>                                    
@@ -44,7 +44,7 @@
                             </div>                                      
                         </div>    
                         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCk3aVE_atNGMx06dHKbmU6RMCgAOMMWEQ&signed_in=true"></script>
-                        <script src="/js/mibici.js"></script>
+                        <script src="/js/mibici-create.js"></script>
                         <!--<script async defer
                             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCk3aVE_atNGMx06dHKbmU6RMCgAOMMWEQ&signed_in=true&callback=initMap">
                         </script>-->

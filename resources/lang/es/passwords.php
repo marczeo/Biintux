@@ -21,5 +21,8 @@ return [
     'email_label'    => 'Correo Electrónico',
     'reset_title'    => 'Restaurar Contraseña',
     'Btn_reset_link' => 'Enviar Enlace de Recuperación',
+    'Btn_reset'      => 'Cambiar Contraseña',
+    'password_label' => 'Contraseña',
+    'confirm_label'  => 'Confirmar',
 
 ];

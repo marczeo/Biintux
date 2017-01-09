@@ -11,7 +11,7 @@ return [
     */
 
     'label'         => 'E S T A C I O N E S',
-    'title'         => 'Modulo de Gestión MiBici', 
+    'title'         => 'Modulo de Gestión de MiBici', 
     'Btn_delete'    => 'Borrar Estación',
     'Btn_update'    => 'Actualizar Estación',
     'title_create'  => 'Crear Nueva Estación de Mibici',

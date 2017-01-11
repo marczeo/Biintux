@@ -24,8 +24,10 @@ class CreateHistoricTravelNodesTable extends Migration
       });
 
       Schema::table('historic_travel_nodes', function(Blueprint $table){
-        $table->foreign('historic_id')->references('id')->on('historic_travel');
-        $table->foreign('next_historic_travel_nodes_id')->references('id')->on('historic_travel_nodes');
+        $table->foreign('historic_id')->references('id')->on('historic_travel')
+          ->onDelete('restrict')->onUpdate('cascade');
+        $table->foreign('next_historic_travel_nodes_id')->references('id')->on('historic_travel_nodes')
+          ->onDelete('restrict')->onUpdate('cascade');
       });
     }
 

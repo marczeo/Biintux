@@ -21,9 +21,12 @@ class CreateDriverTable extends Migration
         });
 
         Schema::table('driver', function(Blueprint $table){
-          $table->foreign('user_id')->references('id')->on('users');
-          $table->foreign('route_id')->references('id')->on('routes');
-          $table->foreign('concessioner_id')->references('id')->on('users');
+          $table->foreign('user_id')->references('id')->on('users')
+            ->onDelete('restrict')->onUpdate('cascade');
+          $table->foreign('route_id')->references('id')->on('routes')
+            ->onDelete('restrict')->onUpdate('cascade');
+          $table->foreign('concessioner_id')->references('id')->on('users')
+            ->onDelete('restrict')->onUpdate('cascade');
         });
     }
 

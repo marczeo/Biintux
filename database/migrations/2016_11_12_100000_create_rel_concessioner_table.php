@@ -20,8 +20,10 @@ class CreateRelConcessionerTable extends Migration
       });
 
       Schema::table('rel_concessioner', function(Blueprint $table){
-        $table->foreign('concessioner_id')->references('id')->on('users');
-        $table->foreign('route_id')->references('id')->on('routes');
+        $table->foreign('concessioner_id')->references('id')->on('users')
+          ->onDelete('restrict')->onUpdate('cascade');
+        $table->foreign('route_id')->references('id')->on('routes')
+          ->onDelete('restrict')->onUpdate('cascade');
       });
     }
 

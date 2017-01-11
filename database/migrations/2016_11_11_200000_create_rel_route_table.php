@@ -21,9 +21,12 @@ class CreateRelRouteTable extends Migration
         });
 
         Schema::table('rel_route', function(Blueprint $table){
-          $table->foreign('route_id')->references('id')->on('routes');
-          $table->foreign('start_node_id')->references('id')->on('nodes');
-          $table->foreign('next_node_id')->references('id')->on('nodes');
+          $table->foreign('route_id')->references('id')->on('routes')
+            ->onDelete('restrict')->onUpdate('cascade');
+          $table->foreign('start_node_id')->references('id')->on('nodes')
+            ->onDelete('restrict')->onUpdate('cascade');
+          $table->foreign('next_node_id')->references('id')->on('nodes')
+            ->onDelete('restrict')->onUpdate('cascade');
         });
     }
 

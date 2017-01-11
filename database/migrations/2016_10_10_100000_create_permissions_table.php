@@ -19,7 +19,8 @@ class CreatePermissionsTable extends Migration
         });
 
         Schema::table('permissions', function(Blueprint $table){
-          $table->foreign('role_id')->references('id')->on('roles');
+          $table->foreign('role_id')->references('id')->on('roles')
+            ->onDelete('restrict')->onUpdate('cascade');
         });
     }
 

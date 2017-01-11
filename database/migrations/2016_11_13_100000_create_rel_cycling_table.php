@@ -21,9 +21,12 @@ class CreateRelCyclingTable extends Migration
         });
 
         Schema::table('rel_cycling', function(Blueprint $table){
-          $table->foreign('cycling_route_id')->references('id')->on('cycling_routes');
-          $table->foreign('node1_id')->references('id')->on('nodes');
-          $table->foreign('node2_id')->references('id')->on('nodes');
+          $table->foreign('cycling_route_id')->references('id')->on('cycling_routes')
+            ->onDelete('restrict')->onUpdate('cascade');
+          $table->foreign('node1_id')->references('id')->on('nodes')
+            ->onDelete('restrict')->onUpdate('cascade');
+          $table->foreign('node2_id')->references('id')->on('nodes')
+            ->onDelete('restrict')->onUpdate('cascade');
         });
     }
 

@@ -20,8 +20,10 @@ class CreateRelStopTable extends Migration
       });
 
       Schema::table('rel_stop', function(Blueprint $table){
-        $table->foreign('route_id')->references('id')->on('routes');
-        $table->foreign('stop_node_id')->references('id')->on('nodes');
+        $table->foreign('route_id')->references('id')->on('routes')
+          ->onDelete('restrict')->onUpdate('cascade');
+        $table->foreign('stop_node_id')->references('id')->on('nodes')
+          ->onDelete('restrict')->onUpdate('cascade');
       });
     }
 

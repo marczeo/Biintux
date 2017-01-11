@@ -23,7 +23,8 @@ class CreateRoutesTable extends Migration
         });
 
         Schema::table('routes', function(Blueprint $table){
-          $table->foreign('start_node_id')->references('id')->on('nodes');
+          $table->foreign('start_node_id')->references('id')->on('nodes')
+            ->onDelete('restrict')->onUpdate('cascade');
         });
     }
 

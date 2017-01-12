@@ -72,7 +72,7 @@ function initialize()
                 draggable: false,
                 title: item.description,
                 myData: "markerFrom",
-                animation: google.maps.Animation.DROP
+                //animation: google.maps.Animation.DROP
               });
           }
           );

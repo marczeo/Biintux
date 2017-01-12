@@ -12,7 +12,18 @@ function initialize()
 
     zoom: 13,
     center: myLatLng,
-    mapTypeId: google.maps.MapTypeId.TERRAIN
+    mapTypeId: google.maps.MapTypeId.TERRAIN,
+    styles: [
+      {
+        "featureType": "poi",
+        stylers: [
+          { hue: "#48C666" },
+          { saturation: 60 },
+          { lightness: -20 },
+          { gamma: 1.51 }
+        ]
+      }
+    ]
     
   };
 

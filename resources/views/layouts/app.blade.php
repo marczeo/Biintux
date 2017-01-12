@@ -46,10 +46,34 @@
                     <!-- Authentication Links -->
                     @if (Auth::check())
                     <ul class="nav navbar-nav">
-                        <li><a href="/ciclovia">{{trans('navbar.bikeway')}}</a></li>
-                        <li><a href="">{{trans('navbar.route')}}</a></li>
-                        <li><a href="/users">{{trans('navbar.user')}}</a></li>
-                        <li><a href="/mibici">{{trans('navbar.mibici')}}</a></li>
+
+                        <li>
+                        <a href="/ciclovia">
+                            <img src="/images/cycling.svg" onerror="this.src='/images/cycling.png'" width="25" height="25">
+                            {{trans('navbar.bikeway')}}
+                        </a>
+                        </li>
+
+                        <li>
+                        <a href="/routes">
+                            <img src="/images/route.svg" onerror="this.src='/images/route.png'" width="25" height="25">
+                            {{trans('navbar.route')}}
+                        </a>
+                        </li>
+
+                        <li>
+                        <a href="/users">
+                            <img src="/images/user.svg" onerror="this.src='/images/user.png'" width="25" height="25">
+                            {{trans('navbar.user')}}
+                        </a>
+                        </li>
+
+                        <li>
+                        <a href="/mibici">
+                            <img src="/images/mibici.svg" onerror="this.src='/images/mibici.png'" width="25" height="25">
+                            {{trans('navbar.mibici')}}
+                        </a>
+                        </li>
                     </ul>
                     @endif
 

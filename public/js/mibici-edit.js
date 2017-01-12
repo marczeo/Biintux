@@ -19,8 +19,8 @@ function initialize()
       {
         "featureType": "poi",
         stylers: [
-          { hue: "#FF9E52" },
-          { saturation: 60 },
+          { hue: "#A5AEFA" },
+          { saturation: 40 },
           { lightness: -20 },
           { gamma: 1.51 }
         ]
@@ -57,20 +57,38 @@ function initialize()
                 
               });
 
+              google.maps.event.addListener(marker, "click", function (event) 
+              {
+                getAddress(this.position, this.title);
+
+                map.setCenter(this.getPosition());
+                map.setZoom(16);
+                
+              });
+
               google.maps.event.addListener(marker, "dblclick", function (event) 
               {
-                var latitude = this.position.lat();
-                var longitude = this.position.lng();
-
                 getAddress(this.position, this.title);
 
                 map.setCenter(this.getPosition());
                 map.setZoom(16);
 
-                idMarker = this.myData;
-                document.getElementById('id').value = idMarker;
+                if(!this.getDraggable())
+                {
+                  if(confirm('Editar?'))
+                  {
+                    this.setDraggable(true);
 
-                //alert(idMarker);
+                    google.maps.event.addListener(marker, "dragend", function (event) 
+                    {
+                      getAddress(this.position, this.title);
+                    });
+
+                    idMarker = this.myData;
+                    document.getElementById('id').value = idMarker;
+
+                  }
+                }
 
               });
           }

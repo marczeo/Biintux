@@ -1,6 +1,4 @@
 var map;
-var geocoder;
-var stepDisplay;
 
 function initialize() 
 {
@@ -11,25 +9,51 @@ function initialize()
 
     zoom: 13,
     center: myLatLng,
-    disableDoubleClickZoom: true,
-    mapTypeId: google.maps.MapTypeId.TERRAIN,
-    styles: [
-      {
-        "featureType": "poi",
-        "stylers": [
-          { "visibility": "off" }
-        ]
-      }
-    ]
+    mapTypeId: google.maps.MapTypeId.TERRAIN
     
   };
 
+  var bermudaTriangle;
+
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
-  geocoder = new google.maps.Geocoder();
-  stepDisplay = new google.maps.InfoWindow();
+
+  $.ajax(
+    {
+
+        //url : '/getAll',
+        type: "GET",
+        success:function(data) 
+        {
+          console.log(data);
+          data.forEach(function(item)
+          {
+            console.log(item.encodepath);
+            var bermudaTrianglex = new google.maps.Polygon(
+            {
+              paths: google.maps.geometry.encoding.decodePath(item.encodepath),
+              strokeColor: '#FF0000',
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+              fillColor: '#FF0000',
+              fillOpacity: 0.35
+            }
+             );
+            bermudaTrianglex.setMap(map);
+          }
+          );
+
+
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {
+            //if fails      
+        }
+    });
 
     $.ajax(
     {
+
         url : '/getAll',
         type: "GET",
         success:function(data) 
@@ -37,7 +61,7 @@ function initialize()
           console.log(data);
           data.forEach(function(item)
           {
-              var myLatLng = new google.maps.LatLng(item.latitude,item.longitude);
+              var myLatLng = new google.maps.LatLng( item.latitude, item.longitude);
 
               var marker = new google.maps.Marker
               ({
@@ -50,8 +74,6 @@ function initialize()
                 myData: "markerFrom",
                 animation: google.maps.Animation.DROP
               });
-
-              marker.addListener('dblclick', clickMarkerEvent);
           }
           );
         },
@@ -61,35 +83,28 @@ function initialize()
         }
     });
 
+    geocoder = new google.maps.Geocoder();
+
+  //Instantiate an info window to hold step text.
+    stepDisplay = new google.maps.InfoWindow();
 }
 
-function getAddress(mylatLng)
+function setMarker(item)
 {
-  geocoder.geocode(
-  {
-    latLng: mylatLng
-  }, function(responses)
-   {
-    if (responses && responses.length > 0) 
-    {      
-      return responses[0].formatted_address;
-    } 
-    else 
-    {
-      return 'Cannot determine address at this location.';
-    }
+  var myLatLng = new google.maps.LatLng( item.latitude, item.longitude);
+
+  var marker = new google.maps.Marker
+  ({
+    position: myLatLng,
+    icon: '/images/mibici.png',
+    label: "",
+    map: map,
+    draggable: true,
+    title: item.description,
+    myData: "markerFrom",
+    animation: google.maps.Animation.DROP
   });
-}
 
-function clickMarkerEvent(event) 
-{
-  var idMarker=this.myData;  // this ---> MARKER
-
-  map.setZoom(18);
-  map.setCenter(this.position);
-
-  alert(getAddress(this.getPosition()));
-  
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);

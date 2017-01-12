@@ -37,14 +37,15 @@ class MibiciController extends Controller
         return view('mibici.destroy');
     }
 
-    public function deleteNode(Request $request)
-    { 
-        //dd($request->id);
-        DB::table('nodes')->where('id', '=', $request->id)->delete();
-       // dd($mibici);
+/*    public function show()
+    {
+        $mibicis = Mibici::all();
 
-        return redirect('/mibici');
-    }
+        foreach ($mibicis as $mibici) 
+        {
+            echo $mibici->latitude;
+        }
+    }*/
 
     public function post(Request $request)
     {

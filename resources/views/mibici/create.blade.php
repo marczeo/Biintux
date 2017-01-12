@@ -29,10 +29,11 @@
                         <div class="form-group">
                             <label for="markerFromAddress" class="col-md-1 text-left">{{trans('mibici.from')}}</label>
                             <div class="col-xs-9">
-                                <input id="markerFromAddress" type="text" class="form-control" name="from" value="{{ old('name') }}" placeholder="{{trans('mibici.from')}}" readonly>
+                                <input id="markerFromAddress" type="text" class="form-control" name="from" value="{{ old('name') }}" placeholder="{{trans('mibici.from')}}">
                             </div>                                    
                             <input type="hidden" id="markerFromLang" name="markerFromLang" value="">
                             <input type="hidden" id="markerFromLat" name="markerFromLat" value="">
+                            <input type="hidden" id="encodePath" name="encodePath" value="">
 
                             <div class="col-md-2 text-center">
                                 <button type="submit" class="btn  btn-success">

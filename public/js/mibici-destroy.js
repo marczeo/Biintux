@@ -2,6 +2,8 @@ var map;
 var geocoder;
 var stepDisplay;
 
+var idMarker; // TO DELETE
+
 function initialize() 
 {
   var myLatLng = new google.maps.LatLng( 20.67, -103.349609);
@@ -47,11 +49,27 @@ function initialize()
                 map: map,
                 draggable: false,
                 title: item.description,
-                myData: "markerFrom",
-                animation: google.maps.Animation.DROP
+                myData: item.id,
+                animation: google.maps.Animation.DROP,
+                
               });
 
-              marker.addListener('dblclick', clickMarkerEvent);
+              google.maps.event.addListener(marker, "dblclick", function (event) 
+              {
+                var latitude = this.position.lat();
+                var longitude = this.position.lng();
+
+                getAddress(this.position, this.title);
+
+                map.setCenter(this.getPosition());
+                map.setZoom(16);
+
+                idMarker = this.myData;
+                document.getElementById('id').value = idMarker;
+
+                //alert(idMarker);
+
+              });
           }
           );
         },
@@ -60,36 +78,29 @@ function initialize()
             //if fails      
         }
     });
-
 }
 
-function getAddress(mylatLng)
+function getAddress(latLng, title)
 {
-  geocoder.geocode(
+  //alert(latLng);
+  geocoder.geocode
+  ({
+    latLng: latLng
+  }, 
+  function(responses) 
   {
-    latLng: mylatLng
-  }, function(responses)
-   {
-    if (responses && responses.length > 0) 
+    if (responses && responses.length > 0)
     {      
-      return responses[0].formatted_address;
-    } 
-    else 
+      document.getElementById('markerFromAddress').value = responses[0].formatted_address;
+      document.getElementById('name').value = title;
+    }
+    else
     {
-      return 'Cannot determine address at this location.';
+      document.getElementById('markerFromAddress').value = 'Cannot determine address at this location.';
     }
   });
 }
 
-function clickMarkerEvent(event) 
-{
-  var idMarker=this.myData;  // this ---> MARKER
-
-  map.setZoom(18);
-  map.setCenter(this.position);
-
-  alert(getAddress(this.getPosition()));
-  
-}
 
 google.maps.event.addDomListener(window, 'load', initialize);
+

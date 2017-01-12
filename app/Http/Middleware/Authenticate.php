@@ -19,7 +19,7 @@ class Authenticate
     public function handle($request, Closure $next, $guard = null)
     {
 
-        // si la persona no inició sesión, entonces ....
+        // The user has not logged in yet
         if (Auth::guard($guard)->guest()) {
 
             if ($request->ajax()) {
@@ -28,8 +28,7 @@ class Authenticate
 
             } else {
 
-                // si la persona no inició sesión y no es una solicitud ajax
-                // enviar al formulario de ingreso
+                // redirect
                 return redirect()->guest('entrar');
 
             }

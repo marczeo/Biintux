@@ -2,6 +2,7 @@ var lat;
 var lng;
 var marker;
 var map;
+var geocoder;/////////
 
 function initialize() 
 {
@@ -12,7 +13,16 @@ function initialize()
 
     zoom: 13,
     center: myLatLng,
-    mapTypeId: google.maps.MapTypeId.TERRAIN
+    disableDoubleClickZoom: true,
+    mapTypeId: google.maps.MapTypeId.TERRAIN,
+    styles: [
+      {
+        "featureType": "poi",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      }
+    ]
     
   };
 
@@ -69,7 +79,17 @@ function initialize()
 
   marker.addListener('dragend', moveMarkerEvent);
 
- // getAddress(marker, 'markerFromAddress');
+  google.maps.event.addListener(marker, "dblclick", function (event) 
+  {
+
+    map.setCenter(this.getPosition());
+    map.setZoom(16);
+
+    //alert(idMarker);
+
+  });
+
+  getAddress(myLatLng, 'markerFromAddress');
 
   document.getElementById('markerFromLat').value = marker.lat;
   document.getElementById('markerFromLang').value = marker.lng;

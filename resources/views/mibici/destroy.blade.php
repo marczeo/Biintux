@@ -8,7 +8,7 @@
                 <div class="panel-heading">{{trans('mibici.label')}}</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ action('MibiciController@deleteNode','name') }}">
+                    <form class="form-horizontal" name = main role="form" method="POST" action="{{ action('MibiciController@deleteNode','name') }}" onsubmit="return confirm('{{trans('mibici.msg_confirm_delete')}}');">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">

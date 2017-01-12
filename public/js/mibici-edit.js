@@ -47,7 +47,7 @@ function initialize()
               var marker = new google.maps.Marker
               ({
                 position: myLatLng,
-                icon: '/images/mibici.png',
+                icon: '/images/mibici.svg',
                 label: "",
                 map: map,
                 draggable: false,
@@ -63,7 +63,7 @@ function initialize()
 
                 map.setCenter(this.getPosition());
                 map.setZoom(16);
-                
+
               });
 
               google.maps.event.addListener(marker, "dblclick", function (event) 

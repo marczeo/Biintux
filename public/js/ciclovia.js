@@ -96,7 +96,7 @@ function moveMarkerEvent(event) {
 function addMarker(location, name,id) {
   var marker = new google.maps.Marker({
     position: location,
-    icon: '/images/cycling.png',
+    icon: '/images/cycling.svg',
     label: name,
     map: map,
     draggable: true,

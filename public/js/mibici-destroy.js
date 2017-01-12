@@ -47,7 +47,7 @@ function initialize()
               var marker = new google.maps.Marker
               ({
                 position: myLatLng,
-                icon: '/images/mibici.png',
+                icon: '/images/mibici.svg',
                 label: "",
                 map: map,
                 draggable: false,

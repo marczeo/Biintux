@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript"></script>
@@ -23,7 +24,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
+        <nav class="navbar navbar-inverse navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
 
@@ -81,7 +82,12 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!--Dropdown to change languaje-->
                         <li class="dropdown">
-                            <a href="languaje" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <a href="languaje" title = "{{ trans('navbar.language') }}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            @if(App::getLocale()=='es')
+                            <img src="/images/lang/es.svg" onerror="this.src='/images/lang/es.png'" width="25" height="25">
+                            @elseif(App::getLocale()=='en')
+                            <img src="/images/lang/en.svg" onerror="this.src='/images/lang/en.png'" width="25" height="25">
+                            @endif 
                                 {{ trans('navbar.language') }} <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
@@ -95,8 +101,9 @@
                         </li><!--End language-->
                         <!-- Authentication Links -->
                         @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}">{{trans('navbar.login')}}</a></li>
-                            <li><a href="{{ url('/register') }}">{{trans('navbar.register')}}</a></li>
+                            <li><a href="{{ url('/login') }}">
+                            <img src="/images/login.svg" onerror="this.src='/images/login.png'" width="25" height="25">{{trans('navbar.login')}}</a></li>
+                            <li><a href="{{ url('/register') }}"><img src="/images/register.svg" onerror="this.src='/images/register.png'" width="25" height="25">{{trans('navbar.register')}}</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

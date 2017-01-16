@@ -74,6 +74,14 @@ function initialize()
                 myData: "markerFrom",
                 //animation: google.maps.Animation.DROP
               });
+
+              google.maps.event.addListener(marker, "dblclick", function (event) 
+              {
+
+                map.setCenter(this.getPosition());
+                map.setZoom(15);
+
+              });
           }
           );
         },

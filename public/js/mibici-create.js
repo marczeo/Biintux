@@ -79,6 +79,14 @@ function initialize()
   });
 
   marker.addListener('dragend', moveMarkerEvent);
+    google.maps.event.addListener(marker, "dblclick", function (event) 
+    {
+      getAddress(this.position, this.title);
+
+      map.setCenter(this.getPosition());
+      map.setZoom(14);
+
+    });
 
  // getAddress(marker, 'markerFromAddress');
 

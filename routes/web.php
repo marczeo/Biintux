@@ -37,7 +37,7 @@ Route::group(['middleware' => 'auth'], function ()
     |--------------------------------------------------------------------------
     */
     //Route::get('/ciclovias', 'CicloviaController@index');
-    Route::get('/getAll','CicloviaController@getAll');
+    Route::get('/getAllCiclovia','CicloviaController@getAll');
     Route::resource('ciclovia', 'CicloviaController');
     /*
     |--------------------------------------------------------------------------

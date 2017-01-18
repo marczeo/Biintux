@@ -146,8 +146,7 @@ function showSteps(directionResult) {
   // can keep track of it and remove it when calculating new
   // routes.
   myRoute = directionResult.routes[0].legs[0];
-  console.log("showSteps");
-  console.log(myRoute);
+  console.log(directionResult.routes[0].legs[0].length);
 
   
 }
@@ -161,7 +160,6 @@ function computeTotalDistance(result) {
   var flightPlanCoordinates=[];
   // First, clear out any existing markerArray
   // from previous calculations.
-  console.log(markerArray.length);
   clearMarkers();
   var total = 0;
   myroute = result.routes[0];
@@ -173,9 +171,9 @@ function computeTotalDistance(result) {
 
   leRoute = result.routes[0].legs[0];
   console.log(leRoute);
-  console.log("computeTotalDistance");
+  console.log("pasos: " +leRoute.steps.length);
   for (var i = 0; i < leRoute.steps.length; i++) {
-    console.log(leRoute.steps[i].start_point.latLng);
+    console.log(leRoute.steps[i].start_point);
     var marker = new google.maps.Marker({
       position: leRoute.steps[i].start_point,
       map: map
@@ -185,6 +183,12 @@ function computeTotalDistance(result) {
     flightPlanCoordinates[i]=leRoute.steps[i].start_point;
     console.log("tambor");
   }
+  console.log("Destino: " + destination.lat+", "+ destination.lng);
+  markerArray[i]=new google.maps.Marker({
+      position: { lat: destination.lat, lng: destination.lng },
+      map: map
+    });
+  flightPlanCoordinates[i]={ lat: destination.lat, lng: destination.lng };
 
   
   flightPath = new google.maps.Polyline({
@@ -194,14 +198,9 @@ function computeTotalDistance(result) {
     strokeOpacity: 1.0,
     strokeWeight: 2
   });
+  
   var encodePath=google.maps.geometry.encoding.encodePath(flightPath.getPath());
-  console.log("paths"); 
-  console.log(flightPath);
-  console.log(encodePath);
-  document.getElementById('encodePath').value =encodePath.replace(/\\/g,"\\\\");
-  console.log("limpio");
-  console.log(document.getElementById('encodePath').value);
-
+  document.getElementById('encodePath').value =encodePath.replace(/\\/g,"\\\\");  
   
 }
 

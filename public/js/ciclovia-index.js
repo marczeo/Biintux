@@ -23,14 +23,41 @@ function initialize() {
 
   $.ajax(
     {
-        url : '/getAll',
+        url : '/getAllCiclovia',
         type: "GET",
         success:function(data) 
         {
           console.log(data);
           data.forEach(function(item){
+            var instring = google.maps.geometry.encoding.decodePath(item.encodepath);
+            var routeCoordinates = Array();
+            var points = instring;
+
+            for (i = 0; i < points.length; i++) {
+              var p = new google.maps.LatLng(points[i][0], points[i][1]);
+              routeCoordinates.push(p);
+            }
+            var lineSymbol = {
+              path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
+              scale: 2.2,
+              strokeColor: "#FFF",
+              strokeOpacity: 1
+            };
+
+            var routePath = new google.maps.Polyline({
+              path: points,
+              icons: [{
+                icon: lineSymbol,
+                offset: '50%',
+                repeat: '240px'
+              }],
+              strokeColor: '#b51818',
+              strokeOpacity: 0.7,
+              strokeWeight: 8
+            });
+            routePath.setMap(map);
             console.log(item.encodepath);
-            var bermudaTrianglex = new google.maps.Polygon({
+            /*var bermudaTrianglex = new google.maps.Polygon({
               paths: google.maps.geometry.encoding.decodePath(item.encodepath),
               strokeColor: '#FF0000',
               strokeOpacity: 0.8,
@@ -38,7 +65,7 @@ function initialize() {
               fillColor: '#FF0000',
               fillOpacity: 0.35
              });
-            bermudaTrianglex.setMap(map);
+            bermudaTrianglex.setMap(map);*/
           });
 
         },

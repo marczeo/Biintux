@@ -51,9 +51,10 @@ class CicloviaController extends Controller
         $ciclovia_nodo_start->next_nodo=$ciclovia_nodo_end->id;
         $ciclovia_nodo_start->save();
 
+        $ciclovia->code="BW-666";
         $ciclovia->name=$request->name;
-        $ciclovia->start_nodo=$ciclovia_nodo_start->id;
-        $ciclovia->end_nodo=$ciclovia_nodo_end->id;
+        //$ciclovia->start_nodo=$ciclovia_nodo_start->id;
+        //$ciclovia->end_nodo=$ciclovia_nodo_end->id;
         $ciclovia->encodepath=$request->encodePath;
         $ciclovia->save();
 

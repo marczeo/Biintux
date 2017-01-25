@@ -16,6 +16,8 @@ class CreateCyclingRoutesTable extends Migration
         Schema::create('cycling_routes', function(Blueprint $table){
           $table->increments('id');
           $table->string('code');
+          $table->string('name');
+          $table->string('encodepath');
         });
     }
 

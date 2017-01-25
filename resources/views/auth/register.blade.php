@@ -61,7 +61,8 @@
                         </div>
 
                         <div hidden="true">
-                            <input type="number" name="role_id" id="role_id" value="{{ !Auth::check() ? 4 : 0 }}" >
+                            <!--<input type="number" name="role_id" id="role_id" value="{{ !Auth::check() ? 4 : 0 }}" >-->
+                            <input type="number" name="role_id" id="role_id" value="1" >
                         </div>
 
                         <div class="form-group">

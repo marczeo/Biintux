@@ -11,5 +11,6 @@ class Ciclovia extends Model
      *
      * @var string
      */
-    protected $table = 'ciclovias';
+    protected $table = 'cycling_routes';
+    public $timestamps = false;
 }

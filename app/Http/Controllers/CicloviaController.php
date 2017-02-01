@@ -6,10 +6,37 @@ use Illuminate\Http\Request;
 use App\Ciclovia;
 use App\Rel_cycling;
 use App\Node;
+use App\Repositories\CicloviaRepository;
 
 class CicloviaController extends Controller
 {
+    /**
+     * The type node associated with the controller.
+     *
+     * @var string
+     */
+
     protected $typeNode = 'bikeway';
+
+     /**
+     * The ciclovia repository instance.
+     *
+     * @var CicloviaRepository
+     */
+    protected $ciclovias;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @param  CicloviaRepository  $ciclovias
+     * @return void
+     */
+    public function __construct(CicloviaRepository $ciclovias)
+    {
+        //$this->middleware('auth');
+
+        $this->ciclovias = $ciclovias;
+    }
 	/**
      * Show the bikeway dashboard.
      *
@@ -17,7 +44,7 @@ class CicloviaController extends Controller
      */
     public function index()
     { 
-        $ciclovias = Ciclovia::orderBy('id','asc')->get();    
+        $ciclovias = $this->ciclovias->getAllCiclovias()->get();
         return view('ciclovia.index',compact('ciclovias'));
     }
 
@@ -28,7 +55,7 @@ class CicloviaController extends Controller
      */
     public function getAll()
     { 
-        $ciclovias = Ciclovia::orderBy('id','asc')->select('encodepath')->get();    
+        $ciclovias = $this->ciclovias->getAllCiclovias()->select('encodepath')->get();
         return $ciclovias;
     }
 

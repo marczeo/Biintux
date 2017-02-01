@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Mibici;
+use App\Node;
 use DB;
 
 class MibiciController extends Controller
@@ -17,7 +17,7 @@ class MibiciController extends Controller
     public function getAll()
     { 
         //$mibicis = Mibici::orderBy('id','asc')->select('encodepath')->get(); 
-        $mibicis = Mibici::all(); 
+        $mibicis = Node::all(); 
         //dd($mibicis);  
         return $mibicis;
     }
@@ -48,7 +48,7 @@ class MibiciController extends Controller
 
     public function post(Request $request)
     {
-        $mibici = new Mibici;
+        $mibici = new Node;
         $mibici->latitude = $request->markerFromLat; 
         $mibici->longitude = $request->markerFromLang;
         $mibici->description = $request->name;

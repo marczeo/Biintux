@@ -96,7 +96,7 @@ function moveMarkerEvent(event) {
 function addMarker(location, name,id) {
   var marker = new google.maps.Marker({
     position: location,
-    icon: '/images/cycling.svg',
+    icon: '/images/cycling.png',
     label: name,
     map: map,
     draggable: true,
@@ -131,24 +131,15 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, 
     destination: pointB,
     //travelMode: google.maps.TravelMode.BICYCLING
     travelMode: google.maps.TravelMode.WALKING
-  }, function(response, status) {
+  }, function(response, status) {//directionResult
     if (status == google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(response);
-      showSteps(response);
+      //steps
+      myRoute = response.routes[0].legs[0];
     } else {
       window.alert('Directions request failed due to ' + status);
     }
   });
-}
-function showSteps(directionResult) {
-  // For each step, place a marker, and add the text to the marker's
-  // info window. Also attach the marker to an array so we
-  // can keep track of it and remove it when calculating new
-  // routes.
-  myRoute = directionResult.routes[0].legs[0];
-  console.log(directionResult.routes[0].legs[0].length);
-
-  
 }
 function attachInstructionText(marker, text) {
   google.maps.event.addListener(marker, 'click', function() {
@@ -158,6 +149,7 @@ function attachInstructionText(marker, text) {
 }
 function computeTotalDistance(result) {
   var flightPlanCoordinates=[];
+  document.getElementById('markerList').value="";
   // First, clear out any existing markerArray
   // from previous calculations.
   clearMarkers();
@@ -170,10 +162,9 @@ function computeTotalDistance(result) {
   document.getElementById('distance').value = total + ' km';
 
   leRoute = result.routes[0].legs[0];
-  console.log(leRoute);
-  console.log("pasos: " +leRoute.steps.length);
+
+  console.log("lineas: " +leRoute.steps.length);
   for (var i = 0; i < leRoute.steps.length; i++) {
-    console.log(leRoute.steps[i].start_point);
     var marker = new google.maps.Marker({
       position: leRoute.steps[i].start_point,
       map: map
@@ -181,13 +172,15 @@ function computeTotalDistance(result) {
     attachInstructionText(marker, leRoute.steps[i].instructions);
     markerArray[i] = marker;
     flightPlanCoordinates[i]=leRoute.steps[i].start_point;
-    console.log("tambor");
+    document.getElementById('markerList').value+=leRoute.steps[i].start_point;
   }
+  console.log("Origen: " + origin.lat+", "+ origin.lng);
   console.log("Destino: " + destination.lat+", "+ destination.lng);
   markerArray[i]=new google.maps.Marker({
-      position: { lat: destination.lat, lng: destination.lng },
-      map: map
-    });
+    position: { lat: destination.lat, lng: destination.lng },
+    map: map
+  });
+  document.getElementById('markerList').value+="("+ destination.lat +"," +destination.lng +")";
   flightPlanCoordinates[i]={ lat: destination.lat, lng: destination.lng };
 
   
@@ -209,6 +202,7 @@ function clearMarkers()
   for (i = 0; i < markerArray.length; i++) {
     markerArray[i].setMap(null);
   }
+  markerArray=[];
 }
 google.maps.event.addDomListener(window, 'load', initialize_ciclovia);
 

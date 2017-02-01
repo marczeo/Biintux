@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Ciclovia;
-use App\Ciclovia_nodo;
+use App\Rel_cycling;
+use App\Node;
 
 class CicloviaController extends Controller
 {
+    protected $typeNode = 'bikeway';
 	/**
      * Show the bikeway dashboard.
      *
@@ -38,25 +40,37 @@ class CicloviaController extends Controller
     public function store(Request $request)
     {
     	$ciclovia = new ciclovia;
-        $ciclovia_nodo_start = new Ciclovia_nodo;
-        $ciclovia_nodo_end = new Ciclovia_nodo;
-
-        $ciclovia_nodo_start->longitude = $request->markerFromLang;
-        $ciclovia_nodo_start->latitude = $request->markerFromLat;
-        $ciclovia_nodo_start->save();
-
-        $ciclovia_nodo_end->longitude = $request->markerToLang;
-        $ciclovia_nodo_end->latitude = $request->markerToLat;
-        $ciclovia_nodo_end->save();
-        $ciclovia_nodo_start->next_nodo=$ciclovia_nodo_end->id;
-        $ciclovia_nodo_start->save();
 
         $ciclovia->code="BW-666";
         $ciclovia->name=$request->name;
-        //$ciclovia->start_nodo=$ciclovia_nodo_start->id;
-        //$ciclovia->end_nodo=$ciclovia_nodo_end->id;
         $ciclovia->encodepath=$request->encodePath;
         $ciclovia->save();
+
+         /*Limpieza de nodos*/
+        preg_match_all('/\((.*?)\)/', $request->markerList, $nodes);
+        $primeraPasada=true;
+        foreach ($nodes[1] as $node) {
+            $latLong=explode (",", $node);
+            $newNode= new Node;
+            $newNode->latitude=$latLong[0];
+            $newNode->longitude=$latLong[1];
+            $newNode->type=$this->typeNode;
+            $newNode->save();
+
+            if($primeraPasada)
+            {
+                $primeraPasada=false;
+            }
+            else{
+                $rel_cycling->next_node_id=$newNode->id;
+                $rel_cycling->save();
+            }
+            $rel_cycling = new Rel_cycling;
+            $rel_cycling->cycling_route_id = $ciclovia->id;
+            $rel_cycling->start_node_id=$newNode->id;
+
+        }
+        $rel_cycling->save();
 
         return redirect('/ciclovia');
     }

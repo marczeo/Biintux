@@ -4,6 +4,8 @@ var stepDisplay;
 
 var idMarker; // TO DELETE
 
+var stations = [];
+
 function initialize() 
 {
   var myLatLng = new google.maps.LatLng( 20.67, -103.349609);
@@ -75,9 +77,23 @@ function initialize()
 
                 if(!this.getDraggable())
                 {
+                  // HAS QUE SE GUARDEN EN UN ARREGLO
+                  // HAS QUE EL EVENTO TEXTCHANGED CAMBIE EL ARREGLO EN BASE AL ID DEL MARCADOR ACTUAL
+                  // HAS QUE LA LATITUD Y LONGITUD CAMBIEN CON EL POSITION CHANGED
                   if(confirm('Editar?'))
                   {
+                    // becomes Draggable
                     this.setDraggable(true);
+                    // changes icon
+                    this.setIcon('/images/mibici-update.svg');
+
+                    Array.prototype.push.apply(stations, [this.position,this.myData]);
+
+                    for (var i = stations.length - 1; i >= 0; i--) 
+                    {
+                      alert(stations[i].length);
+                      //alert(stations[i]);
+                    }
 
                     google.maps.event.addListener(marker, "dragend", function (event) 
                     {

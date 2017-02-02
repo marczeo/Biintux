@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth'], function ()
     Route::get('/mibici/destroy', 'MibiciController@destroy');
     Route::get('/mibici/edit', 'MibiciController@edit');
     Route::post('/deleteNode', 'MibiciController@deleteNode');
+    Route::post('/updateNodes', 'MibiciController@updateNodes');
     Route::post('/mibici', 'MibiciController@post');
 
 

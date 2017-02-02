@@ -37,6 +37,11 @@ class MibiciController extends Controller
         return view('mibici.destroy');
     }
 
+    public function updateNodes(Request $request)
+    {
+
+    }
+
     public function deleteNode(Request $request)
     { 
         //dd($request->id);

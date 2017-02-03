@@ -50,12 +50,12 @@ function initialize() {
             offset: '50%',
             repeat: '240px'
           }],
-          strokeColor: '#b51818',
+          strokeColor: item.color,
           strokeOpacity: 0.7,
           strokeWeight: 8
         });
         routePath.setMap(map);
-        
+
       });
 
     },

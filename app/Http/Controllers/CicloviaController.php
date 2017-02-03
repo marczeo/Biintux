@@ -23,7 +23,7 @@ class CicloviaController extends Controller
      *
      * @var CicloviaRepository
      */
-    protected $ciclovias;
+    protected $cicloviasDAO;
 
     /**
      * Create a new controller instance.
@@ -35,7 +35,7 @@ class CicloviaController extends Controller
     {
         //$this->middleware('auth');
 
-        $this->ciclovias = $ciclovias;
+        $this->cicloviasDAO = $ciclovias;
     }
 	/**
      * Show the bikeway dashboard.
@@ -44,7 +44,7 @@ class CicloviaController extends Controller
      */
     public function index()
     { 
-        $ciclovias = $this->ciclovias->getAllCiclovias()->get();
+        $ciclovias = $this->cicloviasDAO->getAllCiclovias()->get();
         return view('ciclovia.index',compact('ciclovias'));
     }
 
@@ -55,7 +55,7 @@ class CicloviaController extends Controller
      */
     public function getAll()
     { 
-        $ciclovias = $this->ciclovias->getAllCiclovias()->select('encodepath')->get();
+        $ciclovias = $this->cicloviasDAO->getAllCiclovias()->select('encodepath', 'color')->get();
         return $ciclovias;
     }
 
@@ -67,6 +67,10 @@ class CicloviaController extends Controller
     public function store(Request $request)
     {
     	$ciclovia = new ciclovia;
+        $ciclovia->setColor();
+        while ($this->cicloviasDAO->existColor($ciclovia->color)){
+            $ciclovia->setColor();
+        }
 
         $ciclovia->code="BW-666";
         $ciclovia->name=$request->name;

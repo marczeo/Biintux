@@ -18,6 +18,7 @@ class CreateCyclingRoutesTable extends Migration
           $table->string('code');
           $table->string('name');
           $table->string('encodepath');
+          $table->string('color');
         });
     }
 

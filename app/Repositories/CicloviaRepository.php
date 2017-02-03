@@ -24,4 +24,13 @@ class CicloviaRepository
     {
         return Ciclovia::orderBy('id','asc');
     }
+
+    public function existColor($color)
+    {
+        
+        if(Ciclovia::where('color', $color)->count())
+            return true;
+        return false;
+
+    }
 }

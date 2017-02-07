@@ -58,6 +58,11 @@ class CicloviaController extends Controller
         $ciclovias = $this->cicloviasDAO->getAllCiclovias()->select('encodepath', 'color')->get();
         return $ciclovias;
     }
+    public function getAllJson()
+    { 
+        $ciclovias = $this->cicloviasDAO->getAllCiclovias()->select('id','name', 'color')->get();
+        return $ciclovias->toJson();
+    }
 
     /**
      * Add a bikeway to database

@@ -18,4 +18,10 @@ elixir((mix) => {
        //.webpack('app.js');
      mix.scripts('map_ciclovia.js','public/js/ciclovia.js');
      mix.scripts('map_ciclovia_index.js','public/js/ciclovia-index.js');
-});
+
+     //Copia de fuentes bootstrap
+     mix.copy(
+     	'node_modules/bootstrap-sass/assets/fonts/',
+     	'public/fonts'
+     );
+ });

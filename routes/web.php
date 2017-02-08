@@ -30,20 +30,28 @@ Route::get('/spanish','LanguageController@spanish');
 Route::group(['middleware' => 'auth'], function () 
 {
 
+/*
+|--------------------------------------------------------------------------
+| Gestion de usuarios
+|--------------------------------------------------------------------------
+*/
+Route::resource('users','UserController');
 
-    /*
-    |--------------------------------------------------------------------------
-    | Ciclovía
-    |--------------------------------------------------------------------------
-    */
-    //Route::get('/ciclovias', 'CicloviaController@index');
-    Route::get('/getAllCiclovia','CicloviaController@getAll');
-    Route::resource('ciclovia', 'CicloviaController');
-    /*
-    |--------------------------------------------------------------------------
-    | miBici
-    |--------------------------------------------------------------------------
-    */
+/*
+|--------------------------------------------------------------------------
+| Ciclovía
+|--------------------------------------------------------------------------
+*/
+//Route::get('/ciclovias', 'CicloviaController@index');
+Route::get('/getAllCiclovia','CicloviaController@getAll');
+ Route::resource('ciclovia', 'CicloviaController');
+/*
+
+
+|--------------------------------------------------------------------------
+ | miBici
+|--------------------------------------------------------------------------
+*/
 
     Route::get('/getAll','MibiciController@getAll');
     Route::get('/mibici', 'MibiciController@index');

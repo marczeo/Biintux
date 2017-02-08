@@ -23,7 +23,7 @@ return [
     'edit'      => 'Editar',
     'add'       => 'Agregar',
     'profile'   => 'Perfil',
-    'route'     => 'Ruta',
-    'user'      => 'Usuario',
+    'route'     => 'Rutas',
+    'user'      => 'Usuarios',
     'mibici'    => 'miBici',
 ];

@@ -73,16 +73,16 @@
                         </li>
 
                         <li>
-                        <a href="/users">
-                            <img src="/images/user.svg" onerror="this.src='/images/user.png'" width="25" height="25">
-                            {{trans('navbar.user')}}
+                        <a href="/mibici">
+                            <img src="/images/mibici.svg" onerror="this.src='/images/mibici.png'" width="25" height="25">
+                            {{trans('navbar.mibici')}}
                         </a>
                         </li>
 
                         <li>
-                        <a href="/mibici">
-                            <img src="/images/mibici.svg" onerror="this.src='/images/mibici.png'" width="25" height="25">
-                            {{trans('navbar.mibici')}}
+                        <a href="/users">
+                            <img src="/images/user.svg" onerror="this.src='/images/user.png'" width="25" height="25">
+                            {{trans('navbar.user')}}
                         </a>
                         </li>
                     </ul>

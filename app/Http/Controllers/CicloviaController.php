@@ -49,22 +49,6 @@ class CicloviaController extends Controller
     }
 
     /**
-     * Show the bikeway dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getAll()
-    { 
-        $ciclovias = $this->cicloviasDAO->getAllCiclovias()->select('encodepath', 'color')->get();
-        return $ciclovias;
-    }
-    public function getAllJson()
-    { 
-        $ciclovias = $this->cicloviasDAO->getAllCiclovias()->select('id','name', 'color')->get();
-        return $ciclovias->toJson();
-    }
-
-    /**
      * Add a bikeway to database
      *
      * @return \Illuminate\Http\Response
@@ -159,5 +143,26 @@ class CicloviaController extends Controller
     public function edit()
     {
         return view('ciclovia.edit');
+    }
+
+     /**
+     * Show the bikeway dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getAll()
+    { 
+        $ciclovias = $this->cicloviasDAO->getAllCiclovias()->select('encodepath', 'color')->get();
+        return $ciclovias;
+    }
+    
+    /**
+    * Show all bikeways
+    * @return json
+    */
+    public function getAllJson()
+    { 
+        $ciclovias = $this->cicloviasDAO->getAllCiclovias()->select('id','name', 'color')->get();
+        return $ciclovias->toJson();
     }
 }

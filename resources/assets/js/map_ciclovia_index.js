@@ -61,10 +61,11 @@ function initialize() {
     },
     error: function(jqXHR, textStatus, errorThrown) 
     {
-            //if fails      
-          }
-        });
+      console.log("No se pudieron cargar los datos");
+    }
+  });
 }
+/*Functions for use bootstrap table*/
 function queryParams() {
     return {
         type: 'owner',

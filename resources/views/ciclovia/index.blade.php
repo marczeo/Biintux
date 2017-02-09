@@ -32,7 +32,7 @@
                             <tr>
                                 <th class="col-xs-1" data-field="" data-sortable="true" data-cell-style="formaterColumnColor"></th>
                                 <th class="col-xs-7" data-field="name" data-align="center" data-sortable="true">Nombre</th>
-                                <th class="col-xs-4" data-field="code" data-sortable="true" data-formatter="formaterColumnCode" data-align="center">Opciones</th>
+                                <th class="col-xs-4" data-field="ciclovia" data-sortable="true" data-formatter="formaterColumnEditActions" data-align="center">Opciones</th>
                             </tr>
                         </thead>
                     </table>

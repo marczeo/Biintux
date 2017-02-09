@@ -80,7 +80,7 @@
                         </li>
 
                         <li>
-                        <a href="/users">
+                        <a href="/user">
                             <img src="/images/user.svg" onerror="this.src='/images/user.png'" width="25" height="25">
                             {{trans('navbar.user')}}
                         </a>
@@ -146,6 +146,7 @@
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+    <script src="/js/main.js"></script>
     @yield('scriptsBottom')
 </body>
 </html>

@@ -23,3 +23,10 @@ Route::get('/user', function (Request $request) {
     |--------------------------------------------------------------------------
     */
 Route::get('/getAllCiclovia','CicloviaController@getAllJson');
+
+/*
+    |--------------------------------------------------------------------------
+    | Usuarios
+    |--------------------------------------------------------------------------
+    */
+Route::get('/getAllUser','UserController@getAllJson');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\UsuarioRepository;
+use App\User;
 class UserController extends Controller
 {
     /**
@@ -32,7 +33,7 @@ class UserController extends Controller
      */
     public function index()
     { 
-        $usuarios = $this->usersDAO->getAllusuarios()->get();
+        $usuarios = $this->usersDAO->getAllUsuarios()->get();
         return view('user.index',compact('usuarios'));
     }
 
@@ -72,9 +73,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy($id)
     {
-        return view('user.destroy');
+    	$user=User::findOrFail($id);
+    	$user->delete();
+        return redirect('/user');
     }
 
     /**
@@ -84,7 +87,7 @@ class UserController extends Controller
      */
     public function show()
     {
-        return view('user.destroy');
+        return view('user.show');
     }
 
     /**
@@ -95,5 +98,15 @@ class UserController extends Controller
     public function edit()
     {
         return view('user.edit');
+    }
+
+    /**
+    * Show all bikeways
+    * @return json
+    */
+    public function getAllJson()
+    { 
+        $usuarios = $this->usersDAO->getAllUsuarios()->get();
+        return $usuarios->toJson();
     }
 }

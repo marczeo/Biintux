@@ -44,8 +44,7 @@ class CicloviaController extends Controller
      */
     public function index()
     { 
-        $ciclovias = $this->cicloviasDAO->getAllCiclovias()->get();
-        return view('ciclovia.index',compact('ciclovias'));
+        return view('ciclovia.index');
     }
 
     /**

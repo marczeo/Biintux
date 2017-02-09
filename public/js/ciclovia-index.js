@@ -61,30 +61,10 @@ function initialize() {
     },
     error: function(jqXHR, textStatus, errorThrown) 
     {
-            //if fails      
-          }
-        });
+      console.log("No se pudieron cargar los datos");
+    }
+  });
 }
-function queryParams() {
-    return {
-        type: 'owner',
-        sort: 'updated',
-        direction: 'desc',
-        per_page: 100,
-        page: 1
-    };
-}
- function formaterColumnCode(index, row) {
-        var html = [];
-        html.push('<a href="editar/'+row.id+'" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> ');
-        html.push('<a href="delete/'+row.id+'" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a> ');
-        
-        return html.join('');
- }
-function formaterColumnColor(value, row, index, field) {
-  return {
-    css: {"background-color": row.color}
-  };
-}
+
 google.maps.event.addDomListener(window, 'load', initialize);
 //# sourceMappingURL=ciclovia-index.js.map

@@ -35,7 +35,7 @@ Route::group(['middleware' => 'auth'], function ()
 | Gestion de usuarios
 |--------------------------------------------------------------------------
 */
-Route::resource('users','UserController');
+Route::resource('user','UserController');
 
 /*
 |--------------------------------------------------------------------------

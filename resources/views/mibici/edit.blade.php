@@ -17,7 +17,7 @@
                             <label for="name" class="col-md-1">{{trans('mibici.name')}}</label>
                             
                             <div class="col-md-11">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus placeholder="{{trans('mibici.name')}}"  readonly>
+                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus placeholder="{{trans('mibici.name')}}">
 
                                 @if ($errors->has('name'))
                                     <span class="help-block">

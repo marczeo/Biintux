@@ -4,11 +4,17 @@ var stepDisplay;
 
 var idMarker; // TO DELETE
 
-var stations = [];
+var list;
 
 function initialize() 
 {
   var myLatLng = new google.maps.LatLng( 20.67, -103.349609);
+
+  list = [];
+
+  //list.push({position: 0, nombre: "", id: 0});
+
+  //alert(list[0].id);
 
   var mapOptions = 
   {
@@ -21,8 +27,8 @@ function initialize()
       {
         "featureType": "poi",
         stylers: [
-          { hue: "#A5AEFA" },
-          { saturation: 40 },
+          { hue: "#E6CCFF" },
+          { saturation: -40 },
           { lightness: -20 },
           { gamma: 1.51 }
         ]
@@ -87,20 +93,27 @@ function initialize()
                     // changes icon
                     this.setIcon('/images/mibici-update.svg');
 
-                    Array.prototype.push.apply(stations, [this.position,this.myData]);
-
-                    for (var i = stations.length - 1; i >= 0; i--) 
-                    {
-                      alert(stations[i].length);
-                      //alert(stations[i]);
-                    }
+                    list.push({position: this.position, description: this.title, id: this.myData});
 
                     google.maps.event.addListener(marker, "dragend", function (event) 
                     {
                       getAddress(this.position, this.title);
+
+                      for(int i = 0; i < list.length - 1 ; i++)
+                      {
+                        if(list[i].id == this.myData)
+                        {
+                          alert(list[i].description);
+                          list[i].description =  document.getElementById('name').value = title;
+
+                          break;
+                        }
+                      }
+
                     });
 
                     idMarker = this.myData;
+
                     document.getElementById('id').value = idMarker;
 
                   }

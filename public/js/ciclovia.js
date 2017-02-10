@@ -167,7 +167,7 @@ function computeTotalDistance(result) {
   for (var i = 0; i < leRoute.steps.length; i++) {
     var marker = new google.maps.Marker({
       position: leRoute.steps[i].start_point,
-      map: map
+      //map: map
     });
     attachInstructionText(marker, leRoute.steps[i].instructions);
     markerArray[i] = marker;
@@ -178,7 +178,7 @@ function computeTotalDistance(result) {
   console.log("Destino: " + destination.lat+", "+ destination.lng);
   markerArray[i]=new google.maps.Marker({
     position: { lat: destination.lat, lng: destination.lng },
-    map: map
+    //map: map
   });
   document.getElementById('markerList').value+="("+ destination.lat +"," +destination.lng +")";
   flightPlanCoordinates[i]={ lat: destination.lat, lng: destination.lng };

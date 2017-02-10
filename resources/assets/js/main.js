@@ -16,7 +16,7 @@ function formaterColumnEditActions(value, row, index) {
     html.push('');
     //html.push('<a href="'+controller+'/delete/'+row.id+'" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a> ');
     html.push( '<form method="POST" action="'+
-        controller+'/'+row.id+'" class="form-inline" >' + '<input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="'+$('meta[name="csrf-token"]').attr('content')+'">'+ '<a href="'+controller+'/editar/'+row.id+'" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> <button class="btn btn-xs btn-danger" type="submit" v><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>'+ '</form>');
+        controller+'/'+row.id+'" class="form-inline" >' + '<input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="'+$('meta[name="csrf-token"]').attr('content')+'">'+ '<a href="'+controller+'/editar/'+row.id+'" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> <button class="btn btn-xs btn-danger" type="submit" v><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>'+ '</form>');
     html.push('</div>');
     return html.join('');
 }

@@ -17,7 +17,7 @@ class MibiciController extends Controller
     public function getAll()
     { 
         //$mibicis = Mibici::orderBy('id','asc')->select('encodepath')->get(); 
-        $mibicis = Node::all(); 
+        $mibicis = Node::Where('type','mibici')->get(); 
         //dd($mibicis);  
         return $mibicis;
     }

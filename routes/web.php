@@ -42,8 +42,6 @@ Route::resource('user','UserController');
 | Ciclovía
 |--------------------------------------------------------------------------
 */
-//Route::get('/ciclovias', 'CicloviaController@index');
-Route::get('/getAllCiclovia','CicloviaController@getAll');
  Route::resource('ciclovia', 'CicloviaController');
 /*
 

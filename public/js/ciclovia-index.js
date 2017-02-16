@@ -27,9 +27,7 @@ function initialize() {
     type: "GET",
     success:function(data) 
     {
-      console.log(data);
       $.each(data, function(i, item) {
-        console.log(item);
         var instring = google.maps.geometry.encoding.decodePath(item.encodepath);
         var routeCoordinates = Array();
         var points = instring;

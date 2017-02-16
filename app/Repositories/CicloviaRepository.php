@@ -25,6 +25,12 @@ class CicloviaRepository
         return Ciclovia::orderBy('id','asc')->get();
     }
 
+    /**
+     * Verify that color exist
+     *
+     * @param  string  $color
+     * @return boolean
+     */
     public function existColor($color)
     {
         

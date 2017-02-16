@@ -22,6 +22,17 @@ class UsuarioRepository
     }*/
     public function getAllUsuarios()
     {
-        return User::orderBy('id','asc');
+        $usuarios= User::orderBy('id','asc')->select('id','name','email','role_id')->get();
+        $user_response=[];
+        foreach ($usuarios as $key=> $user)
+        {
+
+            $user_response[$key]['id']=$user->id;
+            $user_response[$key]['name']=$user->name;
+            $user_response[$key]['email']=$user->email;
+            $user_response[$key]['role']=$user->role->description;
+            $user_response[$key]['color']=$user->getColor();
+        }
+        return json_encode($user_response);
     }
 }

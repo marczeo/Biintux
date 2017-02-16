@@ -33,8 +33,7 @@ class UserController extends Controller
      */
     public function index()
     { 
-        $usuarios = $this->usersDAO->getAllUsuarios()->get();
-        return view('user.index',compact('usuarios'));
+        return view('user.index');
     }
 
     
@@ -106,7 +105,7 @@ class UserController extends Controller
     */
     public function getAllJson()
     { 
-        $usuarios = $this->usersDAO->getAllUsuarios()->get();
-        return $usuarios->toJson();
+        $usuarios = $this->usersDAO->getAllUsuarios();
+        return $usuarios;
     }
 }

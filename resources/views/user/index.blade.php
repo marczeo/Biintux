@@ -32,7 +32,7 @@
                             <tr>
                                 <th class="col-xs-4" data-field="name" data-align="center" data-sortable="true">Nombre</th>
                                 <th class="col-xs-4" data-field="email" data-align="center" data-sortable="true">E-mail</th>
-                                <th class="col-xs-3" data-field="role_id" data-sortable="true" data-align="center">Rol</th>
+                                <th class="col-xs-3" data-field="role" data-align="center" data-cell-style="formaterColumnColor">Rol</th>
                                 <th class="col-xs-1" data-field="user" data-sortable="true" data-formatter="formaterColumnEditActions" data-align="center">Opciones</th>
                             </tr>
                         </thead>

@@ -36,4 +36,58 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = $value;
     }
+
+    /*
+     * Get the role records associated with the user.
+    */
+    public function role(){
+        return $this->belongsTo('App\Role');
+    }
+
+    /**
+     * Verify that the role of the user is admin
+     * @return boolean
+    */
+    public function isAdmin()
+    {
+       return $this->role->description == 'Administrator';
+    }
+
+    /**
+     * Verify that the role of the user is concessionaire
+     * @return boolean
+    */
+    public function isConcessionaire()
+    {
+       return $this->role->description == 'Concessionaire';
+    }
+
+    /**
+     * Verify that the role of the user is admin
+     * @return boolean
+    */
+    public function isDriver()
+    {
+       return $this->role->description == 'Driver';
+    }
+
+    /**
+     * Get color related to the user
+     * @return strin
+    */
+    public function getColor()
+    {
+       if($this->isAdmin()){
+            return "hsla(121, 25%, 50%, 1)";
+       }
+        elseif($this->isConcessionaire()){
+            return "hsla(178, 34%, 56%, 1)";
+        }
+        elseif($this->isDriver()){
+            return "hsla(216, 34%, 56%, 1)";
+        }
+        else{
+            return "hsla(124, 3%, 81%, 1)";
+        }
+    }
 }

@@ -22,7 +22,7 @@ class CicloviaRepository
 
      public function getAllCiclovias()
     {
-        return Ciclovia::orderBy('id','asc');
+        return Ciclovia::orderBy('id','asc')->get();
     }
 
     public function existColor($color)

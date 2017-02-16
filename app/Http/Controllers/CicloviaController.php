@@ -119,9 +119,11 @@ class CicloviaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy($id)
     {
-        return view('ciclovia.destroy');
+        $ciclovia=Ciclovia::findOrFail($id);
+        $ciclovia->delete();
+        return redirect('/ciclovia');
     }
 
     /**
@@ -143,17 +145,6 @@ class CicloviaController extends Controller
     {
         return view('ciclovia.edit');
     }
-
-     /**
-     * Show the bikeway dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getAll()
-    { 
-        $ciclovias = $this->cicloviasDAO->getAllCiclovias()->select('encodepath', 'color')->get();
-        return $ciclovias;
-    }
     
     /**
     * Show all bikeways
@@ -161,7 +152,7 @@ class CicloviaController extends Controller
     */
     public function getAllJson()
     { 
-        $ciclovias = $this->cicloviasDAO->getAllCiclovias()->select('id','name', 'color')->get();
-        return $ciclovias->toJson();
+        $ciclovias = $this->cicloviasDAO->getAllCiclovias();
+        return $ciclovias;
     }
 }

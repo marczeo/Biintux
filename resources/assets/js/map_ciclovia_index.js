@@ -23,11 +23,12 @@ function initialize() {
 
   $.ajax(
   {
-    url : '/getAllCiclovia',
+    url : '/api/getAllCiclovia',
     type: "GET",
     success:function(data) 
     {
-      data.forEach(function(item){
+      console.log(data);
+      $.each(data, function(i, item) {
         var instring = google.maps.geometry.encoding.decodePath(item.encodepath);
         var routeCoordinates = Array();
         var points = instring;

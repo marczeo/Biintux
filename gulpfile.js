@@ -16,9 +16,15 @@ const elixir = require('laravel-elixir');
 elixir((mix) => {
     mix.sass('app.scss');
        //.webpack('app.js');
-     mix.scripts('map_ciclovia.js','public/js/ciclovia.js');
-     mix.scripts('map_ciclovia_index.js','public/js/ciclovia-index.js');
-     mix.scripts('main.js','public/js/main.js');
+    mix.scripts('map_ciclovia.js','public/js/ciclovia.js');
+    mix.scripts('map_ciclovia_index.js','public/js/ciclovia-index.js');
+    mix.scripts('main.js','public/js/main.js');
+
+    mix.scripts('mibici-index.js','public/js/mibici-index.js');
+    mix.scripts('mibici-create.js','public/js/mibici-create.js');
+    mix.scripts('mibici-destroy.js','public/js/mibici-destroy.js');
+    mix.scripts('mibici-edit.js','public/js/mibici-edit.js');
+
 
      //Copia de fuentes bootstrap
      mix.copy(

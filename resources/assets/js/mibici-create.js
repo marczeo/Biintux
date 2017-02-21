@@ -133,5 +133,3 @@ function moveMarkerEvent(event)
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
-
-//# sourceMappingURL=mibici-create.js.map

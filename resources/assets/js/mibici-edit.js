@@ -4,6 +4,10 @@ var stepDisplay;
 
 var idMarker; // TO DELETE
 
+//var list;
+var active;
+var refList;
+
 function initialize() 
 {
   var myLatLng = new google.maps.LatLng( 20.67, -103.349609);
@@ -19,8 +23,8 @@ function initialize()
       {
         "featureType": "poi",
         stylers: [
-          { hue: "#FF9E52" },
-          { saturation: 60 },
+          { hue: "#E6CCFF" },
+          { saturation: -40 },
           { lightness: -20 },
           { gamma: 1.51 }
         ]
@@ -39,9 +43,12 @@ function initialize()
         type: "GET",
         success:function(data) 
         {
+          active = false;
+
           console.log(data);
           data.forEach(function(item)
           {
+            console.log(item);
               var myLatLng = new google.maps.LatLng(item.latitude,item.longitude);
 
               var marker = new google.maps.Marker
@@ -57,20 +64,42 @@ function initialize()
                 
               });
 
-              google.maps.event.addListener(marker, "dblclick", function (event) 
+              google.maps.event.addListener(marker, "click", function (event) 
               {
-                var latitude = this.position.lat();
-                var longitude = this.position.lng();
-
-                getAddress(this.position, this.title);
+                document.getElementById('name').value = this.title;
+                getAddress(this.position, this.title, this.myData);
 
                 map.setCenter(this.getPosition());
                 map.setZoom(16);
 
-                idMarker = this.myData;
-                document.getElementById('id').value = idMarker;
+              });
 
-                //alert(idMarker);
+              google.maps.event.addListener(marker, "dblclick", function (event) 
+              { 
+                document.getElementById('name').value = this.title;
+                getAddress(this.position, this.title, this.myData);
+
+                map.setCenter(this.getPosition());
+                map.setZoom(16);
+
+                if(!this.getDraggable())
+                {
+                  if(active == false)
+                  if(confirm('Editar?'))
+                  {
+                    active = true;
+                    // becomes Draggable
+                    this.setDraggable(true);
+                    // changes icon
+                    this.setIcon('/images/mibici-update.svg');
+
+                    google.maps.event.addListener(marker, "dragend", function (event) 
+                    {
+                      getAddress(this.position, this.title, this.myData);
+                    });
+
+                  }
+                }
 
               });
           }
@@ -83,9 +112,12 @@ function initialize()
     });
 }
 
-function getAddress(latLng, title)
+function getAddress(latLng, title, myData)
 {
-  //alert(latLng);
+
+  idMarker = myData;
+  document.getElementById('id').value = idMarker;
+
   geocoder.geocode
   ({
     latLng: latLng
@@ -94,8 +126,10 @@ function getAddress(latLng, title)
   {
     if (responses && responses.length > 0)
     {      
-      document.getElementById('markerFromAddress').value = responses[0].formatted_address;
-      document.getElementById('name').value = title;
+
+          document.getElementById('markerFromAddress').value = responses[0].formatted_address;  
+          document.getElementById('markerFromLat').value = latLng.lat();
+          document.getElementById('markerFromLang').value = latLng.lng();
     }
     else
     {
@@ -107,5 +141,3 @@ function getAddress(latLng, title)
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
-
-//# sourceMappingURL=mibici-destroy.js.map

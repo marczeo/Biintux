@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Node;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
 use DB;
 
 class MibiciController extends Controller
@@ -16,7 +18,6 @@ class MibiciController extends Controller
 
     public function getAll()
     { 
-        //$mibicis = Mibici::orderBy('id','asc')->select('encodepath')->get(); 
         $mibicis = Node::Where('type','mibici')->get(); 
         //dd($mibicis);  
         return $mibicis;
@@ -39,14 +40,22 @@ class MibiciController extends Controller
 
     public function updateNodes(Request $request)
     {
+        DB::table('nodes')
+            ->where('id', '=', $request->id)
+            ->update(
+                array( 
+                    "latitude" => $request->markerFromLat,
+                    "longitude" => $request->markerFromLang,
+                    "description" => $request->name,
+                )
+            );
 
+        return redirect('/mibici');
     }
 
     public function deleteNode(Request $request)
     { 
-        //dd($request->id);
         DB::table('nodes')->where('id', '=', $request->id)->delete();
-       // dd($mibici);
 
         return redirect('/mibici');
     }
@@ -58,8 +67,6 @@ class MibiciController extends Controller
         $mibici->longitude = $request->markerFromLang;
         $mibici->description = $request->name;
         $mibici->type = "mibici";
-        //$mibici->encodepath=$request->encodePath;
-        //dd($mibici);
         $mibici->save();
 
         return redirect('/mibici');

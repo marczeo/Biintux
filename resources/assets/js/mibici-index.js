@@ -116,5 +116,3 @@ function setMarker(item)
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
-
-//# sourceMappingURL=mibici-index.js.map

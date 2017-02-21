@@ -8,13 +8,13 @@
                 <div class="panel-heading">{{trans('mibici.label')}}</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" name = main role="form" method="POST" action="{{ action('MibiciController@deleteNode','name') }}" onsubmit="return confirm('{{trans('mibici.msg_confirm_delete')}}');">
+                    <form class="form-horizontal" name = main role="form" method="POST" action="{{ action('MibiciController@updateNodes')}}" onsubmit="if(confirm('{{trans('mibici.msg_confirm_delete')}}'))">
 
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                         
-                            <label for="name" class="col-md-1">{{trans('mibici.name')}}</label>
+                             <label for="name" class="col-md-1">{{trans('mibici.name')}}</label>
                             
                             <div class="col-md-11">
                                 <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus placeholder="{{trans('mibici.name')}}">

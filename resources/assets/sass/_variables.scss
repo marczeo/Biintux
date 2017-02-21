@@ -1,4 +1,9 @@
 
+//hell rot  - > FFE6E6
+//dunkel rot - > FFB3B3
+//hell grun - > DFF0D8
+//dunkel grun - > 9BD293
+
 // Body
 $body-bg:#FFE6E6;
 // #f5f8fa;
@@ -11,11 +16,11 @@ $panel-default-border: $laravel-border-color;
 $panel-inner-border: $laravel-border-color;
 
 // Brands
-$brand-primary: #3097D1;
-$brand-info: #8eb4cb;
-$brand-success: #2ab27b;
+$brand-primary: #8eb4cb;
+$brand-info: #9669ab;
+$brand-success: #3097D1;
 $brand-warning: #cbb956;
-$brand-danger: #bf5329;
+$brand-danger: #bf2929; //bf5329
 
 // Typography
 $font-family-sans-serif: "Raleway", sans-serif;

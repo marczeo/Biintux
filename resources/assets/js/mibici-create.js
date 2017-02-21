@@ -17,7 +17,7 @@ function initialize()
       {
         "featureType": "poi",
         stylers: [
-          { hue: "#48C666" },
+          { hue: "#3097D1" },
           { saturation: 60 },
           { lightness: -20 },
           { gamma: 1.51 }

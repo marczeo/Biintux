@@ -27,7 +27,8 @@
                         data-buttons-class="default"
                         data-search="true"
                         data-toolbar="#toolbar"
-                        data-height="500">
+                        data-height="500"
+                        data-locale="es-MX">
                         <thead>
                             <tr>
                                 <th class="col-xs-1" data-field="" data-sortable="true" data-cell-style="formaterColumnColor"></th>

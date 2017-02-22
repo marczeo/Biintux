@@ -26,9 +26,35 @@ elixir((mix) => {
     mix.scripts('mibici-edit.js','public/js/mibici-edit.js');
 
 
-     //Copia de fuentes bootstrap
-     mix.copy(
-     	'node_modules/bootstrap-sass/assets/fonts/',
-     	'public/fonts'
-     );
+    //Copia de jQuery
+    mix.copy(
+        'node_modules/jquery/dist/jquery.min.js',
+        'public/js/jquery/jquery.min.js'
+    );
+    //Copia de fuentes bootstrap
+    mix.copy(
+    	'node_modules/bootstrap-sass/assets/fonts/',
+    	'public/fonts'
+    );
+    //Copiar bootstrap table https://www.npmjs.com/package/bootstrap-table
+    mix.copy(
+        'node_modules/bootstrap-table/dist/bootstrap-table.min.css',
+        'public/css/bootstrap-table/bootstrap-table.min.css'
+    );
+    mix.copy(
+        'node_modules/bootstrap-table/dist/bootstrap-table.min.js',
+        'public/js/bootstrap-table/bootstrap-table.min.js'
+    );
+    mix.copy(
+        'node_modules/bootstrap-table/dist/locale/bootstrap-table-es-MX.min.js',
+        'public/js/bootstrap-table/bootstrap-table-es-MX.min.js'
+    );
+    mix.copy(
+        'node_modules/bootstrap-table/dist/locale/bootstrap-table-en-US.min.js',
+        'public/js/bootstrap-table/bootstrap-table-en-US.min.js'
+    );
+    mix.copy(
+        'node_modules/bootstrap-table/dist/bootstrap-table-locale-all.min.js',
+        'public/js/bootstrap-table/bootstrap-table-locale-all.min.js'
+    );
  });

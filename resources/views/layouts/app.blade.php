@@ -12,19 +12,13 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
-    <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
+        <!--User style-->
+        <link href="/css/app.css" rel="stylesheet">
+        <!-- bootstrap table -->
+        <link href="{{ asset('css/bootstrap-table/bootstrap-table.min.css') }}" rel="stylesheet">
+        <!--<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.css">-->
 
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript"></script>
-    <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.css">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
-
-<!-- Latest compiled and minified Locales -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/locale/bootstrap-table-es-MX.js"></script>
+    
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
@@ -135,7 +129,7 @@
                                     </li>
                                 </ul>
                             </li>
-                        @endif                            
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -145,8 +139,23 @@
     </div>
 
     <!-- Scripts -->
-    <script src="/js/app.js"></script>
-    <script src="/js/main.js"></script>
+        <!-- jQuery -->
+        <script src="{{asset('js/jquery/jquery.min.js')}}"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript"></script>-->
+
+        <!-- bootstrap-table -->
+        <script src="{{asset('js/bootstrap-table/bootstrap-table.min.js')}}"></script>
+        <!--<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>-->
+
+        <!-- bootstrap-table Locales -->
+        <script src="{{asset('js/bootstrap-table/bootstrap-table-locale-all.min.js')}}"></script>
+        <!--<script src="{{asset('js/bootstrap-table/bootstrap-table-es-MX.min.js')}}"></script>
+        <script src="{{asset('js/bootstrap-table/bootstrap-table-en-US.min.js')}}"></script>-->
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/locale/bootstrap-table-es-MX.js"></script>-->
+        
+        <!-- User scrupt -->
+        <script src="/js/app.js"></script>
+        <script src="/js/main.js"></script>
     @yield('scriptsBottom')
 </body>
 </html>

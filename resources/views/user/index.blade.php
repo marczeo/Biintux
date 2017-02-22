@@ -27,6 +27,7 @@
                         data-buttons-class="default"
                         data-search="true"
                         data-toolbar="#toolbar"
+                        data-locale="es-MX"
                         data-height="500">
                         <thead>
                             <tr>

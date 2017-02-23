@@ -22,11 +22,12 @@ Route::get('/user', function (Request $request) {
     | Ciclovía
     |--------------------------------------------------------------------------
     */
-Route::get('/getAllCiclovia','CicloviaController@getAllJson');
+	Route::get('/getAllCiclovia','CicloviaController@getAllJson');
 
 /*
     |--------------------------------------------------------------------------
     | Usuarios
     |--------------------------------------------------------------------------
     */
-Route::get('/getAllUser','UserController@getAllJson');
+	Route::get('/getAllUser','UserController@getAllJson');
+	Route::get('/login','UserController@authenticate');

@@ -35,4 +35,19 @@ class UsuarioRepository
         }
         return json_encode($user_response);
     }
+
+    /**
+     *Update user
+     */
+    public function update(Request $request, User $user)
+    {
+        $user->name     = $request->name;
+        $user->email    = $request->email;
+        if($request->password != "" && $request->password_confirmation!="")
+        {
+            $user->password=bcrypt($request->password);
+        }
+        $user->save();
+        return true;
+    }
 }

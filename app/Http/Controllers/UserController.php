@@ -64,9 +64,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update()
+    public function update(Request $request, User $user)
     {
-        return view('user.update');
+        $this->usersDAO->update($request,$user);
+        return redirect('/user');
     }
 
     /**
@@ -86,9 +87,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(User $user)
     {
-        return view('user.show');
+        return view('user.show', compact('user'));
     }
 
     /**
@@ -96,9 +97,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit(User $user)
     {
-        return view('user.edit');
+
+        return view('user.edit', compact('user'));
     }
 
     /**

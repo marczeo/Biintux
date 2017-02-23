@@ -18,7 +18,7 @@ function formaterColumnEditActions(value, row, index) {
         '<form method="POST" action="'+ controller+'/'+row.id+'" class="form-inline" >' +
             '<input name="_method" type="hidden" value="DELETE">'+
             '<input name="_token" type="hidden" value="'+csrf_token+'">'+
-            '<a href="'+controller+'/editar/'+row.id+'" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> '+
+            '<a href="'+controller+'/'+row.id+'/edit/" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> '+
             '<button class="btn btn-xs btn-danger" type="submit" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>'+ 
         '</form>'
     );

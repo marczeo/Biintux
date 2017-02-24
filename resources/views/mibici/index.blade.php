@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@section('scriptsTop')
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCk3aVE_atNGMx06dHKbmU6RMCgAOMMWEQ&signed_in=true&libraries=geometry"></script>
+    <script src="/js/mibici-index.js"></script>
+    <style>body {background-color: #FFE6E6;}</style>
+@endsection
+
 @section('content')
 <!-- include "addresstogeo.blade.php";-->
 <div class= "container">
@@ -22,10 +28,7 @@
                 </div>
                 <div class="panel-body">
                     {{trans('mibici.label')}}
-                    <!--<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry"></script>-->
-                    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCk3aVE_atNGMx06dHKbmU6RMCgAOMMWEQ&signed_in=true&libraries=geometry"></script>
-                    <script src="/js/mibici-index.js"></script>
-                        
+                    <!--<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry"></script>-->                  
                     <div class="form-gr">
                         <div id="map" style="height: 500px;"></div>                            
                     </div>

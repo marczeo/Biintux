@@ -153,7 +153,7 @@
         <script src="{{asset('js/bootstrap-table/bootstrap-table-en-US.min.js')}}"></script>-->
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/locale/bootstrap-table-es-MX.js"></script>-->
         
-        <!-- User scrupt -->
+        <!-- User script -->
         <script src="/js/app.js"></script>
         <script src="/js/main.js"></script>
     @yield('scriptsBottom')

@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@section('scriptsTop')
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCk3aVE_atNGMx06dHKbmU6RMCgAOMMWEQ&signed_in=true"></script>
+    <script src="/js/mibici-create.js"></script>
+    <style>body {background-color: #FFE6E6;}</style>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -42,9 +48,7 @@
                                     </span>
                                 </button>
                             </div>                                      
-                        </div>    
-                        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCk3aVE_atNGMx06dHKbmU6RMCgAOMMWEQ&signed_in=true"></script>
-                        <script src="/js/mibici-create.js"></script>
+                        </div>
                         <!--<script async defer
                             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCk3aVE_atNGMx06dHKbmU6RMCgAOMMWEQ&signed_in=true&callback=initMap">
                         </script>-->

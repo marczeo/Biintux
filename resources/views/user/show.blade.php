@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('scriptsTop')
+    <style>body {background-color: #ded4eb;}</style>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">

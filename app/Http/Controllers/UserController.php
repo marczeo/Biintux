@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Laracasts\Flash\Flash;
+use Session;
 use App\Repositories\UsuarioRepository;
+use Illuminate\Support\Facades\Auth;
 use App\User;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -24,8 +27,12 @@ class UserController extends Controller
      */
     public function __construct(UsuarioRepository $users)
     {
-        //$this->middleware('auth');
+        //
+        $this->middleware('auth', ['except' => 'getAllJson']);
+        
 
+
+        //Use DAO
         $this->usersDAO = $users;
     }
 	/**
@@ -87,8 +94,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(User $user = Null)
     {
+        if($user->id==Null)
+            $user=Auth::user();
         return view('user.show', compact('user'));
     }
 
@@ -99,8 +108,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-
-        return view('user.edit', compact('user'));
+        if(Auth::user()->isAdmin() || Auth::user()->id==$user->id)
+            return view('user.edit', compact('user'));
+        flash('No tiene permiso', 'danger');
+        return redirect('/perfil');
     }
 
     /**

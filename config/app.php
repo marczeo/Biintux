@@ -184,10 +184,16 @@ return [
         App\Providers\RouteServiceProvider::class,
         
         /* 
-         *token 
-         *https://github.com/tymondesigns/jwt-auth/wiki/Installation
+         * token 
+         * https://github.com/tymondesigns/jwt-auth/wiki/Installation
          */
         'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
+
+        /*
+         * Flash messages
+         * https://github.com/laracasts/flash
+         */
+        Laracasts\Flash\FlashServiceProvider::class,
 
     ],
 

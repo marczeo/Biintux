@@ -30,12 +30,36 @@ Route::get('/spanish','LanguageController@spanish');
 Route::group(['middleware' => 'auth'], function () 
 {
 
+
+    /*
+
+
+    |--------------------------------------------------------------------------
+     | miBici
+    |--------------------------------------------------------------------------
+    */
+
+        Route::get('/getAll','MibiciController@getAll');
+        Route::get('/mibici', 'MibiciController@index');
+        Route::get('/mibici/create', 'MibiciController@create');
+        Route::get('/mibici/destroy', 'MibiciController@destroy');
+        Route::get('/mibici/edit', 'MibiciController@edit');
+        Route::post('/deleteNode', 'MibiciController@deleteNode');
+        Route::post('/updateNodes', 'MibiciController@updateNodes');
+        Route::post('/mibici', 'MibiciController@post');
+
+
+
+});
+
 /*
 |--------------------------------------------------------------------------
 | Gestion de usuarios
 |--------------------------------------------------------------------------
 */
 Route::resource('user','UserController');
+Route::get('/perfil', 'UserController@show');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -43,34 +67,3 @@ Route::resource('user','UserController');
 |--------------------------------------------------------------------------
 */
  Route::resource('ciclovia', 'CicloviaController');
-/*
-
-
-|--------------------------------------------------------------------------
- | miBici
-|--------------------------------------------------------------------------
-*/
-
-    Route::get('/getAll','MibiciController@getAll');
-    Route::get('/mibici', 'MibiciController@index');
-    Route::get('/mibici/create', 'MibiciController@create');
-    Route::get('/mibici/destroy', 'MibiciController@destroy');
-    Route::get('/mibici/edit', 'MibiciController@edit');
-    Route::post('/deleteNode', 'MibiciController@deleteNode');
-    Route::post('/updateNodes', 'MibiciController@updateNodes');
-    Route::post('/mibici', 'MibiciController@post');
-
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Perfil
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get('perfil', function() 
-    {
-        return view('profile');
-    })->middleware('auth');
-
-});

@@ -5,36 +5,19 @@
 @endsection
 
 @section('content')
+
 <div class="container">
+    @include('flash::message')
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">User</div>
-
-                <div class="panel-body">
+                <div class="panel-heading">{{trans('profile.title')}}</div>
+                <div class="panel-body text-center">
+                    <img class="profile-img" src="/images/profile.svg" onerror="this.src='/images/profile.png'" width="500" height="500">
+                    <h1>{{ $user->name }}</h1>
+                    <h5>{{ $user->email }}</h5>
+                    <a class="btn btn-info" href="/user/{{$user->id}}/edit">{{trans('profile.edit')}}</a>
                     
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">{{trans('register.name')}}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ $user->name }}" disabled="disabled">
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">{{trans('register.email')}}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ $user->email}}" disabled="disabled">
-                            </div>
-                        </div>
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">Rol</label>
-
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" name="email" value="{{ $user->role->description}}" disabled="disabled">
-                            </div>
-                        </div>
                 </div>
             </div>
         </div>

@@ -16,7 +16,7 @@
                 <div class="panel-body">
                     <div class="form-group col-md-12">
                         <div id="toolbar" class="btn-group">
-                         <a href="{{ url('/ciclovia/create') }}" class="btn  btn-success">{{trans('navbar.add')}} <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                         <a href="{{ url('/user/create') }}" class="btn  btn-success">{{trans('navbar.add')}} <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                          </a>
                      </div>
                         <table 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Laracasts\Flash\Flash;
 use Session;
 use App\Repositories\UsuarioRepository;
+use App\Repositories\RoleRepository;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use JWTAuth;
@@ -33,9 +34,11 @@ class UserController extends Controller
         }
         else{#Peticion desde web
             $this->middleware('auth');
-            $this->middleware('admin',['only' => [
+            $this->middleware('concessionaire',['only' => [
+                'index',
                 'destroy',
             ]]);
+
         }
 
 
@@ -60,6 +63,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->usersDAO->createUser($request);
         return redirect('/user');
     }
 
@@ -70,7 +74,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.create');
+        $roleDAO= new RoleRepository();
+        $roles=json_decode($roleDAO->getAllRoles());
+        return view('user.create',compact('roles'));
     }
 
     /**
@@ -80,7 +86,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $this->usersDAO->update($request,$user);
+        $this->usersDAO->updateUser($request,$user);
         return redirect('/user');
     }
 

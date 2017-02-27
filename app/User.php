@@ -59,7 +59,7 @@ class User extends Authenticatable
     */
     public function isConcessionaire()
     {
-       return $this->role->description == 'Concessionaire';
+       return $this->role->description == 'Administrator' || $this->role->description == 'Concessionaire';
     }
 
     /**
@@ -68,7 +68,7 @@ class User extends Authenticatable
     */
     public function isDriver()
     {
-       return $this->role->description == 'Driver';
+       return $this->role->description == 'Concessionaire' || $this->role->description == 'Driver';
     }
 
     /**

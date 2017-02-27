@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use Illuminate\Http\Request;
 use App\User;
-
+use Illuminate\Support\Facades\Auth;
 class UsuarioRepository
 {
 
@@ -37,9 +37,31 @@ class UsuarioRepository
     }
 
     /**
+     *Create user
+     */
+    public function createUser(Request $request)
+    {
+        $user=new User;
+        $user->name     = $request->name;
+        $user->email    = $request->email;
+        $user->password=bcrypt('secret');
+        if(Auth::user()->isAdmin())
+        {
+            $user->role_id=$request->role_id;
+        }
+        else{
+            $user->role_id=2;
+        }
+        
+        
+        $user->save();
+        return true;
+    }
+
+    /**
      *Update user
      */
-    public function update(Request $request, User $user)
+    public function updateUser(Request $request, User $user)
     {
         $user->name     = $request->name;
         $user->email    = $request->email;

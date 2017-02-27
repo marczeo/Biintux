@@ -38,6 +38,7 @@ class CicloviaController extends Controller
             $this->middleware('jwt.auth',['except'=>['getAllJson']]);
         }
         else{#Peticion desde web
+            $this->middleware('auth');
             $this->middleware('admin',['except' => [
                 'show',
                 'getAllJson'

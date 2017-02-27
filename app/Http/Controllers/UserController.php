@@ -32,6 +32,7 @@ class UserController extends Controller
             $this->middleware('jwt.auth',['only'=>['getAllJson']]);
         }
         else{#Peticion desde web
+            $this->middleware('auth');
             $this->middleware('admin',['only' => [
                 'destroy',
             ]]);

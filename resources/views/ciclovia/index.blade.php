@@ -21,7 +21,7 @@
                      </div>
                         <table 
                         data-toggle="table"
-                        data-url="api/getAllCiclovia"
+                        data-url="/getAllCiclovia"
                         data-query-params="queryParams"
                         data-pagination="true"
                         data-page-list="[5,10,20]"

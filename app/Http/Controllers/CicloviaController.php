@@ -31,9 +31,18 @@ class CicloviaController extends Controller
      * @param  CicloviaRepository  $ciclovias
      * @return void
      */
-    public function __construct(CicloviaRepository $ciclovias)
+    public function __construct(CicloviaRepository $ciclovias, Request $request)
     {
-        //$this->middleware('auth');
+        //Cuando la petición es desde API
+        if($request->route()->getPrefix()=="api"){
+            $this->middleware('jwt.auth',['except'=>['getAllJson']]);
+        }
+        else{#Peticion desde web
+            $this->middleware('admin',['except' => [
+                'show',
+                'getAllJson'
+            ]]);
+        }
 
         $this->cicloviasDAO = $ciclovias;
     }

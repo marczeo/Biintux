@@ -25,14 +25,17 @@ class UserController extends Controller
      * @param  userRepository  $users
      * @return void
      */
-    public function __construct(UsuarioRepository $users)
+    public function __construct(UsuarioRepository $users, Request $request)
     {
-        //
-        $this->middleware('auth', ['except' => ['getAllJson','authenticate']]);
-        $this->middleware('admin',['only' => [
-            'destroy',
-        ]]);
-        
+        //Cuando la petición es desde API
+        if($request->route()->getPrefix()=="api"){
+            $this->middleware('jwt.auth',['only'=>['getAllJson']]);
+        }
+        else{#Peticion desde web
+            $this->middleware('admin',['only' => [
+                'destroy',
+            ]]);
+        }
 
 
         //Use DAO

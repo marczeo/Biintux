@@ -59,6 +59,7 @@ Route::group(['middleware' => 'auth'], function ()
 */
 Route::resource('user','UserController');
 Route::get('/perfil', 'UserController@show');
+Route::get('/getAllUser','UserController@getAllJson');
 
 
 /*
@@ -67,3 +68,4 @@ Route::get('/perfil', 'UserController@show');
 |--------------------------------------------------------------------------
 */
  Route::resource('ciclovia', 'CicloviaController');
+ Route::get('/getAllCiclovia','CicloviaController@getAllJson');

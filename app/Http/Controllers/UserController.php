@@ -28,7 +28,10 @@ class UserController extends Controller
     public function __construct(UsuarioRepository $users)
     {
         //
-        $this->middleware('auth', ['except' => 'getAllJson']);
+        $this->middleware('auth', ['except' => ['getAllJson','authenticate']]);
+        $this->middleware('admin',['only' => [
+            'destroy',
+        ]]);
         
 
 
@@ -94,9 +97,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user = Null)
+    public function show(User $user = null)
     {
-        if($user->id==Null)
+        if($user->id==null)
             $user=Auth::user();
         return view('user.show', compact('user'));
     }

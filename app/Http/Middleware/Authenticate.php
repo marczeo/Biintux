@@ -22,7 +22,7 @@ class Authenticate
         // si la persona no inició sesión, entonces ....
         if (Auth::guard($guard)->guest()) {
 
-            if ($request->ajax()) {
+            if ($request->ajax()|| $request->wantsJson()) {
 
                 return response('Unauthorized.', 401);
 

@@ -79,6 +79,11 @@
                             {{trans('navbar.user')}}
                         </a>
                         </li>
+                        <li>
+                            <a href="/bus">
+                                {{trans('navbar.bus')}}
+                            </a>
+                        </li>
                     </ul>
                     @endif
 

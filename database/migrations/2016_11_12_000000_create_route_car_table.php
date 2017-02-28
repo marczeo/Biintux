@@ -17,6 +17,7 @@ class CreateRouteCarTable extends Migration
           $table->increments('id');
           $table->string('economic_number');
           $table->integer('route_id')->unsigned();
+          $table->integer('passenger_capacity')->default(0);
         });
 
         Schema::table('route_car', function(Blueprint $table){

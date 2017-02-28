@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Driver;
 use Illuminate\Support\Facades\Auth;
 class UsuarioRepository
 {
@@ -41,6 +42,7 @@ class UsuarioRepository
      */
     public function createUser(Request $request)
     {
+        $currentUser=Auth::user();
         $user=new User;
         $user->name     = $request->name;
         $user->email    = $request->email;
@@ -48,13 +50,19 @@ class UsuarioRepository
         if(Auth::user()->isAdmin())
         {
             $user->role_id=$request->role_id;
+            $user->save();
         }
-        else{
+        elseif(Auth::user()->isConcessionaire())
+        {
             $user->role_id=2;
+            $user->save();
+            $driver=new Driver();
+            $driver->user_id=$user->id;
+            $driver->route_car_id=
         }
         
         
-        $user->save();
+        
         return true;
     }
 

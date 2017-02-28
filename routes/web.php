@@ -69,3 +69,10 @@ Route::get('/getAllUser','UserController@getAllJson');
 */
  Route::resource('ciclovia', 'CicloviaController');
  Route::get('/getAllCiclovia','CicloviaController@getAllJson');
+
+ /*
+|--------------------------------------------------------------------------
+| Camiones
+|--------------------------------------------------------------------------
+*/
+ Route::resource('bus', 'BusController');

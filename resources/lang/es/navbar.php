@@ -26,4 +26,5 @@ return [
     'route'     => 'Rutas',
     'user'      => 'Usuarios',
     'mibici'    => 'miBici',
+    'bus'       => 'Camiones',
 ];

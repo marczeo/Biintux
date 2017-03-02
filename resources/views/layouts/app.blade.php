@@ -81,6 +81,7 @@
                         </li>
                         <li>
                             <a href="/bus">
+                                <img src="/images/bus.svg" onerror="this.src='/images/bus.png'" width="25" height="25">
                                 {{trans('navbar.bus')}}
                             </a>
                         </li>

@@ -76,3 +76,12 @@ Route::get('/getAllUser','UserController@getAllJson');
 |--------------------------------------------------------------------------
 */
  Route::resource('bus', 'BusController');
+  Route::get('/getAllBus','BusController@getAllJson');
+
+  /*
+|--------------------------------------------------------------------------
+| Rutas de Camiones
+|--------------------------------------------------------------------------
+*/
+ Route::resource('route', 'RouteController');
+  Route::get('/getAllRoute','Routeontroller@getAllJson');

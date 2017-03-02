@@ -12,6 +12,11 @@ class Ciclovia extends Model
      * @var string
      */
     protected $table = 'cycling_routes';
+    /**
+     * Enable timestamps
+     *
+     * @var boolean
+    */
     public $timestamps = false;
 
     public function setColor()

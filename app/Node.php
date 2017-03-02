@@ -12,5 +12,10 @@ class Node extends Model
      * @var string
      */
     protected $table = 'nodes';
+    /**
+     * Enable timestamps
+     *
+     * @var boolean
+    */
     public $timestamps = false;
 }

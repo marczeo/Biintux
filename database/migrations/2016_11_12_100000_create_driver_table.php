@@ -17,7 +17,7 @@ class CreateDriverTable extends Migration
           $table->increments('id');
           $table->integer('user_id')->unsigned();
           $table->integer('route_car_id')->unsigned();
-          $table->integer('concessioner_id')->unsigned();
+          $table->integer('concessionaire_id')->unsigned();
         });
 
         Schema::table('driver', function(Blueprint $table){
@@ -25,7 +25,7 @@ class CreateDriverTable extends Migration
             ->onDelete('restrict')->onUpdate('cascade');
           $table->foreign('route_car_id')->references('id')->on('route_car')
             ->onDelete('restrict')->onUpdate('cascade');
-          $table->foreign('concessioner_id')->references('id')->on('users')
+          $table->foreign('concessionaire_id')->references('id')->on('users')
             ->onDelete('restrict')->onUpdate('cascade');
         });
     }

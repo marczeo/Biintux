@@ -12,5 +12,10 @@ class Driver extends Model
      * @var string
      */
     protected $table = 'driver';
+    /**
+     * Enable timestamps
+     *
+     * @var boolean
+    */
     public $timestamps = false;
 }

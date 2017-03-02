@@ -18,16 +18,23 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:api');
 
 /*
-    |--------------------------------------------------------------------------
-    | Ciclovía
-    |--------------------------------------------------------------------------
-    */
-	Route::get('/getAllCiclovia','CicloviaController@getAllJson');
+|--------------------------------------------------------------------------
+| Ciclovía
+|--------------------------------------------------------------------------
+*/
+Route::get('/getAllCiclovia','CicloviaController@getAllJson');
 
 /*
-    |--------------------------------------------------------------------------
-    | Usuarios
-    |--------------------------------------------------------------------------
-    */
-	Route::get('/getAllUser','UserController@getAllJson');
-	Route::get('/login','UserController@authenticate');
+|--------------------------------------------------------------------------
+| Usuarios
+|--------------------------------------------------------------------------
+*/
+Route::get('/getAllUser','UserController@getAllJson');
+Route::get('/login','UserController@authenticate');
+
+/*
+|--------------------------------------------------------------------------
+| Rutas de camiones
+|--------------------------------------------------------------------------
+*/
+Route::get('/getAllRoute','RouteController@getAllJson');

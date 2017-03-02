@@ -1,45 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Repositories\BusRepository;
-use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Http\Request;
 
-class BusController extends Controller
+class RouteController extends Controller
 {
-    /**
-     * The bus repository instance.
-     *
-     * @var busesRepository
-     */
-    protected $busesDAO;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @param  busesRepository  $busesRepository
-     * @return void
-     */
-    public function __construct(BusRepository $busesRepository, Request $request)
-    {
-        //Cuando la petición es desde API
-        if($request->route()->getPrefix()=="api"){
-            $this->middleware('jwt.auth',['only'=>['getAllJson']]);
-        }
-        else{#Peticion desde web
-            $this->middleware('auth');
-            $this->middleware('concessionaire',['only' => [
-                'index',
-                'destroy',
-            ]]);
-
-        }
-
-
-        //Use DAO
-        $this->busesDAO = $busesRepository;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -47,7 +13,7 @@ class BusController extends Controller
      */
     public function index()
     {
-        return view('bus.index');
+        //
     }
 
     /**
@@ -57,7 +23,7 @@ class BusController extends Controller
      */
     public function create()
     {
-        return view('bus.create');
+        //
     }
 
     /**

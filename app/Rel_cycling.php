@@ -12,5 +12,10 @@ class Rel_cycling extends Model
      * @var string
      */
     protected $table = 'rel_cycling';
+    /**
+     * Enable timestamps
+     *
+     * @var boolean
+    */
     public $timestamps = false;
 }

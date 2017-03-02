@@ -4,15 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Bus extends Model
+class Rel_concessionaire extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'route_car';
-    
+    protected $table = 'rel_concessionaire';
     /**
      * Enable timestamps
      *

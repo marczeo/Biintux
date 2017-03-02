@@ -5,6 +5,7 @@ namespace App\Repositories;
 use Illuminate\Http\Request;
 use App\User;
 use App\Driver;
+use App\Rel_concessionaire
 use Illuminate\Support\Facades\Auth;
 class UsuarioRepository
 {
@@ -47,18 +48,29 @@ class UsuarioRepository
         $user->name     = $request->name;
         $user->email    = $request->email;
         $user->password=bcrypt('secret');
-        if(Auth::user()->isAdmin())
+        if($currentUser->isAdmin())
         {
             $user->role_id=$request->role_id;
             $user->save();
+            if($user->isConcessionaire()){
+                $rel_concessionaire = new Rel_concessionaire;
+                $rel_concessionaire->rel_concessionaire_id=$user->id;
+                $rel_concessionaire->route_id=1;
+            }
+            elseif ($user->isDriver()) {
+                $driver=new Driver();
+                $driver->user_id=$user->id;
+                $driver->route_car_id=1;
+            }
         }
-        elseif(Auth::user()->isConcessionaire())
+        elseif($currentUser->isConcessionaire())
         {
             $user->role_id=2;
             $user->save();
             $driver=new Driver();
             $driver->user_id=$user->id;
-            $driver->route_car_id=
+            $driver->route_car_id=1;
+            $driver->concessionaire_id=$currentUser->id;
         }
         
         

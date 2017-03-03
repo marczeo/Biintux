@@ -25,6 +25,8 @@ elixir((mix) => {
     mix.scripts('mibici-destroy.js','public/js/mibici-destroy.js');
     mix.scripts('mibici-edit.js','public/js/mibici-edit.js');
 
+    mix.scripts('user.js', 'public/js/user.js')
+
 
     //Copia de jQuery
     mix.copy(

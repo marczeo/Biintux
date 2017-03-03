@@ -42,15 +42,44 @@
                                 @endif
                             </div>
                         </div>
-                        @if(!Auth::user()->isConcessionaire())
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Rol</label>
+                        @if(Auth::user()->isAdmin())
+                        <div class="form-group{{ $errors->has('rol') ? ' has-error' : '' }}">
+                            <label for="rol" class="col-md-4 control-label">Rol</label>
 
                             <div class="col-md-6">
-                                <select class="form-control" name="role_id">
+                                <select id="select_role" class="form-control" name="role_id">
                                 @foreach ($roles as $role)
                                     <option value="{{$role->id}}">{{$role->description}}</option>
                                 @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <!--Solo para consecionario-->
+                        <div id="route_container" class="hide form-group{{ $errors->has('route') ? ' has-error' : '' }}">
+                            <label for="route" class="col-md-4 control-label">Route</label>
+
+                            <div class="col-md-6">
+                                <select id="select_route" class="form-control" name="route_id">
+                                @foreach ($rutas as $ruta)
+                                    <option value="{{$ruta->id}}">{{$ruta->code}}</option>
+                                @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <!--Solo para admin-->
+                        <div id="bus_container" class="hide form-group{{ $errors->has('route') ? ' has-error' : '' }}">
+                            <label for="route" class="col-md-4 control-label">Bus</label>
+
+                            <div class="col-md-6">
+                                <select id="select_bus" class="form-control" name="bus_id">
+                                </select>
+                            </div>
+                        </div>
+                        <div id="concessionaire_container" class="hide form-group{{ $errors->has('route') ? ' has-error' : '' }}">
+                            <label for="concessionaire" class="col-md-4 control-label">Concessionaire</label>
+
+                            <div class="col-md-6">
+                                <select id="select_concessionaire" class="form-control" name="concessionaire_id">
                                 </select>
                             </div>
                         </div>
@@ -69,4 +98,7 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scriptsBottom')
+    <script src="/js/user.js"></script>
 @endsection

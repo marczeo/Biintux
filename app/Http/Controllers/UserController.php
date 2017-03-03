@@ -7,6 +7,7 @@ use Laracasts\Flash\Flash;
 use Session;
 use App\Repositories\UsuarioRepository;
 use App\Repositories\RoleRepository;
+use App\Repositories\RouteRepository;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use JWTAuth;
@@ -74,9 +75,13 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roleDAO= new RoleRepository();
-        $roles=json_decode($roleDAO->getAllRoles());
-        return view('user.create',compact('roles'));
+        $roleDAO = new RoleRepository();
+        $roles = json_decode($roleDAO->getAllRoles());
+
+        $routeDAO = new RouteRepository();
+        $rutas = json_decode($routeDAO->getAllRoutes());
+        $concesionarios = json_decode($this->usersDAO->getAllConcessionaire());
+        return view('user.create',compact('roles', 'rutas'));
     }
 
     /**

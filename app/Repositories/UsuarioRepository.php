@@ -5,7 +5,7 @@ namespace App\Repositories;
 use Illuminate\Http\Request;
 use App\User;
 use App\Driver;
-use App\Rel_concessionaire
+use App\Rel_concessionaire;
 use Illuminate\Support\Facades\Auth;
 class UsuarioRepository
 {
@@ -37,6 +37,21 @@ class UsuarioRepository
         }
         return json_encode($user_response);
     }
+    public function getAllConcessionaire()
+    {
+        $usuarios= User::where('role_id',3)->orderBy('id','asc')->select('id','name','email','role_id')->get();
+        $user_response=[];
+        foreach ($usuarios as $key=> $user)
+        {
+
+            $user_response[$key]['id']=$user->id;
+            $user_response[$key]['name']=$user->name;
+            $user_response[$key]['email']=$user->email;
+            $user_response[$key]['role']=$user->role->description;
+            $user_response[$key]['color']=$user->getColor();
+        }
+        return json_encode($user_response);
+    }
 
     /**
      *Create user
@@ -55,12 +70,15 @@ class UsuarioRepository
             if($user->isConcessionaire()){
                 $rel_concessionaire = new Rel_concessionaire;
                 $rel_concessionaire->rel_concessionaire_id=$user->id;
-                $rel_concessionaire->route_id=1;
+                $rel_concessionaire->route_id=$request->route_id;
+                $rel_concessionaire->save();
             }
             elseif ($user->isDriver()) {
                 $driver=new Driver();
                 $driver->user_id=$user->id;
-                $driver->route_car_id=1;
+                $driver->route_car_id=$request->bus_id;
+                $driver->concessionaire_id= $request->concessionaire_id;
+                $driver->save();
             }
         }
         elseif($currentUser->isConcessionaire())
@@ -69,7 +87,7 @@ class UsuarioRepository
             $user->save();
             $driver=new Driver();
             $driver->user_id=$user->id;
-            $driver->route_car_id=1;
+            $driver->route_car_id=$currentUser->rel_concessionaire()->route_id;
             $driver->concessionaire_id=$currentUser->id;
         }
         

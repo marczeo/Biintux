@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Bus;
+use App\Rel_concessionaire;
 class RouteController extends Controller
 {
     /**
@@ -80,5 +81,30 @@ class RouteController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getBuses(Request $request, $id)
+    {
+        if($request->ajax()){
+            $buses=Bus::where('route_id',$id)->get();
+            return response()->json($buses);
+        }
+    }
+    public function getConcessionarios(Request $request, $id)
+    {
+        if($request->ajax()){
+            $buses=Rel_concessionaire::where('route_id',$id)->get();
+            $user_response=[];
+            foreach ($buses as $key=> $user)
+            {
+
+                $user_response[$key]['id']=$user->user->id;
+                $user_response[$key]['name']=$user->user->name;
+                $user_response[$key]['email']=$user->user->email;
+                $user_response[$key]['role']=$user->user->role->description;
+                $user_response[$key]['color']=$user->user->getColor();
+            }
+            return response()->json($user_response);
+        }
     }
 }

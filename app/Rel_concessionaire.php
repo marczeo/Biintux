@@ -18,4 +18,17 @@ class Rel_concessionaire extends Model
      * @var boolean
     */
     public $timestamps = false;
+
+    /*
+     * Get the users records associated with the rel concessionaire.
+    */
+    public function user(){
+        return $this->belongsTo('App\User','concessionaire_id');
+    }
+    /*
+     * Get the route records associated with the rel concessionaire.
+    */
+    public function route(){
+        return $this->belongsTo('App\Route');
+    }
 }

@@ -19,4 +19,11 @@ class Route extends Model
      * @var boolean
     */
     public $timestamps = false;
+
+    /*
+     * Get the rel_concessionaire records associated with the route.
+    */
+    public function rel_concessionaire(){
+        return $this->hasOne('App\Rel_concessionaire');
+    }
 }

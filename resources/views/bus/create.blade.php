@@ -33,7 +33,7 @@
                             <label for="passenger_capacity" class="col-md-4 control-label">{{trans('bus.passenger_capacity')}}</label>
 
                             <div class="col-md-6">
-                                <input id="passenger_capacity" type="text" class="form-control" name="passenger_capacity" value="{{ old('passenger_capacity') }}" required>
+                                <input id="passenger_capacity" type="number" class="form-control" name="passenger_capacity" value="{{ old('passenger_capacity') }}" required>
 
                                 @if ($errors->has('passenger_capacity'))
                                     <span class="help-block">

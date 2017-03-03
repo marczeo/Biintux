@@ -43,6 +43,12 @@ class User extends Authenticatable
     public function role(){
         return $this->belongsTo('App\Role');
     }
+    /*
+     * Get the rel_concessionaire records associated with the user.
+    */
+    public function rel_concessionaire(){
+        return $this->hasOne('App\Rel_concessionaire');
+    }
 
     /**
      * Verify that the role of the user is admin

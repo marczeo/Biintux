@@ -69,7 +69,7 @@ class UsuarioRepository
             $user->save();
             if($user->isConcessionaire()){
                 $rel_concessionaire = new Rel_concessionaire;
-                $rel_concessionaire->rel_concessionaire_id=$user->id;
+                $rel_concessionaire->concessionaire_id=$user->id;
                 $rel_concessionaire->route_id=$request->route_id;
                 $rel_concessionaire->save();
             }

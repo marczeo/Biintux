@@ -2,7 +2,13 @@
  * Mostrar selección de ruta cuando el usuario a agregar es concesionario
 */
 $( "#select_role" ).change(function() {
-	 if($( "#select_role option:selected" ).text() == "Concessionaire" || $("#select_role option:selected" ).text() == "Driver"){
+	 if($( "#select_role option:selected" ).text() == "Concessionaire"){
+		$("#route_container").addClass('show');
+		$("#bus_container").removeClass('show');
+		$("#concessionaire_container").removeClass('show');
+	}
+	else if($("#select_role option:selected" ).text() == "Driver")
+	{
 		$("#route_container").addClass('show');
 		$("#bus_container").addClass('show');
 		$("#concessionaire_container").addClass('show');

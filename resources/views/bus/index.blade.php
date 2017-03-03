@@ -31,8 +31,8 @@
                         data-height="500">
                         <thead>
                             <tr>
-                                <th class="col-xs-4" data-field="name" data-align="center" data-sortable="true">Número economico</th>
-                                <th class="col-xs-4" data-field="email" data-align="center" data-sortable="true">Capacidad</th>
+                                <th class="col-xs-4" data-field="economic_number" data-align="center" data-sortable="true">Número economico</th>
+                                <th class="col-xs-4" data-field="passenger_capacity" data-align="center" data-sortable="true">Capacidad</th>
                                 <th class="col-xs-1" data-field="bus" data-sortable="true" data-formatter="formaterColumnEditActions" data-align="center">Opciones</th>
                             </tr>
                         </thead>

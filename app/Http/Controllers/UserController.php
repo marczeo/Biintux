@@ -158,6 +158,7 @@ class UserController extends Controller
         }
 
         // all good so return the token
-        return response()->json(compact('token'));
+        //return response()->json(compact('token'));
+        return response()->json(compact('token'))->header('Content-Type','application/json');
     }
 }

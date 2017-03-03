@@ -116,4 +116,10 @@ class BusController extends Controller
     {
         //
     }
+
+    public function getAllJson()
+    { 
+        $buses = $this->busesDAO->getAllBuses();
+        return $buses;
+    }
 }

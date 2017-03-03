@@ -16,12 +16,12 @@ class CreateRouteCarTable extends Migration
         Schema::create('route_car', function(Blueprint $table){
           $table->increments('id');
           $table->string('economic_number');
-          $table->integer('route_id')->unsigned();
+          $table->integer('concessionaire_id')->unsigned();
           $table->integer('passenger_capacity')->default(0);
         });
 
         Schema::table('route_car', function(Blueprint $table){
-          $table->foreign('route_id')->references('id')->on('routes')
+          $table->foreign('concessionaire_id')->references('id')->on('users')
             ->onDelete('restrict')->onUpdate('cascade');
         });
     }

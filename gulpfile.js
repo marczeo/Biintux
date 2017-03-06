@@ -27,7 +27,6 @@ elixir((mix) => {
 
     mix.scripts('user.js', 'public/js/user.js')
 
-
     //Copia de jQuery
     mix.copy(
         'node_modules/jquery/dist/jquery.min.js',

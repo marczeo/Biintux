@@ -189,7 +189,8 @@ function computeTotalDistance(result) {
     geodesic: true,
     strokeColor: '#FF0000',
     strokeOpacity: 1.0,
-    strokeWeight: 2
+    strokeWeight: 2,
+    //map: map,
   });
   
   var encodePath=google.maps.geometry.encoding.encodePath(flightPath.getPath());

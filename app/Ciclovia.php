@@ -30,4 +30,11 @@ class Ciclovia extends Model
        $luminosidad = mt_rand(30,60);
        $this->color="hsla(".$matiz.",".$saturacion."%,".$luminosidad."%,1)";
     }
+
+    /*
+     * Get the nodes records associated with the bikeway.
+    */
+    public function rel_cycling(){
+      return $this->hasMany('App\Rel_cycling','cycling_route_id');
+    }
 }

@@ -27,7 +27,7 @@ function initialize() {
     type: "GET",
     success:function(data) 
     {
-      $.each(data, function(i, item) {
+      $.each($.parseJSON(data), function(i, item) {
         var instring = google.maps.geometry.encoding.decodePath(item.encodepath);
         var routeCoordinates = Array();
         var points = instring;
@@ -45,6 +45,7 @@ function initialize() {
 
         var routePath = new google.maps.Polyline({
           path: points,
+          interpolate: true,
           icons: [{
             icon: lineSymbol,
             offset: '50%',

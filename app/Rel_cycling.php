@@ -18,4 +18,17 @@ class Rel_cycling extends Model
      * @var boolean
     */
     public $timestamps = false;
+
+    /*
+     * Get the bikeway records associated with the rel cycling.
+    */
+    public function bikeway(){
+        return $this->belongsTo('App\Ciclovia');
+    }
+    /*
+     * Get the start node records associated with the rel cycling.
+    */
+    public function start_node(){
+        return $this->belongsTo('App\Node','start_node_id');
+    }
 }

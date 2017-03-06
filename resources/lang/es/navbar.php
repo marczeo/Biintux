@@ -25,6 +25,7 @@ return [
     'profile'   => 'Perfil',
     'route'     => 'Rutas',
     'user'      => 'Usuarios',
+    'driver'    => 'Conductores',
     'mibici'    => 'miBici',
     'bus'       => 'Camiones',
 ];

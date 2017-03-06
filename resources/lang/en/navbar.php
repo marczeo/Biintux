@@ -24,7 +24,8 @@ return [
     'add'       => 'Add',
     'profile'   => 'Profile',
     'route'     => 'Bus routes',
-    'user'      => 'Users',   
+    'user'      => 'Users',
+    'driver'    => 'Drivers',
     'mibici'    => 'miBici',
     'bus'       => 'Buses',
 ];

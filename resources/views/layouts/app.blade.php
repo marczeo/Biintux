@@ -51,33 +51,32 @@
                     <!-- Authentication Links -->
                     @if (Auth::check())
                     <ul class="nav navbar-nav">
-
+                        @if(Auth::user()->isAdmin())
                         <li>
-                        <a href="/ciclovia">
-                            <img src="/images/cycling.svg" onerror="this.src='/images/cycling.png'" width="25" height="25">
-                            {{trans('navbar.bikeway')}}
-                        </a>
+                            <a href="/ciclovia">
+                                <img src="/images/cycling.svg" onerror="this.src='/images/cycling.png'" width="25" height="25">
+                                {{trans('navbar.bikeway')}}
+                            </a>
                         </li>
 
                         <li>
-                        <a href="/routes">
-                            <img src="/images/route.svg" onerror="this.src='/images/route.png'" width="25" height="25">
-                            {{trans('navbar.route')}}
-                        </a>
+                            <a href="/routes">
+                                <img src="/images/route.svg" onerror="this.src='/images/route.png'" width="25" height="25">
+                                {{trans('navbar.route')}}
+                            </a>
                         </li>
 
                         <li>
-                        <a href="/mibici">
-                            <img src="/images/mibici.svg" onerror="this.src='/images/mibici.png'" width="25" height="25">
-                            {{trans('navbar.mibici')}}
-                        </a>
+                            <a href="/mibici">
+                                <img src="/images/mibici.svg" onerror="this.src='/images/mibici.png'" width="25" height="25">
+                                {{trans('navbar.mibici')}}
+                            </a>
                         </li>
-
                         <li>
-                        <a href="/user">
-                            <img src="/images/user.svg" onerror="this.src='/images/user.png'" width="25" height="25">
-                            {{trans('navbar.user')}}
-                        </a>
+                            <a href="/user">
+                                <img src="/images/user.svg" onerror="this.src='/images/user.png'" width="25" height="25">
+                                {{trans('navbar.user')}}
+                            </a>
                         </li>
                         <li>
                             <a href="/bus">
@@ -85,6 +84,20 @@
                                 {{trans('navbar.bus')}}
                             </a>
                         </li>
+                        @elseif(Auth::user()->isConcessionaire())
+                        <li>
+                            <a href="/user">
+                                <img src="/images/user.svg" onerror="this.src='/images/user.png'" width="25" height="25">
+                                {{trans('navbar.driver')}}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/bus">
+                                <img src="/images/bus.svg" onerror="this.src='/images/bus.png'" width="25" height="25">
+                                {{trans('navbar.bus')}}
+                            </a>
+                        </li>
+                        @endif
                     </ul>
                     @endif
 

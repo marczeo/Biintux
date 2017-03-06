@@ -7,6 +7,7 @@ use App\User;
 use App\Driver;
 use App\Rel_concessionaire;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
 class UsuarioRepository
 {
 
@@ -24,7 +25,15 @@ class UsuarioRepository
     }*/
     public function getAllUsuarios()
     {
-        $usuarios= User::orderBy('id','asc')->select('id','name','email','role_id')->get();
+        $currentUser=Auth::user();
+        $usuarios= new Collection;
+        if($currentUser->isAdmin())
+            $usuarios= User::orderBy('id','asc')->select('id','name','email','role_id')->get();
+        elseif ($currentUser->isConcessionaire()) {
+            foreach ($currentUser->drivers as $driver) {
+                $usuarios->push($driver->user);
+            }
+        }
         $user_response=[];
         foreach ($usuarios as $key=> $user)
         {
@@ -32,7 +41,7 @@ class UsuarioRepository
             $user_response[$key]['id']=$user->id;
             $user_response[$key]['name']=$user->name;
             $user_response[$key]['email']=$user->email;
-            $user_response[$key]['role']=$user->role->description;
+            $user_response[$key]['role']=trans('user.'.$user->role->description);
             $user_response[$key]['color']=$user->getColor();
         }
         return json_encode($user_response);

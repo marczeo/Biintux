@@ -86,11 +86,11 @@ class RouteController extends Controller
     public function getBuses(Request $request, $id)
     {
         if($request->ajax()){
-            $buses=Bus::where('route_id',$id)->get();
+            $buses=Bus::where('concessionaire_id',$id)->get();
             return response()->json($buses);
         }
     }
-    public function getConcessionarios(Request $request, $id)
+    public function getConcesionarios(Request $request, $id)
     {
         if($request->ajax()){
             $buses=Rel_concessionaire::where('route_id',$id)->get();

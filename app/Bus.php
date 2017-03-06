@@ -19,4 +19,11 @@ class Bus extends Model
      * @var boolean
     */
     public $timestamps = false;
+
+    /*
+     * Get the user concessionaire records associated with the bus.
+    */
+    public function concessionaire(){
+        return $this->belongsTo('App\User','concessionaire_id');
+    }
 }

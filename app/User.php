@@ -44,10 +44,10 @@ class User extends Authenticatable
         return $this->belongsTo('App\Role');
     }
     /*
-     * Get the rel_concessionaire records associated with the user.
+     * Get the rel_concessionaire records associated with the user(concessionaire).
     */
     public function rel_concessionaire(){
-        return $this->hasOne('App\Rel_concessionaire');
+        return $this->hasOne('App\Rel_concessionaire','concessionaire_id');
     }
 
     /**
@@ -95,5 +95,24 @@ class User extends Authenticatable
         else{
             return "hsla(124, 3%, 81%, 1)";
         }
+    }
+
+    /*
+     * Get the drivers records associated with the user (Concessionaire).
+    */
+    public function drivers(){
+        return $this->hasMany('App\Driver','concessionaire_id');
+    }
+    /*
+     * Get the driver records associated with the user (driver).
+    */
+    public function driver(){
+        return $this->hasOne('App\Driver');
+    }
+    /*
+     * Get the buses records associated with the user (Concessionaire).
+    */
+    public function buses(){
+        return $this->hasMany('App\Bus','concessionaire_id');
     }
 }

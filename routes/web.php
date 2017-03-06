@@ -86,5 +86,5 @@ Route::get('/getAllUser','UserController@getAllJson');
 */
  Route::resource('route', 'RouteController');
  Route::get('/getAllRoute','RouteController@getAllJson');
- Route::get('/routeGet/{id}','RouteController@getBuses');
-  Route::get('/routeGetCon/{id}','RouteController@getConcessionarios');
+ Route::get('/route/{id}/getBuses','RouteController@getBuses');
+ Route::get('/route/{id}/getConcesionarios','RouteController@getConcesionarios');

@@ -80,7 +80,6 @@ class UserController extends Controller
 
         $routeDAO = new RouteRepository();
         $rutas = json_decode($routeDAO->getAllRoutes());
-        $concesionarios = json_decode($this->usersDAO->getAllConcessionaire());
         return view('user.create',compact('roles', 'rutas'));
     }
 

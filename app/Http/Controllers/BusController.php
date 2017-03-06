@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Repositories\BusRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Repositories\RouteRepository;
 
 class BusController extends Controller
 {
@@ -57,7 +58,9 @@ class BusController extends Controller
      */
     public function create()
     {
-        return view('bus.create');
+        $routeDAO = new RouteRepository();
+        $rutas = json_decode($routeDAO->getAllRoutes());
+        return view('bus.create',compact('rutas'));
     }
 
     /**

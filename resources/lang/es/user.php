@@ -15,5 +15,9 @@ return [
 
     'add'=>'Agregar',
     'role'=>'Rol',
+    'Common' => 'Común',
+    'Driver' => 'Conductor',
+    'Concessionaire' => 'Concesionario',
+    'Administrator' => 'Administrador',
 
 ];

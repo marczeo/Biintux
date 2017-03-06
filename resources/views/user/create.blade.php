@@ -48,6 +48,7 @@
 
                             <div class="col-md-6">
                                 <select id="select_role" class="form-control" name="role_id">
+                                    <option selected disabled>Choose here</option>
                                 @foreach ($roles as $role)
                                     <option value="{{$role->id}}">{{$role->description}}</option>
                                 @endforeach
@@ -60,6 +61,7 @@
 
                             <div class="col-md-6">
                                 <select id="select_route" class="form-control" name="route_id">
+                                    <option selected disabled>Choose here</option>
                                 @foreach ($rutas as $ruta)
                                     <option value="{{$ruta->id}}">{{$ruta->code}}</option>
                                 @endforeach
@@ -67,22 +69,26 @@
                             </div>
                         </div>
                         <!--Solo para admin-->
-                        <div id="bus_container" class="hide form-group{{ $errors->has('route') ? ' has-error' : '' }}">
-                            <label for="route" class="col-md-4 control-label">Bus</label>
-
-                            <div class="col-md-6">
-                                <select id="select_bus" class="form-control" name="bus_id">
-                                </select>
-                            </div>
-                        </div>
                         <div id="concessionaire_container" class="hide form-group{{ $errors->has('route') ? ' has-error' : '' }}">
                             <label for="concessionaire" class="col-md-4 control-label">Concessionaire</label>
 
                             <div class="col-md-6">
                                 <select id="select_concessionaire" class="form-control" name="concessionaire_id">
+                                    <option selected disabled>Choose here</option>
                                 </select>
                             </div>
                         </div>
+
+                        <div id="bus_container" class="hide form-group{{ $errors->has('route') ? ' has-error' : '' }}">
+                            <label for="route" class="col-md-4 control-label">Bus</label>
+
+                            <div class="col-md-6">
+                                <select id="select_bus" class="form-control" name="bus_id">
+                                    <option selected disabled>Choose here</option>
+                                </select>
+                            </div>
+                        </div>
+                        
                         @endif
 
                         <div class="form-group">

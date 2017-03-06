@@ -31,8 +31,12 @@
                         data-height="500">
                         <thead>
                             <tr>
-                                <th class="col-xs-4" data-field="economic_number" data-align="center" data-sortable="true">Número economico</th>
-                                <th class="col-xs-4" data-field="passenger_capacity" data-align="center" data-sortable="true">Capacidad</th>
+                                <th class="col-xs-3" data-field="economic_number" data-align="center" data-sortable="true">Número economico</th>
+                                <th class="col-xs-2" data-field="passenger_capacity" data-align="center" data-sortable="true">Capacidad</th>
+                                @if(Auth::user()->isAdmin())
+                                <th class="col-xs-2" data-field="route" data-align="center" data-sortable="true">Ruta</th>
+                                <th class="col-xs-4" data-field="concessionaire" data-align="center" data-sortable="true">Concesionario</th>
+                                @endif
                                 <th class="col-xs-1" data-field="bus" data-sortable="true" data-formatter="formaterColumnEditActions" data-align="center">Opciones</th>
                             </tr>
                         </thead>

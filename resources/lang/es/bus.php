@@ -16,6 +16,10 @@ return [
     'title' => 'Camiones',
     'economic_number'  => 'Número económico',
     'passenger_capacity' =>  'Capacidad de pasajeros',
+    'route' => 'Ruta',
+    'concessionaire' => 'Concesionario',
+    'options' => 'Opciones',
+    'choose' => 'Selecciona una opción',
     'edit'=> 'Editar camión',
     'btn_add' => 'Agregar',
 ];

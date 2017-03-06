@@ -31,10 +31,10 @@
                         data-height="500">
                         <thead>
                             <tr>
-                                <th class="col-xs-4" data-field="name" data-align="center" data-sortable="true">Nombre</th>
-                                <th class="col-xs-4" data-field="email" data-align="center" data-sortable="true">E-mail</th>
-                                <th class="col-xs-3" data-field="role" data-align="center" data-cell-style="formaterColumnColor">Rol</th>
-                                <th class="col-xs-1" data-field="user" data-sortable="true" data-formatter="formaterColumnEditActions" data-align="center">Opciones</th>
+                                <th class="col-xs-4" data-field="name" data-align="center" data-sortable="true">{{trans('user.name')}}</th>
+                                <th class="col-xs-4" data-field="email" data-align="center" data-sortable="true">{{trans('user.email')}}</th>
+                                <th class="col-xs-3" data-field="role" data-align="center" data-cell-style="formaterColumnColor">{{trans('user.role')}}</th>
+                                <th class="col-xs-1" data-field="user" data-sortable="true" data-formatter="formaterColumnEditActions" data-align="center">{{trans('user.options')}}</th>
                             </tr>
                         </thead>
                     </table>

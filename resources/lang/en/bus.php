@@ -16,6 +16,10 @@ return [
     'title' => 'Buses',
     'economic_number'  => 'Economic number',
     'passenger_capacity' =>  'Passenger capacity',
+    'route' => 'Route',
+    'concessionaire' => 'Concessionarire',
+    'options' => 'Options',
+    'choose' => 'Choose here',
     'edit'=> 'Edit bus',
     'btn_add' => 'Add',
 ];

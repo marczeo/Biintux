@@ -19,5 +19,11 @@ return [
     'Driver' => 'Conductor',
     'Concessionaire' => 'Concesionario',
     'Administrator' => 'Administrador',
+    'name' =>'Nombre',
+    'email' =>'Correo electrónico',
+    'options' => 'Opciones',
+    'choose' => 'Seleccione una opción',
+    'bus' => 'Camión',
+    'route' => 'Ruta',
 
 ];

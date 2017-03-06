@@ -44,11 +44,11 @@
                         </div>
                         @if(Auth::user()->isAdmin())
                         <div class="form-group{{ $errors->has('rol') ? ' has-error' : '' }}">
-                            <label for="rol" class="col-md-4 control-label">Rol</label>
+                            <label for="rol" class="col-md-4 control-label">{{trans('user.role')}}</label>
 
                             <div class="col-md-6">
                                 <select id="select_role" class="form-control" name="role_id">
-                                    <option selected disabled>Choose here</option>
+                                    <option selected disabled>{{trans('user.choose')}}</option>
                                 @foreach ($roles as $role)
                                     <option value="{{$role->id}}">{{$role->description}}</option>
                                 @endforeach
@@ -57,11 +57,11 @@
                         </div>
                         <!--Solo para consecionario-->
                         <div id="route_container" class="hide form-group{{ $errors->has('route') ? ' has-error' : '' }}">
-                            <label for="route" class="col-md-4 control-label">Route</label>
+                            <label for="route" class="col-md-4 control-label">{{trans('user.route')}}</label>
 
                             <div class="col-md-6">
                                 <select id="select_route" class="form-control" name="route_id">
-                                    <option selected disabled>Choose here</option>
+                                    <option selected disabled>{{trans('user.choose')}}</option>
                                 @foreach ($rutas as $ruta)
                                     <option value="{{$ruta->id}}">{{$ruta->code}}</option>
                                 @endforeach
@@ -70,21 +70,21 @@
                         </div>
                         <!--Solo para admin-->
                         <div id="concessionaire_container" class="hide form-group{{ $errors->has('route') ? ' has-error' : '' }}">
-                            <label for="concessionaire" class="col-md-4 control-label">Concessionaire</label>
+                            <label for="concessionaire" class="col-md-4 control-label">{{trans('user.Concessionaire')}}</label>
 
                             <div class="col-md-6">
                                 <select id="select_concessionaire" class="form-control" name="concessionaire_id">
-                                    <option selected disabled>Choose here</option>
+                                    <option selected disabled>{{trans('user.choose')}}</option>
                                 </select>
                             </div>
                         </div>
 
                         <div id="bus_container" class="hide form-group{{ $errors->has('route') ? ' has-error' : '' }}">
-                            <label for="route" class="col-md-4 control-label">Bus</label>
+                            <label for="route" class="col-md-4 control-label">{{trans('user.bus')}}</label>
 
                             <div class="col-md-6">
                                 <select id="select_bus" class="form-control" name="bus_id">
-                                    <option selected disabled>Choose here</option>
+                                    <option selected disabled>{{trans('user.choose')}}</option>
                                 </select>
                             </div>
                         </div>

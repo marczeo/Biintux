@@ -19,5 +19,11 @@ return [
     'Driver' => 'Driver',
     'Concessionaire' => 'Concessionaire',
     'Administrator' => 'Administrator',
+    'name' =>'Name',
+    'email' =>'E-mail',
+    'options' => 'Options',
+    'choose' => 'Choose here',
+    'bus' => 'Bus',
+    'route' => 'Route',
 
 ];

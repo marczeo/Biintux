@@ -46,11 +46,11 @@
                         @if(Auth::user()->isAdmin())
                         <!--Solo para admin-->
                         <div id="route_container" class="form-group{{ $errors->has('route') ? ' has-error' : '' }}">
-                            <label for="route" class="col-md-4 control-label">Route</label>
+                            <label for="route" class="col-md-4 control-label">{{trans('bus.route')}}</label>
 
                             <div class="col-md-6">
                                 <select id="select_route" class="form-control" name="route_id">
-                                    <option selected disabled>Choose here</option>
+                                    <option selected disabled>{{trans('bus.choose')}}</option>
                                 @foreach ($rutas as $ruta)
                                     <option value="{{$ruta->id}}">{{$ruta->code}}</option>
                                 @endforeach
@@ -58,11 +58,11 @@
                             </div>
                         </div>
                         <div id="concessionaire_container" class="form-group{{ $errors->has('route') ? ' has-error' : '' }}">
-                            <label for="concessionaire" class="col-md-4 control-label">Concessionaire</label>
+                            <label for="concessionaire" class="col-md-4 control-label">{{trans('bus.concessionaire')}}</label>
 
                             <div class="col-md-6">
                                 <select id="select_concessionaire" class="form-control" name="concessionaire_id">
-                                    <option selected disabled>Choose here</option>
+                                    <option selected disabled>{{trans('bus.choose')}}</option>
                                 </select>
                             </div>
                         </div>

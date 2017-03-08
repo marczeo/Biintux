@@ -38,3 +38,10 @@ Route::get('/login','UserController@authenticate');
 |--------------------------------------------------------------------------
 */
 Route::get('/getAllRoute','RouteController@getAllJson');
+
+ /*
+|--------------------------------------------------------------------------
+| Camiones
+|--------------------------------------------------------------------------
+*/
+ Route::get('/getAllBus','BusController@getAllJson');

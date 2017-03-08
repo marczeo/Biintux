@@ -16,8 +16,8 @@ class CreateNodesTable extends Migration
         Schema::create('nodes', function(Blueprint $table){
           $table->increments('id');
           $table->string('description')->nullable();
-          $table->float('longitude', 16, 15);
-          $table->float('latitude', 16, 15);
+          $table->float('longitude', 10, 6);
+          $table->float('latitude', 10, 6);
           $table->string('type');
         });
     }

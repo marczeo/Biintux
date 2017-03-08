@@ -15,9 +15,8 @@ var stepDisplay;
 var markerArray=[];
 var origin;
 var destination;
-var myRoute;
-var leRoute;
-var flightPath;
+var route;
+var route_pasos;
 
 /**
 * Initialize map and default values
@@ -135,7 +134,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, 
     if (status == google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(response);
       //steps
-      myRoute = response.routes[0].legs[0];
+      route = response.routes[0].legs[0];
     } else {
       window.alert('Directions request failed due to ' + status);
     }
@@ -150,32 +149,32 @@ function attachInstructionText(marker, text) {
 function computeTotalDistance(result) {
   var flightPlanCoordinates=[];
   document.getElementById('markerList').value="";
-  // First, clear out any existing markerArray
-  // from previous calculations.
+  //Limpiar array de marcadores
   clearMarkers();
   var total = 0;
-  myroute = result.routes[0];
-  for (var i = 0; i < myroute.legs.length; i++) {
-    total += myroute.legs[i].distance.value;
+  route = result.routes[0];
+  for (var i = 0; i < route.legs.length; i++) {
+    total += route.legs[i].distance.value;
   }
   total = total / 1000;
   document.getElementById('distance').value = total + ' km';
 
-  leRoute = result.routes[0].legs[0];
+  route_pasos = result.routes[0].legs[0];
 
-  console.log("lineas: " +leRoute.steps.length);
-  for (var i = 0; i < leRoute.steps.length; i++) {
+  //console.log("lineas: " +route_pasos.steps.length);
+  //Agregar nodos al mapa
+  for (var i = 0; i < route_pasos.steps.length; i++) {
     var marker = new google.maps.Marker({
-      position: leRoute.steps[i].start_point,
+      position: route_pasos.steps[i].start_point,
       //map: map
     });
-    attachInstructionText(marker, leRoute.steps[i].instructions);
+    attachInstructionText(marker, route_pasos.steps[i].instructions);
     markerArray[i] = marker;
-    flightPlanCoordinates[i]=leRoute.steps[i].start_point;
-    document.getElementById('markerList').value+=leRoute.steps[i].start_point;
+    flightPlanCoordinates[i]=route_pasos.steps[i].start_point;
+    document.getElementById('markerList').value+=route_pasos.steps[i].start_point;
   }
-  console.log("Origen: " + origin.lat+", "+ origin.lng);
-  console.log("Destino: " + destination.lat+", "+ destination.lng);
+  //console.log("Origen: " + origin.lat+", "+ origin.lng);
+  //console.log("Destino: " + destination.lat+", "+ destination.lng);
   markerArray[i]=new google.maps.Marker({
     position: { lat: destination.lat, lng: destination.lng },
     //map: map
@@ -184,17 +183,10 @@ function computeTotalDistance(result) {
   flightPlanCoordinates[i]={ lat: destination.lat, lng: destination.lng };
 
   
-  flightPath = new google.maps.Polyline({
-    path: flightPlanCoordinates,
-    geodesic: true,
-    strokeColor: '#FF0000',
-    strokeOpacity: 1.0,
-    strokeWeight: 2,
-    //map: map,
-  });
-  
-  var encodePath=google.maps.geometry.encoding.encodePath(flightPath.getPath());
-  document.getElementById('encodePath').value =encodePath.replace(/\\/g,"\\\\");  
+  //console.log(result.routes);
+  console.log(result.routes[0].overview_polyline);
+  var encodePath=result.routes[0].overview_polyline;
+  document.getElementById('encodePath').value =encodePath;
   
 }
 

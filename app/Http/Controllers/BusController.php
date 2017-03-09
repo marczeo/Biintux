@@ -24,6 +24,7 @@ class BusController extends Controller
     public function __construct(BusRepository $busesRepository, Request $request)
     {
         //Cuando la petición es desde API
+        if($request->route()){
         if($request->route()->getPrefix()=="api"){
             $this->middleware('jwt.auth',['only'=>['getAllJson']]);
         }
@@ -34,7 +35,7 @@ class BusController extends Controller
                 'destroy',
             ]]);
 
-        }
+        }}
 
 
         //Use DAO

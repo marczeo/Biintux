@@ -30,6 +30,7 @@ class UserController extends Controller
     public function __construct(UsuarioRepository $users, Request $request)
     {
         //Cuando la petición es desde API
+        if($request->route()){
         if($request->route()->getPrefix()=="api"){
             $this->middleware('jwt.auth',['only'=>['getAllJson']]);
         }
@@ -40,7 +41,7 @@ class UserController extends Controller
                 'destroy',
             ]]);
 
-        }
+        }}
 
 
         //Use DAO

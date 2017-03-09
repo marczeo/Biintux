@@ -2,11 +2,23 @@
 
 namespace App\Repositories;
 
+use Illuminate\Http\Request;
 use App\Ciclovia;
+use App\Rel_cycling;
+use App\Node;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CicloviaRepository
 {
+    /**
+     * The type node associated with the controller.
+     *
+     * @var string
+     */
+
+    protected $typeNode = 'bikeway';
+
 
     /**
      * Get all of the routes  for a given user.
@@ -21,6 +33,12 @@ class CicloviaRepository
                     ->get();
     }*/
 
+    /**
+     * Get all of the bikeways
+     *
+     * @param  null
+     * @return json
+     */
      public function getAllCiclovias()
     {
         $ciclovias =Ciclovia::orderBy('id','asc')->get();
@@ -47,8 +65,76 @@ class CicloviaRepository
             $ciclovia_response->push($cicloviaA);
         }
         return json_encode($ciclovia_response);
+    }
 
-        //return Ciclovia::orderBy('id','asc')->get();
+    /**
+     * Create a new ciclovia
+     *
+     * @param  Request $request
+     * @return Boolean
+     */
+    public function createCiclovia(Request $request)
+    {
+        $ciclovia = new ciclovia;
+        $ciclovia->setColor();
+        while ($this->existColor($ciclovia->color)){
+            $ciclovia->setColor();
+        }
+
+        $ciclovia->code="BW-666";
+        $ciclovia->name=$request->name;
+        $ciclovia->encodepath=$request->encodePath;
+        $ciclovia->save();
+
+         /*Limpieza de nodos*/
+        preg_match_all('/\((.*?)\)/', $request->markerList, $nodes);
+        $primeraPasada=true;
+        foreach ($nodes[1] as $node) {
+            $latLong=explode (",", $node);
+            $newNode= new Node;
+            $newNode->latitude=$latLong[0];
+            $newNode->longitude=$latLong[1];
+            $newNode->type=$this->typeNode;
+            $newNode->save();
+
+            if($primeraPasada)
+            {
+                $primeraPasada=false;
+            }
+            else{
+                $rel_cycling->next_node_id=$newNode->id;
+                $rel_cycling->save();
+            }
+            $rel_cycling = new Rel_cycling;
+            $rel_cycling->cycling_route_id = $ciclovia->id;
+            $rel_cycling->start_node_id=$newNode->id;
+
+        }
+        $rel_cycling->save();
+        return true;
+    }
+
+    /**
+     * Delete a bikeway
+     *
+     * @param  int $IDciclovia
+     * @return boolean
+     */
+    public function deleteCiclovia($IDciclovia)
+    {
+        try{
+            $ciclovia=Ciclovia::findOrFail($IDciclovia);
+            foreach ($ciclovia->rel_cycling as $key => $rel_cycling) {
+                $rel_cycling->delete();
+            }
+            $ciclovia->delete();
+            return true;
+        }
+        catch(ModelNotFoundException $e)
+        {
+            //dd(get_class_methods($e)); // lists all available methods for exception object
+            return false;
+        }
     }
 
     /**

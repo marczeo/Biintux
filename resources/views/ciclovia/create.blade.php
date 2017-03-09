@@ -2,7 +2,6 @@
 
 @section('scriptsTop')
     <style>body {background-color: #cbedbe;}</style>
-    <script src="/js/decode-google-map-polyline.js"></script>
 @endsection
 
 

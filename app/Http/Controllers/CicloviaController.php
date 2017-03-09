@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Laracasts\Flash\Flash;
+use Session;
 use App\Ciclovia;
 use App\Rel_cycling;
 use App\Node;
 use App\Repositories\CicloviaRepository;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class CicloviaController extends Controller
 {
@@ -34,6 +38,7 @@ class CicloviaController extends Controller
     public function __construct(CicloviaRepository $ciclovias, Request $request)
     {
         //Cuando la petición es desde API
+        if($request->route()){
         if($request->route()->getPrefix()=="api"){
             $this->middleware('jwt.auth',['except'=>['getAllJson']]);
         }
@@ -43,7 +48,7 @@ class CicloviaController extends Controller
                 'show',
                 'getAllJson'
             ]]);
-        }
+        }}
 
         $this->cicloviasDAO = $ciclovias;
     }
@@ -64,43 +69,10 @@ class CicloviaController extends Controller
      */
     public function store(Request $request)
     {
-    	$ciclovia = new ciclovia;
-        $ciclovia->setColor();
-        while ($this->cicloviasDAO->existColor($ciclovia->color)){
-            $ciclovia->setColor();
-        }
-
-        $ciclovia->code="BW-666";
-        $ciclovia->name=$request->name;
-        $ciclovia->encodepath=$request->encodePath;
-        $ciclovia->save();
-
-         /*Limpieza de nodos*/
-        preg_match_all('/\((.*?)\)/', $request->markerList, $nodes);
-        $primeraPasada=true;
-        foreach ($nodes[1] as $node) {
-            $latLong=explode (",", $node);
-            $newNode= new Node;
-            $newNode->latitude=$latLong[0];
-            $newNode->longitude=$latLong[1];
-            $newNode->type=$this->typeNode;
-            $newNode->save();
-
-            if($primeraPasada)
-            {
-                $primeraPasada=false;
-            }
-            else{
-                $rel_cycling->next_node_id=$newNode->id;
-                $rel_cycling->save();
-            }
-            $rel_cycling = new Rel_cycling;
-            $rel_cycling->cycling_route_id = $ciclovia->id;
-            $rel_cycling->start_node_id=$newNode->id;
-
-        }
-        $rel_cycling->save();
-
+    	if($this->cicloviasDAO->createCiclovia($request))
+            flash('Ciclovia creada con exito','success');
+        else
+            flash('Error al intentar crear ciclovia','danger');
         return redirect('/ciclovia');
     }
 
@@ -131,8 +103,10 @@ class CicloviaController extends Controller
      */
     public function destroy($id)
     {
-        $ciclovia=Ciclovia::findOrFail($id);
-        $ciclovia->delete();
+        if($this->cicloviasDAO->deleteCiclovia($id))
+            flash('Ciclovía eliminada con exito', 'success');
+        else
+            flash('Error al intentar eliminar ciclovia','danger');
         return redirect('/ciclovia');
     }
 

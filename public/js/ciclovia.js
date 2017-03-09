@@ -184,7 +184,12 @@ function computeTotalDistance(result) {
 
   
   //console.log(result.routes);
-  console.log(result.routes[0].overview_polyline);
+  //console.log(result.routes[0].overview_path);
+  /*for(var i=0;i<result.routes[0].overview_path.length;i++)
+  {
+    console.log(result.routes[0].overview_path[i].lat());
+    console.log(result.routes[0].overview_path[i].lng());
+  }*/
   var encodePath=result.routes[0].overview_polyline;
   document.getElementById('encodePath').value =encodePath;
   

@@ -10,10 +10,10 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="panel panel-default">
-                <div class="panel-heading">{{trans('ciclovia.bikeway')}}</div>
+                <div class="panel-heading">{{trans('route.route')}}</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/ciclovia') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/route') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -30,6 +30,30 @@
                                 @endif
                             </div>
                            
+
+                            
+                        </div>
+                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                        
+                            <label for="first_run" class="col-md-1">{{trans('route.first_run')}}</label>
+                            <div class="col-md-5">
+                                <input id="first_run" type="time" class="form-control" name="first_run" value="{{ old('name') }}" required autofocus placeholder="{{trans('ciclovia.name')}}">
+                                @if ($errors->has('first_run'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+                            <label for="last_run" class="col-md-1">{{trans('route.last_run')}}</label>
+                            <div class="col-md-5">
+                                <input id="last_run" type="time" class="form-control" name="last_run" value="{{ old('name') }}" required autofocus placeholder="{{trans('ciclovia.name')}}">
+                                @if ($errors->has('last_run'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
 
                             
                         </div>

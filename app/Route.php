@@ -20,10 +20,25 @@ class Route extends Model
     */
     public $timestamps = false;
 
+    public function setColor()
+    {
+       $matiz= mt_rand(175, 300);
+       $saturacion = mt_rand(85,100);
+       $luminosidad = mt_rand(30,60);
+       $this->color="hsla(".$matiz.",".$saturacion."%,".$luminosidad."%,1)";
+    }
+
     /*
      * Get the rel_concessionaire records associated with the route.
     */
     public function rel_concessionaire(){
         return $this->hasOne('App\Rel_concessionaire');
+    }
+
+    /*
+     * Get the nodes records associated with the bikeway.
+    */
+    public function rel_route(){
+      return $this->hasMany('App\Rel_route','route_id');
     }
 }

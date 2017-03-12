@@ -61,7 +61,7 @@ class RouteController extends Controller
      */
     public function create()
     {
-        //
+        return view('routes.create');
     }
 
     /**
@@ -72,7 +72,11 @@ class RouteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($this->rutasDAO->createRoute($request))
+            flash('Ciclovia creada con exito','success');
+        else
+            flash('Error al intentar crear ciclovia','danger');
+        return redirect('/route');
     }
 
     /**
@@ -117,7 +121,11 @@ class RouteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if($this->rutasDAO->deleteRoute($id))
+            flash('Ruta eliminada con exito', 'success');
+        else
+            flash('Error al intentar eliminar ruta','danger');
+        return redirect('/route');
     }
 
     public function getBuses(Request $request, $id)

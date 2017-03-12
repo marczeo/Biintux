@@ -19,4 +19,6 @@ return [
     'from'   => 'From',
     'to'   => 'To',
     'distance'=>'Distance',
+    'first_run'=> 'Firs run',
+    'last_run'=>'Last run',
 ];

@@ -21,4 +21,7 @@ return [
     'distance'=>'Distancia',
     'first_run'=> 'Primera corrida',
     'last_run'=>'Ultima corrida',
+    'type'=>'Tipo',
+    'bus'=>'Camión',
+    'train'=>'Tren',
 ];

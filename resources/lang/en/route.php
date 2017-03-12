@@ -21,4 +21,7 @@ return [
     'distance'=>'Distance',
     'first_run'=> 'Firs run',
     'last_run'=>'Last run',
+    'type'=>'Type',
+    'bus'=>'Bus',
+    'train'=>'Train',
 ];

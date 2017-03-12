@@ -36,7 +36,7 @@
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                         
                             <label for="first_run" class="col-md-1">{{trans('route.first_run')}}</label>
-                            <div class="col-md-5">
+                            <div class="col-md-3">
                                 <input id="first_run" type="time" class="form-control" name="first_run" value="{{ old('name') }}" required autofocus placeholder="{{trans('ciclovia.name')}}">
                                 @if ($errors->has('first_run'))
                                     <span class="help-block">
@@ -46,8 +46,21 @@
                             </div>
 
                             <label for="last_run" class="col-md-1">{{trans('route.last_run')}}</label>
-                            <div class="col-md-5">
+                            <div class="col-md-3">
                                 <input id="last_run" type="time" class="form-control" name="last_run" value="{{ old('name') }}" required autofocus placeholder="{{trans('ciclovia.name')}}">
+                                @if ($errors->has('last_run'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+                            <label for="type_route" class="col-md-1">{{trans('route.type')}}</label>
+                            <div class="col-md-3">
+                                <select id="type_route" class="form-control" name="type_route" required autofocus>
+                                    <option value="bus">Camión</option>
+                                    <option value="train">Tren</option>
+                                </select>
                                 @if ($errors->has('last_run'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>

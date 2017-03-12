@@ -60,7 +60,7 @@
                         </li>
 
                         <li>
-                            <a href="/routes">
+                            <a href="/route">
                                 <img src="/images/route.svg" onerror="this.src='/images/route.png'" width="25" height="25">
                                 {{trans('navbar.route')}}
                             </a>

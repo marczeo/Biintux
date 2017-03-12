@@ -5,8 +5,45 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Bus;
 use App\Rel_concessionaire;
+use App\Route;
+use App\Node;
+use App\Repositories\RouteRepository;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 class RouteController extends Controller
 {
+     /**
+     * The route repository instance.
+     *
+     * @var rutasRepository
+     */
+    protected $rutasDAO;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @param  CicloviaRepository  $ciclovias
+     * @return void
+     */
+    public function __construct(RouteRepository $rutas, Request $request)
+    {
+        //Cuando la petición es desde API
+        if($request->route()){
+            if($request->route()->getPrefix()=="api"){
+                $this->middleware('jwt.auth',['except'=>['getAllJson']]);
+            }
+            else{#Peticion desde web
+                $this->middleware('auth');
+                $this->middleware('admin',['except' => [
+                    'show',
+                    'getAllJson'
+                    ]]);
+            }
+        }
+        $this->rutasDAO = $rutas;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +51,7 @@ class RouteController extends Controller
      */
     public function index()
     {
-        //
+        return view('routes.index');
     }
 
     /**
@@ -106,5 +143,14 @@ class RouteController extends Controller
             }
             return response()->json($user_response);
         }
+    }
+    /**
+    * Show all bikeways
+    * @return json
+    */
+    public function getAllJson()
+    { 
+        $ciclovias = $this->rutasDAO->getAllRoutes();
+        return $ciclovias;
     }
 }

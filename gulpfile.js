@@ -20,6 +20,8 @@ elixir((mix) => {
     mix.scripts('map_ciclovia_index.js','public/js/ciclovia-index.js');
     mix.scripts('main.js','public/js/main.js');
 
+    mix.scripts('map_route_index.js','public/js/route-index.js');
+
     mix.scripts('mibici-index.js','public/js/mibici-index.js');
     mix.scripts('mibici-create.js','public/js/mibici-create.js');
     mix.scripts('mibici-destroy.js','public/js/mibici-destroy.js');

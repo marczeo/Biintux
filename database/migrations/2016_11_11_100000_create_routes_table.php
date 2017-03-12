@@ -20,6 +20,8 @@ class CreateRoutesTable extends Migration
           $table->integer('direction');
           $table->time('first_run');
           $table->time('last_run');
+          $table->mediumText('encodepath');
+          $table->string('color');
         });
 
         Schema::table('routes', function(Blueprint $table){

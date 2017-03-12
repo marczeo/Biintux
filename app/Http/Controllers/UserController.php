@@ -159,6 +159,8 @@ class UserController extends Controller
 
         // all good so return the token
         //return response()->json(compact('token'));
-        return response()->json(compact('token'))->header('Content-Type','application/json');
+        $user = Auth::user();
+        $rol=$user->role->description;
+        return response()->json(compact('token','rol'))->header('Content-Type','application/json');
     }
 }

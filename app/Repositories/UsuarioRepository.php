@@ -76,7 +76,7 @@ class UsuarioRepository
         {
             $user->role_id=$request->role_id;
             $user->save();
-            if($user->isConcessionaire()){
+            if(!$user->isAdmin() && $user->isConcessionaire()){
                 $rel_concessionaire = new Rel_concessionaire;
                 $rel_concessionaire->concessionaire_id=$user->id;
                 $rel_concessionaire->route_id=$request->route_id;
@@ -102,7 +102,7 @@ class UsuarioRepository
         
         
         
-        return true;
+        return $user;
     }
 
     /**

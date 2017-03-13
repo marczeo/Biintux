@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Mail\UserCreated;
+use Illuminate\Support\Facades\Mail;
 use Laracasts\Flash\Flash;
 use Session;
 use App\Repositories\UsuarioRepository;
@@ -12,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+
 class UserController extends Controller
 {
     /**
@@ -65,7 +68,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->usersDAO->createUser($request);
+        $newUser=$this->usersDAO->createUser($request);
+        $password="secret";
+        Mail::to($newUser)->send(new UserCreated($newUser));
         return redirect('/user');
     }
 
@@ -80,7 +85,8 @@ class UserController extends Controller
         $roles = json_decode($roleDAO->getAllRoles());
 
         $routeDAO = new RouteRepository();
-        $rutas = json_decode($routeDAO->getAllRoutes());
+        $rutas = json_decode($routeDAO->getAllRoutes())->data;
+        
         return view('user.create',compact('roles', 'rutas'));
     }
 

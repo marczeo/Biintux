@@ -45,10 +45,9 @@ class CicloviaRepository
         
         
         $ciclovia_response=new Collection;
-        //$ciclovia_response=[];
         foreach ($ciclovias as $key=> $ciclovia)
         {
-            $cicloviaA=[];
+            $ciclovia_array=[];
             $nodos = new Collection;
             $rel_cyclings=$ciclovia->rel_cycling;
             foreach ($rel_cyclings as $key => $rel_cycling) {
@@ -57,17 +56,16 @@ class CicloviaRepository
                 $nodo['latitude']=$rel_cycling->start_node->latitude;
                 $nodos->push($nodo);
             }
-            $cicloviaA['id']=$ciclovia->id;
-            $cicloviaA['code']=$ciclovia->code;
-            $cicloviaA['name']=$ciclovia->name;
-            $cicloviaA['encodepath']=$ciclovia->encodepath;
-            $cicloviaA['color']=$ciclovia->color;
-            $cicloviaA['nodos']=$nodos;
-            $ciclovia_response->push($cicloviaA);
-            //$ciclovia_response[$key]=$cicloviaA;
+            $ciclovia_array['id']=$ciclovia->id;
+            $ciclovia_array['code']=$ciclovia->code;
+            $ciclovia_array['name']=$ciclovia->name;
+            $ciclovia_array['encodepath']=$ciclovia->encodepath;
+            $ciclovia_array['color']=$ciclovia->color;
+            $ciclovia_array['nodos']=$nodos;
+            $ciclovia_response->push($ciclovia_array);
         }
-        $test['data']=$ciclovia_response;
-        return json_encode($test);
+        $response['data']=$ciclovia_response;
+        return json_encode($response);
     }
 
     /**

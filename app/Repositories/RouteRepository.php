@@ -31,7 +31,7 @@ class RouteRepository
         $route_response=new Collection;
         foreach ($routes as $key=> $route)
         {
-            $routeA=[];
+            $route_array=[];
             $nodos = new Collection;
             $rel_routes=$route->rel_route;
             foreach ($rel_routes as $key => $rel_route) {
@@ -40,17 +40,17 @@ class RouteRepository
                 $nodo['latitude']=$rel_route->start_node->latitude;
                 $nodos->push($nodo);
             }
-            $routeA['id']=$route->id;
-            $routeA['code']=$route->code;
-            $routeA['type']=trans('route.'.$route->type);
-            //$routeA['name']=$route->name;
-            $routeA['encodepath']=$route->encodepath;
-            $routeA['color']=$route->color;
-            $routeA['nodos']=$nodos;
-            $route_response->push($routeA);
+            $route_array['id']=$route->id;
+            $route_array['code']=$route->code;
+            $route_array['type']=trans('route.'.$route->type);
+            //$route_array['name']=$route->name;
+            $route_array['encodepath']=$route->encodepath;
+            $route_array['color']=$route->color;
+            $route_array['nodos']=$nodos;
+            $route_response->push($route_array);
         }
-        $test['data']=$route_response;
-        return json_encode($test);
+        $response['data']=$route_response;
+        return json_encode($response);
     }
     /**
      * Create a new route

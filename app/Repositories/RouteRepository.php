@@ -49,7 +49,8 @@ class RouteRepository
             $routeA['nodos']=$nodos;
             $route_response->push($routeA);
         }
-        return json_encode($route_response);
+        $test['data']=$route_response;
+        return json_encode($test);
     }
     /**
      * Create a new route

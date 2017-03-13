@@ -45,6 +45,7 @@ class CicloviaRepository
         
         
         $ciclovia_response=new Collection;
+        //$ciclovia_response=[];
         foreach ($ciclovias as $key=> $ciclovia)
         {
             $cicloviaA=[];
@@ -63,8 +64,10 @@ class CicloviaRepository
             $cicloviaA['color']=$ciclovia->color;
             $cicloviaA['nodos']=$nodos;
             $ciclovia_response->push($cicloviaA);
+            //$ciclovia_response[$key]=$cicloviaA;
         }
-        return json_encode($ciclovia_response);
+        $test['data']=$ciclovia_response;
+        return json_encode($test);
     }
 
     /**

@@ -88,7 +88,19 @@
                                 </select>
                             </div>
                         </div>
-                        
+                        @elseif(Auth::user()->isConcessionaire())
+                        <div id="bus_container" class="form-group{{ $errors->has('route') ? ' has-error' : '' }}">
+                            <label for="route" class="col-md-4 control-label">{{trans('user.bus')}}</label>
+
+                            <div class="col-md-6">
+                                <select id="select_bus" class="form-control" name="bus_id">
+                                    <option selected disabled>{{trans('user.choose')}}</option>
+                                    @foreach($buses as $bus)
+                                        <option value="{{$bus->id}}">{{$bus->economic_number}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                         @endif
 
                         <div class="form-group">

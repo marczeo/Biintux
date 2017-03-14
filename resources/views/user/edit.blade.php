@@ -43,6 +43,8 @@
                             </div>
                         </div>
 
+                        {{-- Solo cuando el usuario logueado es el que edita--}}
+                        @if(Auth::user()->id ==   $user->id)
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">{{trans('register.password')}}</label>
 
@@ -64,6 +66,23 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" >
                             </div>
                         </div>
+                        @elseif(Auth::user()->isAdmin())
+                            @if($user->isConcessionaire())
+                            @endif
+                        @elseif(Auth::user()->isConcessionaire())
+                        <div id="bus_container" class="form-group{{ $errors->has('route') ? ' has-error' : '' }}">
+                            <label for="route" class="col-md-4 control-label">{{trans('user.bus')}}</label>
+
+                            <div class="col-md-6">
+                                <select id="select_bus" class="form-control" name="bus_id">
+                                    <option disabled>{{trans('user.choose')}}</option>
+                                    @foreach($buses as $bus)
+                                    <option value="{{$bus->id}}"{{ $user->driver->route_car_id ==$bus->id ? 'selected':''}}>{{$bus->economic_number}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        @endif
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">

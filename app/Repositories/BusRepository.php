@@ -4,10 +4,23 @@ namespace App\Repositories;
 
 use Illuminate\Http\Request;
 use App\Bus;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
 class BusRepository
 {
+    /**
+     * Get all of the buses  for a given user.
+     *
+     * @param  User  $user
+     * @return Collection
+     */
+    public function getAllBusesForUser(User $user)
+    {
+        return $user->buses()
+                    ->orderBy('economic_number', 'asc')
+                    ->get();
+    }
 
     public function createBus(Request $request)
     {

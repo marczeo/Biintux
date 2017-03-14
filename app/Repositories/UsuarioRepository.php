@@ -63,7 +63,9 @@ class UsuarioRepository
     }
 
     /**
-     *Create user
+     * Create user
+     * @param Request $request
+     * @return User $user
      */
     public function createUser(Request $request)
     {
@@ -96,8 +98,9 @@ class UsuarioRepository
             $user->save();
             $driver=new Driver();
             $driver->user_id=$user->id;
-            $driver->route_car_id=$currentUser->rel_concessionaire()->route_id;
+            $driver->route_car_id=$request->bus_id;
             $driver->concessionaire_id=$currentUser->id;
+            $driver->save();
         }
         
         
@@ -110,6 +113,8 @@ class UsuarioRepository
      */
     public function updateUser(Request $request, User $user)
     {
+        $currentUser=Auth::user();
+
         $user->name     = $request->name;
         $user->email    = $request->email;
         if($request->password != "" && $request->password_confirmation!="")
@@ -117,6 +122,16 @@ class UsuarioRepository
             $user->password=bcrypt($request->password);
         }
         $user->save();
+        if($currentUser->isAdmin())
+        {
+
+        }
+        elseif ($currentUser->isConcessionaire()) {
+            $driver=$user->driver;
+            $driver->route_car_id=$request->bus_id;
+            $driver->save();
+        }
+        
         return true;
     }
 }

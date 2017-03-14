@@ -33,7 +33,9 @@
                             <tr>
                                 <th class="col-xs-4" data-field="name" data-align="center" data-sortable="true">{{trans('user.name')}}</th>
                                 <th class="col-xs-4" data-field="email" data-align="center" data-sortable="true">{{trans('user.email')}}</th>
-                                <th class="col-xs-3" data-field="role" data-align="center" data-cell-style="formaterColumnColor">{{trans('user.role')}}</th>
+                                @if(Auth::user()->isAdmin())
+                                <th class="col-xs-3" data-field="role" data-align="center" data-sortable="true" data-cell-style="formaterColumnColor">{{trans('user.role')}}</th>
+                                @endif
                                 <th class="col-xs-1" data-field="user" data-sortable="true" data-formatter="formaterColumnEditActions" data-align="center">{{trans('user.options')}}</th>
                             </tr>
                         </thead>

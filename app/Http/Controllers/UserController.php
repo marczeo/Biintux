@@ -10,6 +10,7 @@ use Session;
 use App\Repositories\UsuarioRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\RouteRepository;
+use App\Repositories\BusRepository;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use JWTAuth;
@@ -69,8 +70,9 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $newUser=$this->usersDAO->createUser($request);
-        $password="secret";
-        Mail::to($newUser)->send(new UserCreated($newUser));
+
+        //Enviar por correo
+        //Mail::to($newUser)->send(new UserCreated($newUser));
         return redirect('/user');
     }
 
@@ -81,12 +83,18 @@ class UserController extends Controller
      */
     public function create()
     {
+        $currentUser=Auth::user();
         $roleDAO = new RoleRepository();
         $roles = json_decode($roleDAO->getAllRoles());
 
         $routeDAO = new RouteRepository();
         $rutas = json_decode($routeDAO->getAllRoutes())->data;
-        
+
+        if(!$currentUser->isAdmin() && $currentUser->isConcessionaire()){
+            $busDAO = new BusRepository();
+            $buses=json_decode($busDAO->getAllBuses());
+            return view('user.create',compact('roles', 'rutas','buses'));
+        }
         return view('user.create',compact('roles', 'rutas'));
     }
 
@@ -132,8 +140,20 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        if(Auth::user()->isAdmin() || Auth::user()->id==$user->id)
+        $currentUser=Auth::user();
+        if($currentUser->id==$user->id)#Usuario actual editará sus datos
+        {
             return view('user.edit', compact('user'));
+        }
+        elseif($currentUser->isAdmin()){
+            return view('user.edit', compact('user'));
+        }
+        elseif($currentUser->isConcessionaire() && $currentUser->id==$user->driver->concessionaire_id)#Usuario actual es concesionario y se editará un conductor
+        {
+            $busDAO = new BusRepository();
+            $buses=json_decode($busDAO->getAllBusesForUser($currentUser));
+            return view('user.edit', compact('user','buses'));
+        }
         flash('No tiene permiso', 'danger');
         return redirect('/perfil');
     }

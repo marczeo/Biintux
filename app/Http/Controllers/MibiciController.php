@@ -8,9 +8,23 @@ use App\Node;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Log;
 use DB;
+use App\Repositories\MibiciRepository;
 
 class MibiciController extends Controller
 {
+    /**
+     * The Mibici repository instance.
+     *
+     * @var mibiciRepository
+     */
+    protected $mibiciDAO;
+
+    public function __construct(MibiciRepository $mibici)
+    {
+        //Use DAO
+        $this->mibiciDAO = $mibici;
+    }
+
 	public function index()
     {
         return view('mibici.index');
@@ -70,5 +84,15 @@ class MibiciController extends Controller
         $mibici->save();
 
         return redirect('/mibici');
+    }
+
+    /**
+    * Show all mibici stations
+    * @return json
+    */
+    public function getAllJson()
+    { 
+        $estaciones = $this->mibiciDAO->getAllMibici();
+        return $estaciones;
     }
 }

@@ -23,9 +23,11 @@ class RouteRepository
      * @param  null
      * @return json
      */
-    public function getAllRoutes()
+    public function getAllRoutes($type)
     {
         $routes =Route::orderBy('id','asc')->get();
+        if($type!=null)
+            $routes =$routes->where('type',$type);
         
         
         $route_response=new Collection;

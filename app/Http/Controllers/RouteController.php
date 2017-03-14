@@ -156,9 +156,9 @@ class RouteController extends Controller
     * Show all bikeways
     * @return json
     */
-    public function getAllJson()
-    { 
-        $ciclovias = $this->rutasDAO->getAllRoutes();
+    public function getAllJson($type=null)
+    {
+        $ciclovias = $this->rutasDAO->getAllRoutes($type);
         return $ciclovias;
     }
 }

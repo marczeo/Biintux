@@ -44,7 +44,8 @@ class RouteRepository
             }
             $route_array['id']=$route->id;
             $route_array['code']=$route->code;
-            $route_array['type']=trans('route.'.$route->type);
+            $route_array['type']=$route->type;
+            $route_array['type_read']=trans('route.'.$route->type);
             //$route_array['name']=$route->name;
             $route_array['encodepath']=$route->encodepath;
             $route_array['color']=$route->color;

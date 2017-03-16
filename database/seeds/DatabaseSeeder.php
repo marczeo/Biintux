@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
          $this->call(RolesTableSeeder::class);
          //$this->call(RoutesTableSeeder::class);
          $this->call(NodesTableSeeder::class);
+         $this->call(CicloviasTableSeeder::class);
     }
 }

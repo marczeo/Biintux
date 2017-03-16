@@ -89,7 +89,7 @@ class UserController extends Controller
         $roles = json_decode($roleDAO->getAllRoles());
 
         $routeDAO = new RouteRepository();
-        $rutas = json_decode($routeDAO->getAllRoutes())->data;
+        $rutas = json_decode($routeDAO->getAllRoutes(null))->data;
 
         if(!$currentUser->isAdmin() && $currentUser->isConcessionaire()){
             $busDAO = new BusRepository();

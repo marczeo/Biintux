@@ -13,11 +13,26 @@ class NodesTableSeeder extends Seeder
      */
     public function run()
     {
-        $content = File::get('mibici_stations');
+        //$contents = File::get(storage_path('\mibici_stations'));
 
-        foreach ($content as $line)
+        if ($contents = fopen("mibici_stations", "r")) 
         {
-   	 		//echo htmlspecialchars($line) ."<br />\n";
+	    	while(!feof($contents))
+	    	{
+		        $line = fgets($contents);
+		        $fragments = explode(", ", $line);
+
+	            $newNode= new Node;
+	            $newNode->latitude=$fragments[0];
+	            $newNode->longitude=$fragments[1];
+	        	$newNode->description=$fragments[2];
+	        	$newNode->type="mibici";
+	        	$newNode->save();
+		        //dd($line);
+	    	}
+
+	    	fclose($contents);
 		}
+
     }
 }

@@ -64,7 +64,7 @@ class BusRepository
                 $buses_response[$key]['passenger_capacity']=$bus->passenger_capacity;
             }
         }
-        
-        return json_encode($buses_response);
+        $response['data']=$buses_response;
+        return json_encode($response);
     }
 }

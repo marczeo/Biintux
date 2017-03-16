@@ -7,6 +7,7 @@
 
 function initialize() {
   var myLatLng = new google.maps.LatLng( 20.659699, -103.349609);
+  var infowindow = new google.maps.InfoWindow();
   var mapOptions = {
     zoom: 13,
     center: myLatLng,
@@ -53,6 +54,14 @@ function initialize() {
           strokeColor: item.color,
           strokeOpacity: 0.7,
           strokeWeight: 8
+        });
+        google.maps.event.addListener(routePath, 'mouseover', function(event) {
+          infowindow.open(map);
+          infowindow.setContent(item.code);
+          infowindow.setPosition(event.latLng);
+        });
+        google.maps.event.addListener(routePath, 'mouseout', function() {
+            infowindow.close();
         });
         routePath.setMap(map);
 

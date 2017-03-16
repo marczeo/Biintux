@@ -16,7 +16,7 @@ class CreateRoutesTable extends Migration
         Schema::create('routes', function(Blueprint $table){
           $table->increments('id');
           $table->string('code');
-          $table->integer('start_node_id')->unsigned();
+          $table->integer('start_node_id')->unsigned()->nullable();
           $table->integer('direction');
           $table->time('first_run');
           $table->time('last_run');

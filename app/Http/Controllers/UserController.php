@@ -35,17 +35,18 @@ class UserController extends Controller
     {
         //Cuando la petición es desde API
         if($request->route()){
-        if($request->route()->getPrefix()=="api"){
-            $this->middleware('jwt.auth',['only'=>['getAllJson']]);
-        }
-        else{#Peticion desde web
-            $this->middleware('auth');
-            $this->middleware('concessionaire',['only' => [
-                'index',
-                'destroy',
-            ]]);
+            if($request->route()->getPrefix()=="api"){
+                $this->middleware('jwt.auth',['only'=>['getAllJson']]);
+            }
+            else{#Peticion desde web
+                $this->middleware('auth');
+                $this->middleware('concessionaire',['only' => [
+                    'index',
+                    'destroy',
+                ]]);
 
-        }}
+            }
+        }
 
 
         //Use DAO

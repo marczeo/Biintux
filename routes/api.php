@@ -53,3 +53,10 @@ Route::get('/getAllRoute/{type}','RouteController@getAllJson');
 |--------------------------------------------------------------------------
 */
  Route::get('/getAllBus','BusController@getAllJson');
+
+ /*
+|--------------------------------------------------------------------------
+| Localización
+|--------------------------------------------------------------------------
+*/
+Route::get('/device_location','Device_locationController@store');

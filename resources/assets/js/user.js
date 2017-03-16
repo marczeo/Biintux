@@ -43,3 +43,61 @@ $("#select_concessionaire").change(event=>{
 		});
 	});
 });
+
+function initialize() {
+  var myLatLng = new google.maps.LatLng( 20.659699, -103.349609);
+  var infowindow = new google.maps.InfoWindow();
+  var mapOptions = {
+    zoom: 13,
+    center: myLatLng,
+    mapTypeId: google.maps.MapTypeId.TERRAIN
+  };
+
+  var bermudaTriangle;
+
+  var map = new google.maps.Map(document.getElementById('map'),
+    mapOptions);
+
+
+  
+/*CICLOVIAS*/
+  $.ajax(
+  {
+    url : '/api/getAllLocation',
+    type: "GET",
+    success:function(data) 
+    {
+      $parseData=JSON.parse(data);
+      //console.log($parseData);
+      $.each($parseData.data, function(i, item) {
+      	console.log(item.name);
+      	var location= new google.maps.LatLng( parseFloat(item.longitude),parseFloat(item.latitude));
+      	var marker = new google.maps.Marker({
+      		position: location,
+      		//label: item.name,
+      		title: item.name,
+      		map: map
+      	});
+      	google.maps.event.addListener(marker, 'mouseover', function(event) {
+          infowindow.open(map);
+          if(item.name=="")
+          	infowindow.setContent("User");
+          else
+          	infowindow.setContent(item.name);
+          infowindow.setPosition(event.latLng);
+        });
+        google.maps.event.addListener(marker, 'mouseout', function() {
+            infowindow.close();
+        });
+
+      });
+
+    },
+    error: function(jqXHR, textStatus, errorThrown) 
+    {
+      console.log("No se pudieron cargar los datos");
+    }
+  });
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);

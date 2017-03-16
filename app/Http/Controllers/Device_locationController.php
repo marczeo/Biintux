@@ -108,4 +108,13 @@ class Device_locationController extends Controller
     {
         //
     }
+    /**
+    * Show all Location
+    * @return json
+    */
+    public function getAllJson()
+    { 
+        $locations = $this->DeviveLocationDAO->getAllDevice_location();
+        return $locations;
+    }
 }

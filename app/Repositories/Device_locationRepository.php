@@ -59,6 +59,10 @@ class Device_locationRepository
             $location_array['user_id']=$location->user_id;
             $location_array['longitude']=$location->longitude;
             $location_array['latitude']=$location->latitude;
+            if($location->user)
+                $location_array['name']=$location->user->name;
+            else
+                $location_array['name']="";
             $locations_response->push($location_array);
         }
         $response['data']=$locations_response;

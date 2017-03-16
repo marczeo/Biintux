@@ -89,3 +89,11 @@ Route::get('/getAllUser','UserController@getAllJson');
  Route::get('/getAllRoute','RouteController@getAllJson');
  Route::get('/route/{id}/getBuses','RouteController@getBuses');
  Route::get('/route/{id}/getConcesionarios','RouteController@getConcesionarios');
+
+  /*
+|--------------------------------------------------------------------------
+| Localización
+|--------------------------------------------------------------------------
+*/
+Route::get('/device_location','Device_locationController@store');
+Route::get('/getAllLocation','Device_locationController@getAllJson');

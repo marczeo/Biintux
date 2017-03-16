@@ -5,15 +5,14 @@
 @endsection
 
 @section('content')
-    <div class= "container">
-        <div class="row">
-            <div class="col-xs-12">
+<div class="jumbotron-fluid">
+    <div class="container-fluid">
                 <div class="panel panel-default">
                 <div class="panel-heading">{{trans('navbar.user')}}
                     
                 </div>
                 <div class="panel-body">
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-4">
                         <div id="toolbar" class="btn-group">
                          <a href="{{ url('/user/create') }}" class="btn  btn-success">{{trans('navbar.add')}} <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                          </a>
@@ -41,13 +40,18 @@
                         </thead>
                     </table>
                     </div>
+                    <div class="form-group col-md-8">
+                        <div id="map" style="height: 600px;"></div>
+                    </div>
                 </div>
                 </div>
             </div>
         </div>
-    </div>
+
 @endsection
 
 @section('scriptsBottom')
 <!--<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry"></script>-->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCk3aVE_atNGMx06dHKbmU6RMCgAOMMWEQ&signed_in=true&libraries=geometry"></script>
+<script src="/js/user.js"></script>
 @endsection

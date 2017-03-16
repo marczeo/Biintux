@@ -48,6 +48,7 @@ function initialize()
               fillOpacity: 0.35
              });
             bermudaTrianglex.setMap(map);
+
           });
 
         },
@@ -77,6 +78,7 @@ function initialize()
     myData: "markerFrom",
     animation: google.maps.Animation.DROP
   });
+            
 
   marker.addListener('dragend', moveMarkerEvent);
     google.maps.event.addListener(marker, "dblclick", function (event) 
@@ -88,28 +90,26 @@ function initialize()
 
     });
 
- // getAddress(marker, 'markerFromAddress');
+  getAddress(marker.position, 'markerFrom');
 
-  document.getElementById('markerFromLat').value = marker.lat;
-  document.getElementById('markerFromLang').value = marker.lng;
+  //getAddress(marker.position, marker.title);
 
 }
 
-
+/////Aqui
 function getAddress(latLng, idInput)
 {
-  geocoder.geocode
-  ({
+  geocoder.geocode({
     latLng: latLng
-  }, 
-  function(responses) 
+  }, function(responses) 
   {
-    if (responses && responses.length > 0)
+    if (responses && responses.length > 0) 
     {      
-      document.getElementById(idInput).value = responses[0].formatted_address;
-    }
-    else
-    {
+      document.getElementById(idInput+'Lat').value = latLng.lat();
+      document.getElementById(idInput+'Lang').value = latLng.lng();
+      document.getElementById(idInput+'Address').value = responses[0].formatted_address;
+
+    } else {
       document.getElementById(idInput).value = 'Cannot determine address at this location.';
     }
   });

@@ -14,7 +14,7 @@
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/bus') }}">
                         {{ csrf_field() }}
-                        {{ method_field('POST') }}
+                        {{ method_field('GET') }}
                         <div class="form-group{{ $errors->has('economic_number') ? ' has-error' : '' }}">
                             <label for="economic_number" class="col-md-4 control-label">{{trans('bus.economic_number')}}</label>
 

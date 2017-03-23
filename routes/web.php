@@ -97,3 +97,6 @@ Route::get('/getAllUser','UserController@getAllJson');
 */
 Route::get('/device_location','Device_locationController@store');
 Route::get('/getAllLocation','Device_locationController@getAllJson');
+
+/*Search*/
+Route::post('/route/search', 'RouteController@search');

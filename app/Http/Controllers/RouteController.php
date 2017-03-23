@@ -10,6 +10,7 @@ use App\Node;
 use App\Repositories\RouteRepository;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Support\Collection;
 class RouteController extends Controller
 {
      /**
@@ -33,11 +34,11 @@ class RouteController extends Controller
                 $this->middleware('jwt.auth',['except'=>['getAllJson']]);
             }
             else{#Peticion desde web
-                $this->middleware('auth');
+                /*$this->middleware('auth');
                 $this->middleware('admin',['except' => [
                     'show',
                     'getAllJson'
-                    ]]);
+                    ]]);*/
             }
         }
         $this->rutasDAO = $rutas;
@@ -160,5 +161,38 @@ class RouteController extends Controller
     {
         $ciclovias = $this->rutasDAO->getAllRoutes($type);
         return $ciclovias;
+    }
+
+    /**
+     * Search for a specific route 
+     * @param String $search
+     * @return json $route
+    */
+    public function search(Request $request){
+        $routes=Route::where('code','LIKE','%'.$request->origin.'%')->get();
+        $route_response=new Collection;
+        foreach ($routes as $key=> $route)
+        {
+            $route_array=[];
+            $nodos = new Collection;
+            $rel_routes=$route->rel_route;
+            foreach ($rel_routes as $key => $rel_route) {
+                $nodo=[];
+                $nodo['longitude']=$rel_route->start_node->longitude;
+                $nodo['latitude']=$rel_route->start_node->latitude;
+                $nodos->push($nodo);
+            }
+            $route_array['id']=$route->id;
+            $route_array['code']=$route->code;
+            $route_array['type']=$route->type;
+            $route_array['type_read']=trans('route.'.$route->type);
+            //$route_array['name']=$route->name;
+            $route_array['encodepath']=$route->encodepath;
+            $route_array['color']=$route->color;
+            $route_array['nodos']=$nodos;
+            $route_response->push($route_array);
+        }
+        $response['data']=$route_response;
+        return json_encode($response);
     }
 }

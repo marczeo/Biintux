@@ -4,10 +4,12 @@
 * @author Marco Gómez
 * @version 0.1
 */
-
+var polis=[];
+var map;
+var infowindow;
 function initialize() {
   var myLatLng = new google.maps.LatLng( 20.659699, -103.349609);
-  var infowindow = new google.maps.InfoWindow();
+  infowindow = new google.maps.InfoWindow();
   var mapOptions = {
     zoom: 13,
     center: myLatLng,
@@ -16,7 +18,7 @@ function initialize() {
 
   var bermudaTriangle;
 
-  var map = new google.maps.Map(document.getElementById('map'),
+  map = new google.maps.Map(document.getElementById('map'),
     mapOptions);
 
 
@@ -65,6 +67,7 @@ function initialize() {
             infowindow.close();
         });
         routePath.setMap(map);
+        polis.push(routePath);
 
       });
 
@@ -122,6 +125,7 @@ function initialize() {
             infowindow.close();
         });
         routePath.setMap(map);
+        polis.push(routePath);
 
       });
 

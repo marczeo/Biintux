@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Route;
 use App\Rel_route;
 use App\Node;
+use App\Path;
 use Illuminate\Support\Collection;
 class RouteRepository
 {
@@ -35,21 +36,19 @@ class RouteRepository
         {
             $route_array=[];
             $nodos = new Collection;
-            $rel_routes=$route->rel_route;
-            foreach ($rel_routes as $key => $rel_route) {
+            foreach ($route->rel_route as $key => $rel_route) {
                 $nodo=[];
                 $nodo['longitude']=$rel_route->start_node->longitude;
                 $nodo['latitude']=$rel_route->start_node->latitude;
                 $nodos->push($nodo);
             }
             $route_array['id']=$route->id;
-            $route_array['code']=$route->code;
+            $route_array['name']=$route->name;
             $route_array['type']=$route->type;
             $route_array['type_read']=trans('route.'.$route->type);
-            //$route_array['name']=$route->name;
-            $route_array['encodepath']=$route->encodepath;
             $route_array['color']=$route->color;
             $route_array['nodos']=$nodos;
+            $route_array['paths']=$route->paths;
             $route_response->push($route_array);
         }
         $response['data']=$route_response;
@@ -69,8 +68,7 @@ class RouteRepository
             $route->setColor();
         }
 
-        //$route->code="BW-666";
-        $route->code=$request->name;
+        $route->name=$request->name;
         $route->encodepath=$request->encodePath;
         $route->direction=1;
         $route->first_run=$request->first_run;

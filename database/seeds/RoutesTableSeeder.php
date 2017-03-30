@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Repositories\RouteRepository;
 use App\Route;
+use App\Path;
 class RoutesTableSeeder extends Seeder
 {
     /**
@@ -12,41 +13,44 @@ class RoutesTableSeeder extends Seeder
      */
     public function run()
     {
-        $directory = database_path("/rutas");
-        $directory_decode = database_path("/decode");
-        $files = File::allFiles($directory);
-        foreach ($files as $file)
+        $directory_routes = database_path("/seeds/dataForSeed/routes");
+        $directory_decode = database_path("/seeds/dataForSeed/decodePaths");
+        $routes_files = File::allFiles($directory_routes);
+        foreach ($routes_files as $route_file)
         {
-            $json = File::get((string)$file);
-            $obj=json_decode($json);
+            $route_json = File::get((string)$route_file);
+            $route=json_decode($route_json);
             
             $DAO = new RouteRepository;
             $newRoute= new Route;
-            $newRoute2=new Route;
+            $path_ida = new Path;
+            $path_vuelta = new Path;
 
             $newRoute->setColor();
             while ($DAO->existColor($newRoute->color)){
                 $newRoute->setColor();
             }
 
-            $decode1=File::get($directory_decode."/".$obj->id."_decodedPath.txt");
-            $newRoute->code=$obj->name;
-            $newRoute->encodepath=$decode1;
-            $newRoute->direction=1;
             $newRoute->first_run="5:00";
             $newRoute->last_run="22:00";
             $newRoute->type="bus";
+            $newRoute->name=$route->name;
             $newRoute->save();
 
-            $decode2=File::get($directory_decode."/".$obj->id."_decodedPath2.txt");
-            $newRoute2->code=$newRoute->code;
-            $newRoute2->encodepath=$decode2;
-            $newRoute2->direction=2;
-            $newRoute2->first_run="5:00";
-            $newRoute2->last_run="22:00";
-            $newRoute2->type="bus";
-            $newRoute2->color=$newRoute->color;
-            $newRoute2->save();
+            
+            $decodePath1=File::get($directory_decode."/".$route->id."_decodedPath.txt");
+            $path_ida->encodepath=$decodePath1;
+            $path_ida->direction=1;
+            $path_ida->route_id=$newRoute->id;
+            $path_ida->save();
+           
+            
+
+            $decodePath2=File::get($directory_decode."/".$route->id."_decodedPath2.txt");
+            $path_vuelta->encodepath=$decodePath2;
+            $path_vuelta->direction=2;
+            $path_vuelta->route_id=$newRoute->id;
+            $path_vuelta->save();
             
         }
     }

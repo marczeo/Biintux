@@ -15,19 +15,11 @@ class CreateRoutesTable extends Migration
     {
         Schema::create('routes', function(Blueprint $table){
           $table->increments('id');
-          $table->string('code');
-          $table->integer('start_node_id')->unsigned()->nullable();
-          $table->integer('direction');
+          $table->string('name');
           $table->time('first_run');
           $table->time('last_run');
-          $table->mediumText('encodepath');
           $table->string('color');
-          $table->string('type')->default("bus");
-        });
-
-        Schema::table('routes', function(Blueprint $table){
-          $table->foreign('start_node_id')->references('id')->on('nodes')
-            ->onDelete('restrict')->onUpdate('cascade');
+          $table->enum('type', array('bus', 'train'))->default('bus');
         });
     }
 

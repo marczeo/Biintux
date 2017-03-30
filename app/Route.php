@@ -32,13 +32,20 @@ class Route extends Model
      * Get the rel_concessionaire records associated with the route.
     */
     public function rel_concessionaire(){
-        return $this->hasOne('App\Rel_concessionaire');
+        return $this->hasMany('App\Rel_concessionaire');
     }
 
     /*
-     * Get the nodes records associated with the bikeway.
+     * Get the rel_route records associated with the route.
     */
     public function rel_route(){
       return $this->hasMany('App\Rel_route','route_id');
+    }
+
+    /*
+     * Get the paths records associated with the route.
+    */
+    public function paths(){
+      return $this->hasMany('App\Path');
     }
 }

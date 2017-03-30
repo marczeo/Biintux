@@ -169,7 +169,7 @@ class RouteController extends Controller
      * @return json $route
     */
     public function search(Request $request){
-        $routes=Route::where('code','LIKE','%'.$request->origin.'%')->get();
+        $routes=Route::where('name','LIKE','%'.$request->origin.'%')->get();
         $route_response=new Collection;
         foreach ($routes as $key=> $route)
         {
@@ -183,11 +183,11 @@ class RouteController extends Controller
                 $nodos->push($nodo);
             }
             $route_array['id']=$route->id;
-            $route_array['code']=$route->code;
+            $route_array['name']=$route->name;
             $route_array['type']=$route->type;
             $route_array['type_read']=trans('route.'.$route->type);
             //$route_array['name']=$route->name;
-            $route_array['encodepath']=$route->encodepath;
+            $route_array['paths']=$route->paths;
             $route_array['color']=$route->color;
             $route_array['nodos']=$nodos;
             $route_response->push($route_array);

@@ -3,21 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\Device_locationRepository;
-use App\Repositories\UsuarioRepository;
-use Illuminate\Support\Facades\Auth;
-use App\User;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
 
-class Device_locationController extends Controller
+class DeviceController extends Controller
 {
     /**
      * The usuario repository instance.
      *
      * @var usuarioRepository
      */
-    protected $DeviceLocationDAO;
+    protected $DeviceDAO;
 
     /**
      * Create a new controller instance.
@@ -28,9 +22,8 @@ class Device_locationController extends Controller
     public function __construct(Device_locationRepository $device)
     {
         //Use DAO
-        $this->DeviceLocationDAO = $device;
+        $this->DeviceDAO = $device;
     }
-
 
     /**
      * Display a listing of the resource.
@@ -60,8 +53,8 @@ class Device_locationController extends Controller
      */
     public function store(Request $request)
     {
-        $result = $this->DeviceLocationDAO->addLocation($request);
-        return json_encode($result);
+        $result = $this->DeviceDAO->addDevice($request);
+        return json_encode(["device_id"=>$result);
     }
 
     /**
@@ -107,14 +100,5 @@ class Device_locationController extends Controller
     public function destroy($id)
     {
         //
-    }
-    /**
-    * Show all Location
-    * @return json
-    */
-    public function getAllJson()
-    { 
-        $locations = $this->DeviceLocationDAO->getAllDevice_location();
-        return $locations;
     }
 }

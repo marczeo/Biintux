@@ -139,8 +139,6 @@ function submit_form(form) {
             }
 			$parseData=JSON.parse(data);
             $.each($parseData.data, function(i, item) {
-                console.log(item.paths);
-        console.log(item.paths.length);
                 for (var i = 0; i < item.paths.length; i++) {
                     var instring = google.maps.geometry.encoding.decodePath(item.paths[i].encodepath);
                     var routeCoordinates = Array();

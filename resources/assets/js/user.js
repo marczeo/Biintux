@@ -60,7 +60,7 @@ function initialize() {
 
 
   
-/*CICLOVIAS*/
+
   $.ajax(
   {
     url : '/api/getAllLocation',
@@ -71,7 +71,7 @@ function initialize() {
       //console.log($parseData);
       $.each($parseData.data, function(i, item) {
       	console.log(item.name);
-      	var location= new google.maps.LatLng( parseFloat(item.longitude),parseFloat(item.latitude));
+      	var location= new google.maps.LatLng( parseFloat(item.latitude),parseFloat(item.longitude));
       	var marker = new google.maps.Marker({
       		position: location,
       		//label: item.name,

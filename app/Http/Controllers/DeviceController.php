@@ -3,6 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Device_location;
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use JWTAuth;
+use App\Repositories\DeviceRepository;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class DeviceController extends Controller
 {
@@ -19,7 +26,7 @@ class DeviceController extends Controller
      * @param  Device_locationRepositiry  $device
      * @return void
      */
-    public function __construct(Device_locationRepository $device)
+    public function __construct(DeviceRepository $device)
     {
         //Use DAO
         $this->DeviceDAO = $device;
@@ -54,7 +61,7 @@ class DeviceController extends Controller
     public function store(Request $request)
     {
         $result = $this->DeviceDAO->addDevice($request);
-        return json_encode(["device_id"=>$result);
+        return json_encode(["device_id"=>$result]);
     }
 
     /**

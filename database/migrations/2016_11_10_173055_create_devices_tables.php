@@ -15,12 +15,10 @@ class CreateDevicesTables extends Migration
     {
         Schema::create('devices', function(Blueprint $table){
             $table->increments('id');
-            $table->integer('user_id')->nullable();
-            $table->string('device_key');
-        });
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->string('device_key')->nullable();
 
-        Schema::table('devices', function(Blueprint $table){
-            $table->foreign('user_id')->references('id')->on('users')
+             $table->foreign('user_id')->references('id')->on('users')
             ->onDelete('restrict')->onUpdate('cascade');
         });
     }

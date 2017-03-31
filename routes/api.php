@@ -61,3 +61,11 @@ Route::get('/getAllRoute/{type}','RouteController@getAllJson');
 */
 Route::get('/device_location','Device_locationController@store');
 Route::get('/getAllLocation','Device_locationController@getAllJson');
+
+ /*
+|--------------------------------------------------------------------------
+| Devices
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/register_device','DeviceController@store');

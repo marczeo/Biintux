@@ -8,7 +8,8 @@ use App\Device_location;
 use App\Node;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 class DeviceRepository
 {
 
@@ -20,8 +21,18 @@ class DeviceRepository
     public function addDevice(Request $request)
     {
        $device=new Device;
-       $device->user_id=$request->user_id;
-       $device->device_key=$request->device_key;
+       $user=null;
+       try {
+             $user = JWTAuth::parseToken()->authenticate();
+        } catch (JWTException $e) {
+            
+        }
+        if($user)
+        {
+            $location->user_id=$user->id;
+        }
+        if($request->device_key)
+            $device->device_key=$request->device_key;
        $device->save();
         return $device->id;
     }

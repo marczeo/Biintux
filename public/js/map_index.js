@@ -30,7 +30,6 @@ function initialize() {
     success:function(data) 
     {
       $parseData=JSON.parse(data);
-      console.log($parseData);
       $.each($parseData.data, function(i, item) {
         
         for (var i = 0; i < item.paths.length; i++) {
@@ -65,7 +64,7 @@ function initialize() {
           });
           google.maps.event.addListener(routePath, 'mouseover', function(event) {
             infowindow.open(map);
-            infowindow.setContent(item.code);
+            infowindow.setContent(item.name);
             infowindow.setPosition(event.latLng);
           });
           google.maps.event.addListener(routePath, 'mouseout', function() {

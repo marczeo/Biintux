@@ -169,7 +169,7 @@ function submit_form(form) {
                     });
                     google.maps.event.addListener(routePath, 'mouseover', function(event) {
                       infowindow.open(map);
-                      infowindow.setContent(item.code);
+                      infowindow.setContent(item.name);
                       infowindow.setPosition(event.latLng);
                     });
                     google.maps.event.addListener(routePath, 'mouseout', function() {

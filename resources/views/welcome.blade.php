@@ -105,7 +105,7 @@
                 </ul>
             </div>
         </div>
-        <div id="main-wrapper" class="col-md-10 pull-right">
+        <div id="main-wrapper" class="col-md-10">
             <div id="main">
               <div id="map" style="height: 100%;"></div>
             </div>

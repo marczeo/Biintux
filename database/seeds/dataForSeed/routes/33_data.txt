@@ -1,1 +1,1 @@
-{"id":"33","name":"706 Vía Central Camionera","encodedPath":"kcr}BzwdvRP@HHV@bAuApL|Au@fAO\|Fn@~Fn@`ALV@RNZ|@Z@j@m@lEkE|@aAxEd@~H|@zC^sBau@zb@ac@lEfIvAwAxFwApDk`@fFaj@pBNdAW|@u@h@cApJeQzL{TjMqUxtA}eChWmb@xBYjAi@z@{BrmCeGOyD`EmKdP{j@fCeKhKkMfEz@fDTjYiRvc@m[ll@y_@lb@}XbUnAJcCn@i`@JwMTgMBqN[iCvBeXn]oVpEsG|D{FvCaGzNma@bF|@vClApAh@|Ha^j_@xDfA?_Dc_AwAcd@[iIr@oGsDqEy@cA?eBhBgDb@wByDiiAas@sOjCsUwHwA~g@@","encodedPath2":"~g@@"}
+﻿{"id":"33","name":"706 Vía Central Camionera","encodedPath":"","encodedPath2":""}

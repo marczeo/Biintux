@@ -10,6 +10,7 @@ var infowindow;
 function initialize() {
   var myLatLng = new google.maps.LatLng( 20.659699, -103.349609);
   infowindow = new google.maps.InfoWindow();
+  var infoWindow = new google.maps.InfoWindow({map: map});
   var mapOptions = {
     zoom: 13,
     center: myLatLng,
@@ -140,7 +141,34 @@ function initialize() {
       console.log("No se pudieron cargar los datos");
     }
   });
-}
 
+  // Try HTML5 geolocation.
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+
+      var marker = new google.maps.Marker({
+        position: pos,
+        map: map,
+        title: 'Su ubicaciónn!'
+      });
+      map.setCenter(pos);
+    }, function() {
+      handleLocationError(true, infoWindow, map.getCenter());
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
+  }
+}
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(browserHasGeolocation ?
+                        'Error: The Geolocation service failed.' :
+                        'Error: Your browser doesn\'t support geolocation.');
+}
 google.maps.event.addDomListener(window, 'load', initialize);
 //# sourceMappingURL=map_index.js.map

@@ -52,7 +52,7 @@
                                 <select id="select_route" class="form-control" name="route_id">
                                     <option selected disabled>{{trans('bus.choose')}}</option>
                                 @foreach ($rutas as $ruta)
-                                    <option value="{{$ruta->id}}">{{$ruta->code}}</option>
+                                    <option value="{{$ruta->id}}">{{$ruta->name}}</option>
                                 @endforeach
                                 </select>
                             </div>

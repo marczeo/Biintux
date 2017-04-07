@@ -5,6 +5,7 @@ use App\Repositories\BusRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Repositories\RouteRepository;
+use App\Bus;
 
 class BusController extends Controller
 {
@@ -118,7 +119,9 @@ class BusController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $bus=Bus::findOrFail($id);
+        $bus->delete();
+        return redirect('/bus');
     }
 
     public function getAllJson()

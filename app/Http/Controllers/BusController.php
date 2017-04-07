@@ -72,7 +72,7 @@ class BusController extends Controller
      */
     public function store(Request $request)
     {
-        $this->busesDAO->createBus($request);
+        $result = $this->busesDAO->createBus($request);
         return redirect('/bus');
     }
 

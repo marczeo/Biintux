@@ -14,11 +14,7 @@ function initialize() {
   var mapOptions = {
     zoom: 13,
     center: myLatLng,
-    mapTypeId: google.maps.MapTypeId.TERRAIN
   };
-
-  var bermudaTriangle;
-
   map = new google.maps.Map(document.getElementById('map'),
     mapOptions);
 
@@ -46,7 +42,7 @@ function initialize() {
           }
           var lineSymbol = {
             path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
-            scale: 2.2,
+            scale: 1.5,
             strokeColor: "#FFF",
             strokeOpacity: 1
           };
@@ -61,7 +57,7 @@ function initialize() {
             }],
             strokeColor: item.color,
             strokeOpacity: 0.7,
-            strokeWeight: 8
+            strokeWeight: 4
           });
           google.maps.event.addListener(routePath, 'mouseover', function(event) {
             infowindow.open(map);

@@ -5,6 +5,7 @@ use App\Repositories\RouteRepository;
 use App\Route;
 use App\Path;
 use App\Node;
+use App\Rel_route;
 class RoutesTableSeeder extends Seeder
 {
     /**
@@ -69,6 +70,11 @@ class RoutesTableSeeder extends Seeder
                     $newNode->latitude = $path_ida_node->lat;
                     $newNode->type='route';
                     $newNode->save();
+
+                    $newRel= new Rel_route;
+                    $newRel->route_id=$newRoute->id;
+                    $newRel->start_node_id=$newNode->id;
+                    $newRel->save();
                     //echo $path_ida_node->lat.", ".$path_ida_node->lng."\n";
                 }
             }
@@ -85,6 +91,11 @@ class RoutesTableSeeder extends Seeder
                     $newNode->latitude = $path_vuelta_node->lat;
                     $newNode->type='route';
                     $newNode->save();
+
+                    $newRel= new Rel_route;
+                    $newRel->route_id=$newRoute->id;
+                    $newRel->start_node_id=$newNode->id;
+                    $newRel->save();
                     //echo $path_vuelta_node->lat.", ".$path_vuelta_node->lng."\n";
                 }
             }

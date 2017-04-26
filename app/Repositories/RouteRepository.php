@@ -18,13 +18,26 @@ class RouteRepository
 
     protected $typeNode = 'route';
 
+
+    /**
+     * Get all of the bus routes
+     *
+     * @param  null
+     * @return Collection
+     */
+    public function getAllRoutesID()
+    {
+        $ids =Route::orderBy('id','asc')->select('id')->get();
+        return $ids;
+    }
+
     /**
      * Get all of the bus routes
      *
      * @param  null
      * @return json
      */
-    public function getAllRoutes($type)
+    public function getAllRoutes($type = null)
     {
         $routes =Route::orderBy('id','asc')->get();
         if($type!=null)
@@ -36,18 +49,18 @@ class RouteRepository
         {
             $route_array=[];
             $nodos = new Collection;
-            foreach ($route->rel_route as $key => $rel_route) {
+            /*foreach ($route->rel_route as $key => $rel_route) {
                 $nodo=[];
                 $nodo['longitude']=$rel_route->start_node->longitude;
                 $nodo['latitude']=$rel_route->start_node->latitude;
                 $nodos->push($nodo);
-            }
+            }*/
             $route_array['id']=$route->id;
             $route_array['name']=$route->name;
             $route_array['type']=$route->type;
             $route_array['type_read']=trans('route.'.$route->type);
             $route_array['color']=$route->color;
-            $route_array['nodos']=$nodos;
+            //$route_array['nodos']=$nodos;
             $route_array['paths']=$route->paths;
             $route_response->push($route_array);
         }
@@ -142,5 +155,49 @@ class RouteRepository
             return true;
         return false;
 
+    }
+
+    /**
+     * calcular distancia entre dos coordenadas
+     *
+     * @param double latitude1
+     * @param double longitude1
+     * @param double latitude2
+     * @param double longitude2
+     * @return double distance
+     */
+    public function distanceCalculation($latitude1, $longitude1, $latitude2, $longitude2, $decimals = 2)
+    {
+        $degrees = rad2deg(acos((sin(deg2rad($latitude1))*sin(deg2rad($latitude2))) + (cos(deg2rad($latitude1))*cos(deg2rad($latitude2))*cos(deg2rad($longitude1-$longitude2)))));
+
+        $distance = ($degrees * 111.13384)*1000; // 1 grado = 111.13384 km, basándose en el diametro promedio de la Tierra (12.735 km)
+        return round($distance, $decimals);
+    }
+
+    /**
+     * Obtener rutas cercanas
+     *
+     * @param double latitude
+     * @param double longitude
+     * @param decimal rango
+     * @return Collection rutas
+     */
+    public function nearRoutes($latitude, $longitude, $rango)
+    {
+        $rutasID = $this->getAllRoutesID();
+        $routes_total= $rutasID->count();
+        $near=new Collection;
+        for ($index_rutasID=0; $index_rutasID < $routes_total; $index_rutasID++) { 
+            $ruta_nodos = Route::findOrFail($rutasID[$index_rutasID]->id)->rel_route;
+            foreach ($ruta_nodos as $nodo) {
+                if($this->distanceCalculation($nodo->start_node->latitude,$nodo->start_node->longitude,$latitude,$longitude) <= $rango)
+                {
+                    $near->push($rutasID[$index_rutasID]);
+                    continue;
+                }
+            }
+
+        }
+        return $near;
     }
 }

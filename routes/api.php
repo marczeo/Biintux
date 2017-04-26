@@ -46,6 +46,7 @@ Route::get('/login','UserController@authenticate');
 */
 Route::get('/getAllRoute','RouteController@getAllJson');
 Route::get('/getAllRoute/{type}','RouteController@getAllJson');
+Route::get('/getNearRoutes','RouteController@getNearRoutes');
 
  /*
 |--------------------------------------------------------------------------

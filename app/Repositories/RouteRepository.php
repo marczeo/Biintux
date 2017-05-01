@@ -193,7 +193,7 @@ class RouteRepository
                 if($this->distanceCalculation($nodo->start_node->latitude,$nodo->start_node->longitude,$latitude,$longitude) <= $rango)
                 {
                     $near->push($rutasID[$index_rutasID]);
-                    continue;
+                    break;
                 }
             }
 

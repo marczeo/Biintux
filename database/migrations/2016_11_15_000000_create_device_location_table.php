@@ -19,6 +19,7 @@ class CreateDeviceLocationTable extends Migration
         $table->integer('user_id')->unsigned()->nullable();
         $table->float('longitude', 10, 6);
         $table->float('latitude', 10, 6);
+        $table->timestamps();
       });
 
       Schema::table('device_location', function(Blueprint $table){

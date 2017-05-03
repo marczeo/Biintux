@@ -100,3 +100,4 @@ Route::get('/getAllLocation','Device_locationController@getAllJson');
 
 /*Search*/
 Route::post('/route/search', 'RouteController@search');
+Route::post('/route/searchNear', 'RouteController@getNearRoutes');

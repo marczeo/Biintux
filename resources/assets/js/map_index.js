@@ -7,9 +7,13 @@
 var polis=[];
 var map;
 var infowindow;
+var geocoder;
+var markerPosition;
 function initialize() {
   var myLatLng = new google.maps.LatLng( 20.659699, -103.349609);
   infowindow = new google.maps.InfoWindow();
+  //New instantiate Geocoder
+  geocoder = new google.maps.Geocoder();
   var infoWindow = new google.maps.InfoWindow({map: map});
   var mapOptions = {
     zoom: 13,
@@ -146,11 +150,17 @@ function initialize() {
         lng: position.coords.longitude
       };
 
-      var marker = new google.maps.Marker({
+      markerPosition = new google.maps.Marker({
         position: pos,
         map: map,
-        title: 'Su ubicaciónn!'
+        draggable: true,
+        title: 'Su ubicaciónn!',
+        myData: 'originNear'
       });
+      markerPosition.addListener('dragend', moveMarkerEvent);
+      getStreetName(pos, "originNear_formatted_address");
+      document.getElementById('originNear_lat').value=position.coords.latitude;
+      document.getElementById('originNear_lng').value=position.coords.longitude;
       map.setCenter(pos);
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
@@ -165,5 +175,31 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.setContent(browserHasGeolocation ?
                         'Error: The Geolocation service failed.' :
                         'Error: Your browser doesn\'t support geolocation.');
+}
+/*
+ * Get street name from position
+*/
+function getStreetName(position, IDInput) {
+  geocoder.geocode({'latLng': position}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      if (results[1]) {
+         document.getElementById(IDInput).value = results[0].formatted_address;
+      } else {
+         document.getElementById(IDInput).value = "-";
+         console.log("fail");
+      }
+    } else {
+       document.getElementById(IDInput).value  = "-";
+       console.log("fail geocoder");
+    }
+  });
+}
+function moveMarkerEvent(event) {
+  var idMarker=this.myData+'_';
+  //Update form inputs
+  document.getElementById(idMarker+'lat').value = event.latLng.lat();
+  document.getElementById(idMarker+'lng').value = event.latLng.lng();
+  document.getElementById(idMarker+'formatted_address').value = event.formatted_address;
+  getStreetName(event.latLng, idMarker+'formatted_address');
 }
 google.maps.event.addDomListener(window, 'load', initialize);

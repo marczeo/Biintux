@@ -8,6 +8,7 @@ use App\Rel_route;
 use App\Node;
 use App\Path;
 use Illuminate\Support\Collection;
+use DB;
 class RouteRepository
 {
     /**
@@ -186,18 +187,39 @@ class RouteRepository
     {
         $rutasID = $this->getAllRoutesID();
         $routes_total= $rutasID->count();
-        $near=new Collection;
+        $nearID_array = array();
         for ($index_rutasID=0; $index_rutasID < $routes_total; $index_rutasID++) { 
             $ruta_nodos = Route::findOrFail($rutasID[$index_rutasID]->id)->rel_route;
             foreach ($ruta_nodos as $nodo) {
                 if($this->distanceCalculation($nodo->start_node->latitude,$nodo->start_node->longitude,$latitude,$longitude) <= $rango)
                 {
-                    $near->push($rutasID[$index_rutasID]);
+                    array_push($nearID_array,$rutasID[$index_rutasID]->id);
                     break;
                 }
             }
 
         }
-        return $near;
+
+               
+        
+        
+        $routes= Route::whereIn('id', $nearID_array)
+                    ->get();
+        $route_response=new Collection;
+        foreach ($routes as $key=> $route)
+        {
+            $route_array=[];
+            $route_array['id']=$route->id;
+            $route_array['name']=$route->name;
+            $route_array['type']=$route->type;
+            $route_array['type_read']=trans('route.'.$route->type);
+            //$route_array['name']=$route->name;
+            $route_array['paths']=$route->paths;
+            $route_array['color']=$route->color;
+            $route_response->push($route_array);
+        }
+        $response['data']=$route_response;
+        
+        return $response;
     }
 }

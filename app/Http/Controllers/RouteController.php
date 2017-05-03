@@ -35,11 +35,13 @@ class RouteController extends Controller
             }
             else{#Peticion desde web
                 $this->middleware('auth',['except' =>[
-                    'search']]);
+                    'search',
+                    'getNearRoutes']]);
                 $this->middleware('admin',['except' => [
                     'show',
                     'getAllJson',
-                    'search'
+                    'search',
+                    'getNearRoutes'
                     ]]);
             }
         }
@@ -204,7 +206,7 @@ class RouteController extends Controller
     */
     public function getNearRoutes(Request $request)
     {
-        $response = $this->rutasDAO->nearRoutes($request->latitude, $request->longitude, $request->rango);
+        $response = $this->rutasDAO->nearRoutes($request->originNear_lat, $request->originNear_lng, $request->rango);
         return json_encode($response);
         
     }

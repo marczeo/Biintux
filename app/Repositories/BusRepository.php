@@ -63,7 +63,7 @@ class BusRepository
                 $buses_response[$key]['economic_number']=$bus->economic_number;
                 $buses_response[$key]['passenger_capacity']=$bus->passenger_capacity;
             }
-            $response['encodepath']=$currentUser->rel_concessionaire->route->encodepath;
+            $response['encodepath']=$currentUser->rel_concessionaire->route->paths;
         }
         $response['data']=$buses_response;
         return json_encode($response);

@@ -18,14 +18,14 @@ class UsersTableSeeder extends Seeder
           'role_id'=>App\Role::where('description', 'Administrator')->value('id'),
           'email'=>'admin@biintux.com',
         ]);
-        factory(App\User::class)->create([
+        /*factory(App\User::class)->create([
           'role_id'=>App\Role::where('description', 'Concessionaire')->value('id'),
           'email'=>'concesionario@biintux.me',
         ]);
         factory(App\User::class)->create([
           'role_id'=>App\Role::where('description', 'Driver')->value('id'),
           'email'=>'driver@biintux.me',
-        ]);
+        ]);*/
         factory(App\User::class)->create([
           'role_id'=>App\Role::where('description', 'Common')->value('id'),
           'email'=>'user@biintux.me',

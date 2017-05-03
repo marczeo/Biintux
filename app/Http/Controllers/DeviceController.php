@@ -108,4 +108,15 @@ class DeviceController extends Controller
     {
         //
     }
+    /**
+     * Validate device
+     *
+     * 
+     * @return json
+     */
+    public function validate_device(Request $request)
+    {
+        $result = $this->DeviceDAO->exist($request['device_id']);
+        return json_encode(["exist"=>$result]);
+    }
 }

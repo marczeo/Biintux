@@ -16,7 +16,7 @@ class DeviceRepository
     /**
      * Create Device
      * @param Request $request
-     * @return json
+     * @return int
      */
     public function addDevice(Request $request)
     {
@@ -35,5 +35,17 @@ class DeviceRepository
             $device->device_key=$request->device_key;
        $device->save();
         return $device->id;
+    }
+
+    /**
+     * Validar que la existencia de un dispositivo
+     * @param string $device_id
+     * @return boolean
+     */
+    public function exist($device_id)
+    {
+        if(Device::find($device_id))
+            return true;
+        return false;
     }
 }

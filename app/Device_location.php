@@ -17,7 +17,7 @@ class Device_location extends Model
      *
      * @var boolean
     */
-    public $timestamps = false;
+    public $timestamps = true;
 
     /*
      * Get the user record associated with the Device location.

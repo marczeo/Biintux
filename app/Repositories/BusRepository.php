@@ -75,8 +75,14 @@ class BusRepository
     */
     public function changeStatus(Bus $bus, $status)
     {
-        $bus->enabled=$status;
-        $bus->save();
-        return json_encode(["response"=>"Status changed successfully"]);
+        try {
+            $bus->enabled=$status;
+            $bus->save();
+            return response()->json(['code'=>200, 'response'=>'Status changed successfully'],200);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response()->json(['code'=>400 ,'response'=>'An error has occurred'],400);
+            
+        }
+        
     }
 }

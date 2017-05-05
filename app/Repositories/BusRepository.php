@@ -77,6 +77,6 @@ class BusRepository
     {
         $bus->enabled=$status;
         $bus->save();
-        return json_encode(["result"=>"ok"]);
+        return json_encode(["response"=>"Status changed successfully"]);
     }
 }

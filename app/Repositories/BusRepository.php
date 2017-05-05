@@ -68,4 +68,15 @@ class BusRepository
         $response['data']=$buses_response;
         return json_encode($response);
     }
+
+    /**
+     * Change status, enabled or disabled a bus
+     * @param String status
+    */
+    public function changeStatus(Bus $bus, $status)
+    {
+        $bus->enabled=$status;
+        $bus->save();
+        return json_encode(["result"=>"ok"]);
+    }
 }

@@ -54,7 +54,7 @@ Route::get('/getNearRoutes','RouteController@getNearRoutes');
 |--------------------------------------------------------------------------
 */
  Route::get('/getAllBus','BusController@getAllJson');
-
+ Route::get('/bus/{bus}/enabled','BusController@changeStatus');
  /*
 |--------------------------------------------------------------------------
 | Localización

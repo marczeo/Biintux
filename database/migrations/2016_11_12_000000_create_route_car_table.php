@@ -18,6 +18,7 @@ class CreateRouteCarTable extends Migration
           $table->string('economic_number');
           $table->integer('concessionaire_id')->unsigned();
           $table->integer('passenger_capacity')->default(0);
+          $table->boolean('enabled')->default(true);
         });
 
         Schema::table('route_car', function(Blueprint $table){

@@ -129,4 +129,16 @@ class BusController extends Controller
         $buses = $this->busesDAO->getAllBuses();
         return $buses;
     }
+
+    /**
+     * Change status -> enabled or disabled a bus
+     * 
+     * @param \Illuminate\Http\Request  $request
+     * @return json
+    */
+    public function changeStatus(Request $request, Bus $bus)
+    {
+        $result=$this->busesDAO->changeStatus($bus, $request['estatus']);
+        return $result;
+    }
 }

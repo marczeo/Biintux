@@ -171,19 +171,19 @@ class RouteRepository
     {
         $degrees = rad2deg(acos((sin(deg2rad($latitude1))*sin(deg2rad($latitude2))) + (cos(deg2rad($latitude1))*cos(deg2rad($latitude2))*cos(deg2rad($longitude1-$longitude2)))));
 
-        $distance = ($degrees * 111.13384)*1000; // 1 grado = 111.13384 km, basándose en el diametro promedio de la Tierra (12.735 km)
+        $distance = ($degrees * 111)*1000; // 1 grado = 111.13384 km, basándose en el diametro promedio de la Tierra (12.735 km)
         return round($distance, $decimals);
     }
 
     /**
-     * Obtener rutas cercanas
+     * Obtener rutas cercanas a partir de los nodos
      *
      * @param double latitude
      * @param double longitude
      * @param decimal rango
      * @return Collection rutas
      */
-    public function nearRoutes($latitude, $longitude, $rango)
+    public function nearRoutesNodes($latitude, $longitude, $rango)
     {
         $rutasID = $this->getAllRoutesID();
         $routes_total= $rutasID->count();
@@ -201,6 +201,58 @@ class RouteRepository
         }
 
                
+        
+        
+        $routes= Route::whereIn('id', $nearID_array)
+                    ->get();
+        $route_response=new Collection;
+        foreach ($routes as $key=> $route)
+        {
+            $route_array=[];
+            $route_array['id']=$route->id;
+            $route_array['name']=$route->name;
+            $route_array['type']=$route->type;
+            $route_array['type_read']=trans('route.'.$route->type);
+            //$route_array['name']=$route->name;
+            $route_array['paths']=$route->paths;
+            $route_array['color']=$route->color;
+            $route_response->push($route_array);
+        }
+        $response['data']=$route_response;
+        
+        return $response;
+    }
+
+    /**
+     * Obtener rutas cercanas a partir
+     *
+     * @param double latitude
+     * @param double longitude
+     * @param decimal rango
+     * @return Collection rutas
+     */
+    public function nearRoutes($latitude, $longitude, $rango)
+    {
+        $rutasID = $this->getAllRoutesID();
+        $routes_total= $rutasID->count();
+        $nearID_array = array();
+        for ($index_rutasID=0; $index_rutasID < $routes_total; $index_rutasID++) { 
+            $ruta_nodos = Route::findOrFail($rutasID[$index_rutasID]->id)->paths;
+            foreach ($ruta_nodos as $ruta) {
+                $poly_nodes =  \GeometryLibrary\PolyUtil::decode($ruta->encodepath);
+                
+                if(\GeometryLibrary\PolyUtil::isLocationOnEdge(
+                    ['lat' => $latitude, 'lng'=> $longitude],
+                    $poly_nodes,
+                    $rango))
+                {
+                    array_push($nearID_array,$rutasID[$index_rutasID]->id);
+                    break;
+                }
+            }
+
+        }
+
         
         
         $routes= Route::whereIn('id', $nearID_array)

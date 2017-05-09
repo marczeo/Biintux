@@ -62,14 +62,14 @@
                   <input type="hidden" name="originNear_lat" id="originNear_lat">
                   <input type="hidden" name="originNear_lng" id="originNear_lng">
                   <div class="input-group-btn">
-                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    <button class="btn btn-default" type="submit" ><i class="glyphicon glyphicon-search"></i></button>
                   </div>
                 </div>
               </li>
               <li>
                 <div class="form-group row">
                   <div class="col-xs-9">
-                    <input type="number" class="form-control" placeholder="Rango" name="rango" id="originNear_formatted_address">
+                    <input type="number" class="form-control" placeholder="Rango" name="rango" id="rango" min="10" value="50">
                   </div>
                   <label class="col-form-label col-xs-3" for="">Metros</label>
                 </div>
@@ -119,9 +119,9 @@
  * @return {boolean}
  */
  function submit_form(form) {
-   var serializeArray = new FormData(form);
+  var serializeArray = new FormData(form);
 
-   $.ajax({
+  $.ajax({
     url: form.action,
     type: form.method,
     data : serializeArray,
@@ -129,69 +129,76 @@
     contentType: false,
     processData: false,
     success: function(data){
-      for (i=0; i<polis.length; i++) 
+
+      /*Quitar todas las rutas actuales del mapa*/
+      for (i=0; i<rutasTemporales.length; i++) 
       {                           
-              polis[i].setMap(null); //or line[i].setVisible(false);
-            }
-            $parseData=JSON.parse(data);
-            $.each($parseData.data, function(i, item) {
-              for (var i = 0; i < item.paths.length; i++) {
-                var instring = google.maps.geometry.encoding.decodePath(item.paths[i].encodepath);
-                var routeCoordinates = Array();
-                var points = instring;
+        rutasTemporales[i].setMap(null); //or line[i].setVisible(false);
+      }
+      $parseData=JSON.parse(data);
+      $.each($parseData.data, function(i, item) {
+        for (var i = 0; i < item.paths.length; i++) {
+          var points = google.maps.geometry.encoding.decodePath(item.paths[i].encodepath);
 
-                for (i = 0; i < points.length; i++) {
-                  var p = new google.maps.LatLng(points[i][0], points[i][1]);
-                  routeCoordinates.push(p);
-                }
-                var lineSymbol = {
-                  path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
-                  scale: 2.2,
-                  strokeColor: "#FFF",
-                  strokeOpacity: 1
-                };
+          var lineSymbol = {
+            path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
+            scale: 2.2,
+            strokeColor: "#FFF",
+            strokeOpacity: 1
+          };
 
-                var routePath = new google.maps.Polyline({
-                  path: points,
-                  interpolate: true,
-                  icons: [{
-                    icon: lineSymbol,
-                    offset: '50%',
-                    repeat: '240px'
-                  }],
-                  strokeColor: item.color,
-                  strokeOpacity: 0.7,
-                  strokeWeight: 8
-                });
-                google.maps.event.addListener(routePath, 'mouseover', function(event) {
-                  infowindow.open(map);
-                  infowindow.setContent(item.name);
-                  infowindow.setPosition(event.latLng);
-                });
-                google.maps.event.addListener(routePath, 'mouseout', function() {
-                  infowindow.close();
-                });
-                routePath.setMap(map);
-                polis.push(routePath);
-              }
-
-            });
-          },
-          error: function (response) {
-           console.log("fail");
-           console.log(response);
-         }
-       });
-   return false;
+          var routePath = new google.maps.Polyline({
+            path: points,
+            interpolate: true,
+            icons: [{
+              icon: lineSymbol,
+              offset: '50%',
+              repeat: '240px'
+            }],
+            strokeColor: item.color,
+            strokeOpacity: 0.7,
+            strokeWeight: 8
+          });
+          google.maps.event.addListener(routePath, 'mouseover', function(event) {
+            infowindow.open(map);
+            infowindow.setContent(item.name);
+            infowindow.setPosition(event.latLng);
+          });
+          google.maps.event.addListener(routePath, 'mouseout', function() {
+            infowindow.close();
+          });
+          routePath.setMap(map);
+          rutasTemporales.push(routePath);
+        }
+      });
+    },
+    error: function (response) {
+      console.log("fail");
+      console.log(response);
+    }
+  });
+  return false;
  }
- function locationEdge(form){
-    var serializeArray = JSON.stringify($(form).serializeObject());
-    var json= JSON.parse(serializeArray);
-    var lat= serializeArray.originNear_lat;
-    var lng= serializeArray.originNear_lng;
-    var rango=serializeArray.rango;
-    console.log(jserializeArray);
-    return false;
+ function locationEdge(){
+  var rango=document.getElementById('rango').value;
+  var originNear_lat=document.getElementById('originNear_lat').value;
+  var originNear_lng=document.getElementById('originNear_lng').value;
+  var myPosition = new google.maps.LatLng(originNear_lat, originNear_lng);
+  /*Quitar todas las rutas actuales del mapa*/
+  for (i=0; i<rutasTemporales.length; i++) 
+  {
+    rutasTemporales[i].setMap(null); //or line[i].setVisible(false);
+  }
+  for (i=0; i<rutasOriginales.length; i++) 
+  {
+    if (google.maps.geometry.poly.containsLocation(myPosition, rutasOriginales[i])) {
+      rutasTemporales.push(rutasOriginales[i]);
+      rutasTemporales[i].setMap(map);
+      console.log("otra");
+    }
+  }
+
+  return false;
  }
     </script>
  

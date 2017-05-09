@@ -206,6 +206,7 @@ class RouteController extends Controller
     */
     public function getNearRoutes(Request $request)
     {
+        //$response = $this->rutasDAO->nearRoutesNodes($request->originNear_lat, $request->originNear_lng, $request->rango);
         $response = $this->rutasDAO->nearRoutes($request->originNear_lat, $request->originNear_lng, $request->rango);
         return json_encode($response);
         

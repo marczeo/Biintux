@@ -10,7 +10,8 @@
         "laravel/framework": "5.3.*",
         "laracasts/flash": "^2.0",
         "guzzlehttp/guzzle": "~4.0",
-        "paragonie/random_compat": "~1.4"
+        "paragonie/random_compat": "~2.0.10",
+        "alexpechkarev/geometry-library": "1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

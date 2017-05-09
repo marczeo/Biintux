@@ -4,7 +4,8 @@
 * @author Marco Gómez
 * @version 0.1
 */
-var polis=[];
+var rutasTemporales=[];
+var rutasOriginales=[];
 var map;
 var infowindow;
 var geocoder;
@@ -36,14 +37,8 @@ function initialize() {
         for (var i = 0; i < item.paths.length; i++) {
           
         
-          var instring = google.maps.geometry.encoding.decodePath(item.paths[i].encodepath);
-          var routeCoordinates = Array();
-          var points = instring;
+          var points = google.maps.geometry.encoding.decodePath(item.paths[i].encodepath);
 
-          for (i = 0; i < points.length; i++) {
-            var p = new google.maps.LatLng(points[i][0], points[i][1]);
-            routeCoordinates.push(p);
-          }
           var lineSymbol = {
             path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
             scale: 1.5,
@@ -52,6 +47,18 @@ function initialize() {
           };
 
           var routePath = new google.maps.Polyline({
+            path: points,
+            interpolate: true,
+            icons: [{
+              icon: lineSymbol,
+              offset: '50%',
+              repeat: '240px'
+            }],
+            strokeColor: item.color,
+            strokeOpacity: 0.7,
+            strokeWeight: 4
+          });
+          var routePathOriginal = new google.maps.Polyline({
             path: points,
             interpolate: true,
             icons: [{
@@ -72,7 +79,8 @@ function initialize() {
               infowindow.close();
           });
           routePath.setMap(map);
-          polis.push(routePath);
+          rutasTemporales.push(routePath);
+          rutasOriginales.push(routePathOriginal);
         }
 
       });
@@ -93,14 +101,8 @@ function initialize() {
       $parseData=JSON.parse(data);
       //console.log($parseData);
       $.each($parseData.data, function(i, item) {
-        var instring = google.maps.geometry.encoding.decodePath(item.encodepath);
-        var routeCoordinates = Array();
-        var points = instring;
+        var points = google.maps.geometry.encoding.decodePath(item.encodepath);
 
-        for (i = 0; i < points.length; i++) {
-          var p = new google.maps.LatLng(points[i][0], points[i][1]);
-          routeCoordinates.push(p);
-        }
         var lineSymbol = {
           path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
           scale: 2.2,
@@ -131,7 +133,8 @@ function initialize() {
             infowindow.close();
         });
         routePath.setMap(map);
-        polis.push(routePath);
+        rutasTemporales.push(routePath);
+        rutasOriginales.push(routePath);
 
       });
 

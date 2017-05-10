@@ -225,7 +225,7 @@ class RouteRepository
 
     /**
      * Obtener rutas cercanas a partir
-     *
+     * https://github.com/alexpechkarev/geometry-library#isLocationOnEdge
      * @param double latitude
      * @param double longitude
      * @param decimal rango
@@ -247,7 +247,6 @@ class RouteRepository
                     $rango))
                 {
                     array_push($nearID_array,$rutasID[$index_rutasID]->id);
-                    break;
                 }
             }
 

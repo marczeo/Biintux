@@ -5,11 +5,11 @@
 * @version 0.1
 */
 var rutasTemporales=[];
-var rutasOriginales=[];
 var map;
 var infowindow;
 var geocoder;
 var markerPosition;
+var circle;
 function initialize() {
   var myLatLng = new google.maps.LatLng( 20.659699, -103.349609);
   infowindow = new google.maps.InfoWindow();
@@ -22,7 +22,10 @@ function initialize() {
   };
   map = new google.maps.Map(document.getElementById('map'),
     mapOptions);
-
+  circle = new google.maps.Circle({
+    map: map,
+    fillColor: '#AA0000'
+  });
 
   /*RUTAS*/
     $.ajax(
@@ -58,18 +61,6 @@ function initialize() {
             strokeOpacity: 0.7,
             strokeWeight: 4
           });
-          var routePathOriginal = new google.maps.Polyline({
-            path: points,
-            interpolate: true,
-            icons: [{
-              icon: lineSymbol,
-              offset: '50%',
-              repeat: '240px'
-            }],
-            strokeColor: item.color,
-            strokeOpacity: 0.7,
-            strokeWeight: 4
-          });
           google.maps.event.addListener(routePath, 'mouseover', function(event) {
             infowindow.open(map);
             infowindow.setContent(item.name);
@@ -80,7 +71,6 @@ function initialize() {
           });
           routePath.setMap(map);
           rutasTemporales.push(routePath);
-          rutasOriginales.push(routePathOriginal);
         }
 
       });
@@ -134,7 +124,6 @@ function initialize() {
         });
         routePath.setMap(map);
         rutasTemporales.push(routePath);
-        rutasOriginales.push(routePath);
 
       });
 
@@ -205,4 +194,83 @@ function moveMarkerEvent(event) {
   document.getElementById(idMarker+'formatted_address').value = event.formatted_address;
   getStreetName(event.latLng, idMarker+'formatted_address');
 }
+
+/**
+ * Submit form
+ * @param {Object} form
+ * @return {boolean}
+ */
+ function submit_form(form) {
+  var serializeArray = new FormData(form);
+
+  $.ajax({
+    url: form.action,
+    type: form.method,
+    data : serializeArray,
+    cache:false,
+    contentType: false,
+    processData: false,
+    success: function(data){
+
+      /*Quitar todas las rutas actuales del mapa*/
+      for (i=0; i<rutasTemporales.length; i++) 
+      {                           
+        rutasTemporales[i].setMap(null); //or line[i].setVisible(false);
+      }
+      rutasTemporales=[];
+      $parseData=JSON.parse(data);
+      $.each($parseData.data, function(i, item) {
+        for (var i = 0; i < item.paths.length; i++) {
+          var points = google.maps.geometry.encoding.decodePath(item.paths[i].encodepath);
+
+          var lineSymbol = {
+            path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
+            scale: 2.2,
+            strokeColor: "#FFF",
+            strokeOpacity: 1
+          };
+
+          var routePath = new google.maps.Polyline({
+            path: points,
+            interpolate: true,
+            icons: [{
+              icon: lineSymbol,
+              offset: '50%',
+              repeat: '240px'
+            }],
+            strokeColor: item.color,
+            strokeOpacity: 0.7,
+            strokeWeight: 8
+          });
+          google.maps.event.addListener(routePath, 'mouseover', function(event) {
+            infowindow.open(map);
+            infowindow.setContent(item.name);
+            infowindow.setPosition(event.latLng);
+          });
+          google.maps.event.addListener(routePath, 'mouseout', function() {
+            infowindow.close();
+          });
+          routePath.setMap(map);
+          rutasTemporales.push(routePath);
+        }
+      });
+    },
+    error: function (response) {
+      console.log("fail");
+      console.log(response);
+    }
+  });
+  return false;
+ }
+ function draw_circle(){
+  var rango= parseInt(document.getElementById('rango').value);
+// Add circle overlay and bind to marker
+  circle.setRadius(rango);
+  circle.bindTo('center', markerPosition, 'position');
+  if(circle.getMap() == null) circle.setMap(map);
+ }
 google.maps.event.addDomListener(window, 'load', initialize);
+
+$( "#rango" ).change(function() {
+  draw_circle();
+});

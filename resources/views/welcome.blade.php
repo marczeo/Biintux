@@ -11,13 +11,13 @@
       {{-- Tabs --}}
       <ul class="nav nav-tabs" id="tab-menu">
         <li class="nav-item active">
-          <a class="nav-link " href="#home">Viajar</a>
+          <a id="viajar"class="nav-link " href="#home">Viajar</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#nearRoutes">Rutas cercanas</a>
+          <a id="cercana"class="nav-link" href="#nearRoutes">Rutas cercanas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#searchRoute">Buscar ruta</a>
+          <a id="buscar" class="nav-link" href="#searchRoute">Buscar ruta</a>
         </li>
       </ul>
 
@@ -110,96 +110,27 @@
     <script type="text/javascript">
       //Utilizar tabs
       $('#tab-menu a').click(function (e) {
-        e.preventDefault()
-        $(this).tab('show')
-      })
-    	/**
- * Submit form
- * @param {Object} form
- * @return {boolean}
- */
- function submit_form(form) {
-  var serializeArray = new FormData(form);
-
-  $.ajax({
-    url: form.action,
-    type: form.method,
-    data : serializeArray,
-    cache:false,
-    contentType: false,
-    processData: false,
-    success: function(data){
-
-      /*Quitar todas las rutas actuales del mapa*/
-      for (i=0; i<rutasTemporales.length; i++) 
-      {                           
-        rutasTemporales[i].setMap(null); //or line[i].setVisible(false);
-      }
-      $parseData=JSON.parse(data);
-      $.each($parseData.data, function(i, item) {
-        for (var i = 0; i < item.paths.length; i++) {
-          var points = google.maps.geometry.encoding.decodePath(item.paths[i].encodepath);
-
-          var lineSymbol = {
-            path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
-            scale: 2.2,
-            strokeColor: "#FFF",
-            strokeOpacity: 1
-          };
-
-          var routePath = new google.maps.Polyline({
-            path: points,
-            interpolate: true,
-            icons: [{
-              icon: lineSymbol,
-              offset: '50%',
-              repeat: '240px'
-            }],
-            strokeColor: item.color,
-            strokeOpacity: 0.7,
-            strokeWeight: 8
-          });
-          google.maps.event.addListener(routePath, 'mouseover', function(event) {
-            infowindow.open(map);
-            infowindow.setContent(item.name);
-            infowindow.setPosition(event.latLng);
-          });
-          google.maps.event.addListener(routePath, 'mouseout', function() {
-            infowindow.close();
-          });
-          routePath.setMap(map);
-          rutasTemporales.push(routePath);
+        var opcion=this.id;
+        console.log(this.id);
+        e.preventDefault();
+        $(this).tab('show');
+        map.setCenter(markerPosition.getPosition());
+        switch(opcion) {
+          case "viajar":
+            map.setZoom(13);
+            if(circle.getMap() != null) circle.setMap(null);
+          break;
+          case "cercana":
+            map.setZoom(18);
+            draw_circle();
+          break;
+          case "buscar":
+            map.setZoom(13);
+            if(circle.getMap() != null) circle.setMap(null);
+          break;
         }
       });
-    },
-    error: function (response) {
-      console.log("fail");
-      console.log(response);
-    }
-  });
-  return false;
- }
- function locationEdge(){
-  var rango=document.getElementById('rango').value;
-  var originNear_lat=document.getElementById('originNear_lat').value;
-  var originNear_lng=document.getElementById('originNear_lng').value;
-  var myPosition = new google.maps.LatLng(originNear_lat, originNear_lng);
-  /*Quitar todas las rutas actuales del mapa*/
-  for (i=0; i<rutasTemporales.length; i++) 
-  {
-    rutasTemporales[i].setMap(null); //or line[i].setVisible(false);
-  }
-  for (i=0; i<rutasOriginales.length; i++) 
-  {
-    if (google.maps.geometry.poly.containsLocation(myPosition, rutasOriginales[i])) {
-      rutasTemporales.push(rutasOriginales[i]);
-      rutasTemporales[i].setMap(map);
-      console.log("otra");
-    }
-  }
-
-  return false;
- }
+    	
     </script>
  
 @endsection

@@ -219,41 +219,45 @@ function moveMarkerEvent(event) {
       }
       rutasTemporales=[];
       $parseData=JSON.parse(data);
-      $.each($parseData.data, function(i, item) {
-        for (var i = 0; i < item.paths.length; i++) {
-          var points = google.maps.geometry.encoding.decodePath(item.paths[i].encodepath);
+      if($parseData.data.length==0)
+        alert("No hay rutas cercanas, intenta aumentando el rango.");
+      else{
+        $.each($parseData.data, function(i, item) {
+          for (var i = 0; i < item.paths.length; i++) {
+            var points = google.maps.geometry.encoding.decodePath(item.paths[i].encodepath);
 
-          var lineSymbol = {
-            path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
-            scale: 2.2,
-            strokeColor: "#FFF",
-            strokeOpacity: 1
-          };
+            var lineSymbol = {
+              path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
+              scale: 2.2,
+              strokeColor: "#FFF",
+              strokeOpacity: 1
+            };
 
-          var routePath = new google.maps.Polyline({
-            path: points,
-            interpolate: true,
-            icons: [{
-              icon: lineSymbol,
-              offset: '50%',
-              repeat: '240px'
-            }],
-            strokeColor: item.color,
-            strokeOpacity: 0.7,
-            strokeWeight: 8
-          });
-          google.maps.event.addListener(routePath, 'mouseover', function(event) {
-            infowindow.open(map);
-            infowindow.setContent(item.name);
-            infowindow.setPosition(event.latLng);
-          });
-          google.maps.event.addListener(routePath, 'mouseout', function() {
-            infowindow.close();
-          });
-          routePath.setMap(map);
-          rutasTemporales.push(routePath);
-        }
-      });
+            var routePath = new google.maps.Polyline({
+              path: points,
+              interpolate: true,
+              icons: [{
+                icon: lineSymbol,
+                offset: '50%',
+                repeat: '240px'
+              }],
+              strokeColor: item.color,
+              strokeOpacity: 0.7,
+              strokeWeight: 8
+            });
+            google.maps.event.addListener(routePath, 'mouseover', function(event) {
+              infowindow.open(map);
+              infowindow.setContent(item.name);
+              infowindow.setPosition(event.latLng);
+            });
+            google.maps.event.addListener(routePath, 'mouseout', function() {
+              infowindow.close();
+            });
+            routePath.setMap(map);
+            rutasTemporales.push(routePath);
+          }
+        });
+      }
     },
     error: function (response) {
       console.log("fail");

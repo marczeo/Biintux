@@ -43,24 +43,34 @@ $("#select_concessionaire").change(event=>{
 		});
 	});
 });
-
+var map;
+var infowindow;
+var marcadores=[];
 function initialize() {
   var myLatLng = new google.maps.LatLng( 20.659699, -103.349609);
-  var infowindow = new google.maps.InfoWindow();
+  infowindow = new google.maps.InfoWindow();
   var mapOptions = {
     zoom: 13,
     center: myLatLng,
     mapTypeId: google.maps.MapTypeId.TERRAIN
   };
 
-  var bermudaTriangle;
 
-  var map = new google.maps.Map(document.getElementById('map'),
+  map = new google.maps.Map(document.getElementById('map'),
     mapOptions);
 
 
-  
+  loadData();
 
+
+}
+function loadData()
+{
+  for (var i=0; i<marcadores.length; i++) {
+     
+        marcadores[i].setMap(null);
+    }
+    marcadores=[];
   $.ajax(
   {
     url : '/api/getAllLocation',
@@ -70,20 +80,21 @@ function initialize() {
       $parseData=JSON.parse(data);
       //console.log($parseData);
       $.each($parseData.data, function(i, item) {
-      	console.log(item.name);
-      	var location= new google.maps.LatLng( parseFloat(item.latitude),parseFloat(item.longitude));
-      	var marker = new google.maps.Marker({
-      		position: location,
-      		//label: item.name,
-      		title: item.name,
-      		map: map
-      	});
-      	google.maps.event.addListener(marker, 'mouseover', function(event) {
+        console.log(item.name);
+        var location= new google.maps.LatLng( parseFloat(item.latitude),parseFloat(item.longitude));
+        var marker = new google.maps.Marker({
+          position: location,
+          //label: item.name,
+          title: item.name,
+          map: map
+        });
+        marcadores[i]=marker;
+        google.maps.event.addListener(marker, 'mouseover', function(event) {
           infowindow.open(map);
           if(item.name=="")
-          	infowindow.setContent("User");
+            infowindow.setContent("User");
           else
-          	infowindow.setContent(item.name);
+            infowindow.setContent(item.name);
           infowindow.setPosition(event.latLng);
         });
         google.maps.event.addListener(marker, 'mouseout', function() {
@@ -99,6 +110,8 @@ function initialize() {
     }
   });
 }
-
 google.maps.event.addDomListener(window, 'load', initialize);
+window.setInterval(function(){
+  loadData();
+}, 2000);
 //# sourceMappingURL=user.js.map

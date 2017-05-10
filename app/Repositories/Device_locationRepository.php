@@ -47,12 +47,14 @@ class Device_locationRepository
      */
      public function getAllDevice_location()
     {
-        $locations =Device_location::orderBy('id','asc')->get();
+        $diferent_user=Device_location::whereNotNull('user_id')->select('user_id')->distinct('user_id')->get();        
         
         
         $locations_response=new Collection;
-        foreach ($locations as $key=> $location)
+        foreach ($diferent_user as $key=> $user)
         {
+
+            $location=Device_location::where('user_id',$user->user_id)->orderBy('created_at', 'asc')->get()->last();
             $location_array=[];
             $location_array['id']=$location->id;
             $location_array['device_id']=$location->device_id;

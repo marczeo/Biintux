@@ -72,6 +72,7 @@ class BusRepository
     /**
      * Change status, enabled or disabled a bus
      * @param String status
+     * @return json
     */
     public function changeStatus(Bus $bus, $status)
     {

@@ -29,12 +29,41 @@ class DeviceRepository
         }
         if($user)
         {
-            $location->user_id=$user->id;
+            $device->user_id=$user->id;
         }
         if($request->device_key)
             $device->device_key=$request->device_key;
        $device->save();
         return $device->id;
+    }
+
+    /**
+     * Asignar usuario al dispositivo
+     * @param string $device_id
+     * @return json
+    */
+    public function assignUserDevice($device_id)
+    {
+        $device=Device::find($device_id);
+        if($device)
+        {
+            $user=null;
+            try {
+               $user = JWTAuth::parseToken()->authenticate();
+           } catch (JWTException $e) {
+
+           }
+           if($user)
+           {
+                $device->user_id=$user->id;
+           }
+           $device->save();
+           return response()->json(['code'=>200, 'response'=>'User assigned to device successfully'],200);
+        }
+        else
+        {
+            return response()->json(['code'=>400 ,'response'=>'An error has occurred'],400);
+        }
     }
 
     /**

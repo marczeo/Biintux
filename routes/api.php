@@ -71,3 +71,4 @@ Route::get('/getAllLocation','Device_locationController@getAllJson');
 
 Route::get('/register_device','DeviceController@store');
 Route::get('/device/validate','DeviceController@validate_device');
+Route::get('/device/assignUser','DeviceController@assignUserDevice');

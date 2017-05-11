@@ -119,4 +119,15 @@ class DeviceController extends Controller
         $result = $this->DeviceDAO->exist($request['device_id']);
         return json_encode(["exist"=>$result]);
     }
+
+    /**
+     * Asignar usuario a dispositivo
+     * 
+     * @return json
+     */
+    public function assignUserDevice(Request $request)
+    {
+        $result = $this->DeviceDAO->assignUserDevice($request['device_id']);
+        return $result;
+    }
 }

@@ -188,6 +188,10 @@ class UserController extends Controller
         //return response()->json(compact('token'));
         $user = Auth::user();
         $rol=$user->role->description;
+        if($rol=="Driver"){
+            $id_bus=$user->driver->route_car_id;
+            return response()->json(compact('token','rol','id_bus'))->header('Content-Type','application/json');
+        }
         return response()->json(compact('token','rol'))->header('Content-Type','application/json');
     }
 }

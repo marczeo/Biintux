@@ -44,10 +44,10 @@ class User extends Authenticatable
         return $this->belongsTo('App\Role');
     }
     /*
-     * Get the device locations records associated with the user.
+     * Get the devices records associated with the user.
     */
-    public function device_locations(){
-        return $this->hasMany('App\Device_location');
+    public function device(){
+        return $this->hasMany('App\Device');
     }
     /*
      * Get the rel_concessionaire records associated with the user(concessionaire).

@@ -20,9 +20,9 @@ class Device_location extends Model
     public $timestamps = true;
 
     /*
-     * Get the user record associated with the Device location.
+     * Get the device record associated with the Device location.
     */
-    public function user(){
-        return $this->belongsTo('App\User');
+    public function device(){
+        return $this->belongsTo('App\Device','device_id','id');
     }
 }

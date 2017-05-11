@@ -4,6 +4,7 @@ namespace App\Repositories;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Device_location;
+use App\Device;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use JWTAuth;
@@ -18,17 +19,7 @@ class Device_locationRepository
      */
     public function addLocation(Request $request)
     {
-       $user=null;
        $location= new Device_location;
-        try {
-             $user = JWTAuth::parseToken()->authenticate();
-        } catch (JWTException $e) {
-            
-        }
-        if($user)
-        {
-            $location->user_id=$user->id;
-        }
         $location->longitude=$request->longitude;
         $location->latitude=$request->latitude;
         if($request->device_id)
@@ -47,22 +38,19 @@ class Device_locationRepository
      */
      public function getAllDevice_location()
     {
-        $diferent_user=Device_location::whereNotNull('user_id')->select('user_id')->distinct('user_id')->get();        
-        
+        $diferent_devices=Device::whereNotNull('user_id')->distinct('user_id')->get();
         
         $locations_response=new Collection;
-        foreach ($diferent_user as $key=> $user)
+        foreach ($diferent_devices as $key=> $device)
         {
-
-            $location=Device_location::where('user_id',$user->user_id)->orderBy('created_at', 'asc')->get()->last();
+            $location=$device->device_locations->last();
             $location_array=[];
             $location_array['id']=$location->id;
             $location_array['device_id']=$location->device_id;
-            $location_array['user_id']=$location->user_id;
             $location_array['longitude']=$location->longitude;
             $location_array['latitude']=$location->latitude;
-            if($location->user)
-                $location_array['name']=$location->user->name;
+            if($location->device)
+                $location_array['name']=$location->device->user->name;
             else
                 $location_array['name']="";
             $locations_response->push($location_array);

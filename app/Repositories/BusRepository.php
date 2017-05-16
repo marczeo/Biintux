@@ -40,9 +40,10 @@ class BusRepository
     {
         $buses=new Collection;
         $currentUser=Auth::user();
+        $buses_response=[];
         if($currentUser->isAdmin()){
             $buses= Bus::orderBy('id','asc')->get();
-            $buses_response=[];
+            
             foreach ($buses as $key=> $bus)
             {
 
@@ -55,7 +56,6 @@ class BusRepository
         }
         elseif ($currentUser->isConcessionaire()) {
             $buses=$currentUser->buses;
-            $buses_response=[];
             foreach ($buses as $key=> $bus)
             {
 

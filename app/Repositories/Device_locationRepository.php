@@ -38,22 +38,49 @@ class Device_locationRepository
      */
      public function getAllDevice_location()
     {
-        $diferent_devices=Device::whereNotNull('user_id')->distinct('user_id')->get();
-        
+        $currentUser=Auth::user();
         $locations_response=new Collection;
-        foreach ($diferent_devices as $key=> $device)
+        if($currentUser->isAdmin())
         {
-            $location=$device->device_locations->last();
-            $location_array=[];
-            $location_array['id']=$location->id;
-            $location_array['device_id']=$location->device_id;
-            $location_array['longitude']=$location->longitude;
-            $location_array['latitude']=$location->latitude;
-            if($location->device)
-                $location_array['name']=$location->device->user->name;
-            else
-                $location_array['name']="";
-            $locations_response->push($location_array);
+            $diferent_devices=Device::whereNotNull('user_id')->distinct('user_id')->get();
+            
+            foreach ($diferent_devices as $key=> $device)
+            {
+                $location=$device->device_locations->last();
+                if($location)
+                {
+                    $location_array=[];
+                    $location_array['id']=$location->id;
+                    $location_array['device_id']=$location->device_id;
+                    $location_array['longitude']=$location->longitude;
+                    $location_array['latitude']=$location->latitude;
+                    if($location->device)
+                        $location_array['name']=$location->device->user->name;
+                    else
+                        $location_array['name']="";
+                    $locations_response->push($location_array);
+                }
+            }
+
+        }
+        elseif ($currentUser->isConcessionaire()) {
+            foreach ($currentUser->drivers as $driver) {
+                $location=$driver->user->device->device_locations->last();
+                if($location)
+                {
+                    $location_array=[];
+                    $location_array['id']=$location->id;
+                    $location_array['device_id']=$location->device_id;
+                    $location_array['longitude']=$location->longitude;
+                    $location_array['latitude']=$location->latitude;
+                    if($location->device)
+                        $location_array['name']=$location->device->user->name;
+                    else
+                        $location_array['name']="";
+                    $locations_response->push($location_array);
+                }
+            }
+            
         }
         $response['data']=$locations_response;
         return json_encode($response);

@@ -73,7 +73,7 @@ function loadData()
     marcadores=[];
   $.ajax(
   {
-    url : '/api/getAllLocation',
+    url : '/getAllLocation',
     type: "GET",
     success:function(data) 
     {

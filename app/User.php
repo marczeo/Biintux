@@ -47,7 +47,7 @@ class User extends Authenticatable
      * Get the devices records associated with the user.
     */
     public function device(){
-        return $this->hasMany('App\Device');
+        return $this->hasOne('App\Device');
     }
     /*
      * Get the rel_concessionaire records associated with the user(concessionaire).

@@ -25,8 +25,18 @@ class Device_locationController extends Controller
      * @param  Device_locationRepositiry  $device
      * @return void
      */
-    public function __construct(Device_locationRepository $device)
+    public function __construct(Device_locationRepository $device, Request $request)
     {
+        //Cuando la petición es desde API
+        if($request->route()){
+        if($request->route()->getPrefix()=="api"){
+            $this->middleware('jwt.auth',['only'=>['getAllJson']]);
+        }
+        else{#Peticion desde web
+            $this->middleware('auth');
+            
+
+        }}
         //Use DAO
         $this->DeviceLocationDAO = $device;
     }

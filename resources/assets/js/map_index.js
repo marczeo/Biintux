@@ -7,6 +7,7 @@
 var rutasTemporales=[];
 var map;
 var infowindow;
+var infoWindow_currentPosition;
 var geocoder;
 var markerPosition;
 var circle;
@@ -15,7 +16,7 @@ function initialize() {
   infowindow = new google.maps.InfoWindow();
   //New instantiate Geocoder
   geocoder = new google.maps.Geocoder();
-  var infoWindow = new google.maps.InfoWindow({map: map});
+  infoWindow_currentPosition = new google.maps.InfoWindow({map: map});
   var mapOptions = {
     zoom: 13,
     center: myLatLng,
@@ -27,6 +28,13 @@ function initialize() {
     fillColor: '#AA0000'
   });
 
+  markerPosition=new google.maps.Marker({
+    map: map,
+    draggable: true,
+    title: 'Su ubicaciónn!',
+    myData: 'originNear'
+  });
+  markerPosition.addListener('dragend', moveMarkerEvent);
   /*RUTAS*/
     /*$.ajax(
   {
@@ -186,29 +194,24 @@ function getCurrentPosition()
         lng: position.coords.longitude
       };
 
-      markerPosition = new google.maps.Marker({
-        position: pos,
-        map: map,
-        draggable: true,
-        title: 'Su ubicaciónn!',
-        myData: 'originNear'
-      });
-      markerPosition.addListener('dragend', moveMarkerEvent);
+      markerPosition.setPosition(pos);
+      markerPosition.setVisible(true);
+      
       getStreetName(pos, "originNear_formatted_address");
       document.getElementById('originNear_lat').value=position.coords.latitude;
       document.getElementById('originNear_lng').value=position.coords.longitude;
       map.setCenter(pos);
     }, function() {
-      handleLocationError(true, infoWindow, map.getCenter());
+      handleLocationError(true, infoWindow_currentPosition, map.getCenter());
     });
   } else {
     // Browser doesn't support Geolocation
-    handleLocationError(false, infoWindow, map.getCenter());
+    handleLocationError(false, infoWindow_currentPosition, map.getCenter());
   }
 }
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-  infoWindow.setPosition(pos);
-  infoWindow.setContent(browserHasGeolocation ?
+  infoWindow_currentPosition.setPosition(pos);
+  infoWindow_currentPosition.setContent(browserHasGeolocation ?
                         'Error: The Geolocation service failed.' :
                         'Error: Your browser doesn\'t support geolocation.');
 }

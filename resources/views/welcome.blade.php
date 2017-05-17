@@ -121,13 +121,15 @@
             if(circle.getMap() != null) circle.setMap(null);
           break;
           case "cercana":
+            getCurrentPosition();
             map.setZoom(18);
             draw_circle();
           break;
           case "buscar":
+            getCurrentPosition();
             map.setZoom(13);
             if(circle.getMap() != null) circle.setMap(null);
-            getCurrentPosition();
+            
           break;
         }
       });

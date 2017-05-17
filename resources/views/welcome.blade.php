@@ -105,7 +105,7 @@
 </div>
 @endsection
 @section('scriptsBottom')
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCk3aVE_atNGMx06dHKbmU6RMCgAOMMWEQ&signed_in=true&libraries=geometry"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCk3aVE_atNGMx06dHKbmU6RMCgAOMMWEQ&signed_in=true&libraries=geometry,places"></script>
     <script src="/js/map_index.js"></script>
     <script type="text/javascript">
       //Utilizar tabs
@@ -127,6 +127,7 @@
           case "buscar":
             map.setZoom(13);
             if(circle.getMap() != null) circle.setMap(null);
+            getCurrentPosition();
           break;
         }
       });

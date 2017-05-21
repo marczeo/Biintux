@@ -169,29 +169,23 @@ class UserController extends Controller
         return $usuarios;
     }
 
+    /**
+     * Login desde la API
+     * @param Request $request
+     * @return json
+    */
     public function authenticate(Request $request)
     {
         // grab credentials from the request
         $credentials = $request->only('email', 'password');
+        return $this->usersDAO->authenticate($credentials);
+    }
 
-        try {
-            // attempt to verify the credentials and create a token for the user
-            if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 401);
-            }
-        } catch (JWTException $e) {
-            // something went wrong whilst attempting to encode the token
-            return response()->json(['error' => 'could_not_create_token'], 500);
-        }
-
-        // all good so return the token
-        //return response()->json(compact('token'));
-        $user = Auth::user();
-        $rol=$user->role->description;
-        if($rol=="Driver"){
-            $id_bus=$user->driver->route_car_id;
-            return response()->json(compact('token','rol','id_bus'))->header('Content-Type','application/json');
-        }
-        return response()->json(compact('token','rol'))->header('Content-Type','application/json');
+    /**
+     * Registro desde la API
+    */
+    public function register(Request $request)
+    {
+        return $this->usersDAO->register($request);
     }
 }

@@ -8,6 +8,9 @@ use App\Driver;
 use App\Rel_concessionaire;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Validator;
 class UsuarioRepository
 {
 
@@ -23,6 +26,22 @@ class UsuarioRepository
                     ->orderBy('created_at', 'asc')
                     ->get();
     }*/
+
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
+        ]);
+    }
+
     public function getAllUsuarios()
     {
         $currentUser=Auth::user();
@@ -133,5 +152,55 @@ class UsuarioRepository
         }
         
         return true;
+    }
+
+    /**
+     * Autenticar usuario desde API
+     * @param Array $credentials
+     * @return json
+    */
+    public function authenticate($credentials)
+    {
+        try {
+            // attempt to verify the credentials and create a token for the user
+            if (! $token = JWTAuth::attempt($credentials)) {
+                return response()->json(['error' => 'invalid_credentials'], 401);
+            }
+        } catch (JWTException $e) {
+            // something went wrong whilst attempting to encode the token
+            return response()->json(['error' => 'could_not_create_token'], 500);
+        }
+
+        // all good so return the token
+        //return response()->json(compact('token'));
+        $user = Auth::user();
+        $rol=$user->role->description;
+        if($rol=="Driver"){
+            $id_bus=$user->driver->route_car_id;
+            return response()->json(compact('token','rol','id_bus'))->header('Content-Type','application/json');
+        }
+        return response()->json(compact('token','rol'))->header('Content-Type','application/json');
+    }
+
+    /**
+     * Registrar usuario desde API
+     * @param array $request
+     * @return json
+    */
+    public function register($request)
+    {
+        $validator = $this->validator($request->all());
+        if ($validator->fails()) 
+        {
+            return response()->json(['error' => 'An error occured, verify your data'], 401);
+        }
+
+        User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => bcrypt($request['password']),
+            'role_id' => 1,
+        ]);
+        return $this->authenticate($request->only('email', 'password'));
     }
 }

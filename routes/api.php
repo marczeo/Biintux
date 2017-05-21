@@ -38,6 +38,7 @@ Route::get('/getAllCiclovia','CicloviaController@getAllJson');
 */
 Route::get('/getAllUser','UserController@getAllJson');
 Route::get('/login','UserController@authenticate');
+Route::get('/register','UserController@register');
 
 /*
 |--------------------------------------------------------------------------

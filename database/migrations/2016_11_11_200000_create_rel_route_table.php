@@ -15,13 +15,13 @@ class CreateRelRouteTable extends Migration
     {
         Schema::create('rel_route', function(Blueprint $table){
           $table->increments('id');
-          $table->integer('route_id')->unsigned();
+          $table->integer('path_id')->unsigned();
           $table->integer('start_node_id')->unsigned();
           $table->integer('next_node_id')->unsigned()->nullable();
         });
 
         Schema::table('rel_route', function(Blueprint $table){
-          $table->foreign('route_id')->references('id')->on('routes')
+          $table->foreign('path_id')->references('id')->on('paths')
             ->onDelete('restrict')->onUpdate('cascade');
           $table->foreign('start_node_id')->references('id')->on('nodes')
             ->onDelete('restrict')->onUpdate('cascade');

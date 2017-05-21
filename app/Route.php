@@ -35,12 +35,6 @@ class Route extends Model
         return $this->hasMany('App\Rel_concessionaire');
     }
 
-    /*
-     * Get the rel_route records associated with the route.
-    */
-    public function rel_route(){
-      return $this->hasMany('App\Rel_route','route_id');
-    }
 
     /*
      * Get the paths records associated with the route.

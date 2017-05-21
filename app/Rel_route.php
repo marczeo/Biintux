@@ -21,10 +21,10 @@ class Rel_route extends Model
     public $timestamps = false;
 
     /*
-     * Get the route records associated with the rel route.
+     * Get the path records associated with the rel route.
     */
-    public function route(){
-        return $this->belongsTo('App\Route');
+    public function path(){
+        return $this->belongsTo('App\Path');
     }
     /*
      * Get the start node records associated with the rel route.

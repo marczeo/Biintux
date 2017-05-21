@@ -26,4 +26,11 @@ class Path extends Model
     {
         return $this->belongsTo('App\Route');
     }
+
+    /*
+     * Get the rel_route records associated with the path.
+    */
+    public function rel_route(){
+      return $this->hasMany('App\Rel_route','path_id');
+    }
 }

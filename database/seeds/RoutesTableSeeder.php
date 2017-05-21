@@ -72,7 +72,6 @@ class RoutesTableSeeder extends Seeder
                     $newNode->save();
 
                     $newRel= new Rel_route;
-                    $newRel->route_id=$newRoute->id;
                     $newRel->start_node_id=$newNode->id;
                     $newRel->save();
                     //echo $path_ida_node->lat.", ".$path_ida_node->lng."\n";
@@ -93,7 +92,6 @@ class RoutesTableSeeder extends Seeder
                     $newNode->save();
 
                     $newRel= new Rel_route;
-                    $newRel->route_id=$newRoute->id;
                     $newRel->start_node_id=$newNode->id;
                     $newRel->save();
                     //echo $path_vuelta_node->lat.", ".$path_vuelta_node->lng."\n";

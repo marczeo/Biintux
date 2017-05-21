@@ -49,20 +49,32 @@ class RouteRepository
         foreach ($routes as $key=> $route)
         {
             $route_array=[];
-            $nodos = new Collection;
-            /*foreach ($route->rel_route as $key => $rel_route) {
-                $nodo=[];
-                $nodo['longitude']=$rel_route->start_node->longitude;
-                $nodo['latitude']=$rel_route->start_node->latitude;
-                $nodos->push($nodo);
-            }*/
+            $paths = new Collection;
+            foreach ($route->paths as $path) {
+                $nodos = new Collection;
+                $path_array=[];
+                /*foreach ($path->rel_route as $rel_route) {
+                    $nodo=[];
+                    $nodo['longitude']=$rel_route->start_node->longitude;
+                    $nodo['latitude']=$rel_route->start_node->latitude;
+                    $nodos->push($nodo);
+                }*/
+                $path_array['id']=$path->id;
+                $path_array['route_id']=$path->route_id;
+                $path_array['direction']=$path->direction;
+                $path_array['encodepath']=$path->encodepath;
+                $path_array['nodos']=$nodos;
+
+                $paths->push($path_array);
+                //return $path_array;
+            }
+            
             $route_array['id']=$route->id;
             $route_array['name']=$route->name;
             $route_array['type']=$route->type;
             $route_array['type_read']=trans('route.'.$route->type);
             $route_array['color']=$route->color;
-            //$route_array['nodos']=$nodos;
-            $route_array['paths']=$route->paths;
+            $route_array['paths']=$paths;
             $route_response->push($route_array);
         }
         $response['data']=$route_response;
@@ -76,19 +88,22 @@ class RouteRepository
      */
     public function createRoute(Request $request)
     {
-        $route = new route;
+        $route = new Route;
+        $path = new Path;
         $route->setColor();
         while ($this->existColor($route->color)){
             $route->setColor();
         }
 
         $route->name=$request->name;
-        $route->encodepath=$request->encodePath;
-        $route->direction=1;
         $route->first_run=$request->first_run;
         $route->last_run=$request->last_run;
         $route->type=$request->type_route;
+        $route->save();
         
+        $path->encodepath=$request->encodePath;
+        $path->direction=1;
+        $path->route_id=$route->id;
 
          /*Limpieza de nodos*/
         preg_match_all('/\((.*?)\)/', $request->markerList, $nodes);
@@ -105,14 +120,14 @@ class RouteRepository
             {
                 $primeraPasada=false;
                 $route->start_node_id=$newNode->id;
-                $route->save();
+                $path->save();
             }
             else{
                 $rel_route->next_node_id=$newNode->id;
                 $rel_route->save();
             }
             $rel_route = new Rel_route;
-            $rel_route->route_id = $route->id;
+            $rel_route->path_id = $path->id;
             $rel_route->start_node_id=$newNode->id;
 
         }
@@ -130,9 +145,13 @@ class RouteRepository
     {
         try{
             $route=Route::findOrFail($IDroute);
-            foreach ($route->rel_route as $key => $rel_route) {
-                $rel_route->delete();
+            foreach ($route->paths as $path) {
+                foreach ($path->rel_route as $key => $rel_route) {
+                    $rel_route->delete();
+                }
+                $path->delete();
             }
+            
             $route->delete();
             return true;
         }
@@ -189,15 +208,16 @@ class RouteRepository
         $routes_total= $rutasID->count();
         $nearID_array = array();
         for ($index_rutasID=0; $index_rutasID < $routes_total; $index_rutasID++) { 
-            $ruta_nodos = Route::findOrFail($rutasID[$index_rutasID]->id)->rel_route;
-            foreach ($ruta_nodos as $nodo) {
-                if($this->distanceCalculation($nodo->start_node->latitude,$nodo->start_node->longitude,$latitude,$longitude) <= $rango)
-                {
-                    array_push($nearID_array,$rutasID[$index_rutasID]->id);
-                    break;
+            $paths = Route::findOrFail($rutasID[$index_rutasID]->id)->paths;
+            foreach ($paths as $path) {
+                foreach ($path->rel_route as $nodo) {
+                    if($this->distanceCalculation($nodo->start_node->latitude,$nodo->start_node->longitude,$latitude,$longitude) <= $rango)
+                    {
+                        array_push($nearID_array,$rutasID[$index_rutasID]->id);
+                        break;
+                    }
                 }
             }
-
         }
 
                

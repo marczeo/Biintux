@@ -31,7 +31,7 @@ class RouteController extends Controller
         //Cuando la petición es desde API
         if($request->route()){
             if($request->route()->getPrefix()=="api"){
-                $this->middleware('jwt.auth',['except'=>['getAllJson','getNearRoutes']]);
+                $this->middleware('jwt.auth',['except'=>['getAllJson','getNearRoutes','getNodes']]);
             }
             else{#Peticion desde web
                 $this->middleware('auth',['except' =>[
@@ -210,5 +210,15 @@ class RouteController extends Controller
         $response = $this->rutasDAO->nearRoutes($request->originNear_lat, $request->originNear_lng, $request->rango);
         return json_encode($response);
         
+    }
+
+    /**
+     * Get route nodes
+     * @param
+     * @return
+    */
+    public function getNodes(Request $request, Route $route)
+    {
+        return $this->rutasDAO->geRouteNodes($route);
     }
 }

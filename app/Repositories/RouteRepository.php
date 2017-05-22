@@ -9,6 +9,7 @@ use App\Node;
 use App\Path;
 use Illuminate\Support\Collection;
 use DB;
+use Illuminate\Database\QueryException;
 class RouteRepository
 {
     /**
@@ -35,7 +36,7 @@ class RouteRepository
     /**
      * Get all of the bus routes
      *
-     * @param  null
+     * @param  strgin $type
      * @return json
      */
     public function getAllRoutes($type = null)
@@ -80,6 +81,41 @@ class RouteRepository
         $response['data']=$route_response;
         return json_encode($response);
     }
+
+    /**
+     * Obtener los nodos de una ruta
+     * @param Route $route
+     * @return json
+    */
+    public function geRouteNodes($route)
+    {
+        try {
+            $paths = new Collection;
+            foreach ($route->paths as $path) {
+                $nodos = new Collection;
+                $path_array=[];
+                foreach ($path->rel_route as $rel_route) {
+                    $nodo=[];
+                    $nodo['longitude']=$rel_route->start_node->longitude;
+                    $nodo['latitude']=$rel_route->start_node->latitude;
+                    $nodos->push($nodo);
+                }
+                $path_array['id']=$path->id;
+                $path_array['route_id']=$path->route_id;
+                $path_array['direction']=$path->direction;
+                $path_array['encodepath']=$path->encodepath;
+                $path_array['nodos']=$nodos;
+
+                $paths->push($path_array);
+            }
+            $response['data']=$paths;
+            return json_encode($response);
+            //return response()->json(['code'=>200, 'response'=>'Status changed successfully'],200);
+        } catch (QueryException $e) {
+            return response()->json(['code'=>400 ,'response'=>'An error has occurred'],400);
+        }
+    }
+
     /**
      * Create a new route
      *

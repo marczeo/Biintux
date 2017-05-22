@@ -71,6 +71,7 @@ class BusRepository
 
     /**
      * Change status, enabled or disabled a bus
+     * @param Bus $bus
      * @param String status
      * @return json
     */
@@ -82,7 +83,6 @@ class BusRepository
             return response()->json(['code'=>200, 'response'=>'Status changed successfully'],200);
         } catch (\Illuminate\Database\QueryException $e) {
             return response()->json(['code'=>400 ,'response'=>'An error has occurred'],400);
-            
         }
         
     }

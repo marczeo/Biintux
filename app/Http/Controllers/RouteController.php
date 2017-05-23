@@ -8,6 +8,8 @@ use App\Rel_concessionaire;
 use App\Route;
 use App\Node;
 use App\Repositories\RouteRepository;
+use App\Repositories\CicloviaRepository;
+use App\Repositories\MibiciRepository;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Collection;
@@ -205,16 +207,30 @@ class RouteController extends Controller
     */
     public function getNearRoutes(Request $request)
     {
-        if($request -> preferences != NULL){
-         $affiliations="";
-         foreach ($request->preferences as $key) {
-            $affiliations.=$key.",";
+        $response=[];
+        $response['data']=[];
+        $response['bikeway']=[];
+        $response['mibici']=[];
+        if($request->preferences != NULL){
+         foreach ($request->preferences as $preference) {
+            switch ($preference) {
+                case 'bus':
+                    //$response = $this->rutasDAO->nearRoutesNodes($request->originNear_lat, $request->originNear_lng, $request->rango);
+                    $response['data']= $this->rutasDAO->nearRoutes($request->originNear_lat, $request->originNear_lng, $request->rango);
+                    break;
+                case 'bikeway':
+                    $cicloviaDAO= new CicloviaRepository;
+                    $response['bikeway']=$cicloviaDAO->nearBikeways($request->originNear_lat, $request->originNear_lng, $request->rango);
+                    break;
+                case 'mibici':
+                    $mibiciDAO= new MibiciRepository;
+                    $response['mibici']=$mibiciDAO->nearStations($request->originNear_lat, $request->originNear_lng, $request->rango);
+                    break;
+                default:
+                    break;
+            }
          }
-         $affiliations = trim($affiliations, ',');
-         //return $affiliations;
        }
-        //$response = $this->rutasDAO->nearRoutesNodes($request->originNear_lat, $request->originNear_lng, $request->rango);
-        $response = $this->rutasDAO->nearRoutes($request->originNear_lat, $request->originNear_lng, $request->rango);
         return json_encode($response);
         
     }
@@ -226,6 +242,6 @@ class RouteController extends Controller
     */
     public function getNodes(Request $request, Route $route)
     {
-        return $this->rutasDAO->geRouteNodes($route);
+        return $this->rutasDAO->getRouteNodes($route);
     }
 }

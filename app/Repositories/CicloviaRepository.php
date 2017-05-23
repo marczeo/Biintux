@@ -19,6 +19,17 @@ class CicloviaRepository
 
     protected $typeNode = 'bikeway';
 
+    /**
+     * Get all of the bikeways
+     *
+     * @param  null
+     * @return Collection
+     */
+    public function getAllBikewaysID()
+    {
+        $ids =Ciclovia::orderBy('id','asc')->select('id')->get();
+        return $ids;
+    }
 
     /**
      * Get all of the routes  for a given user.
@@ -151,5 +162,51 @@ class CicloviaRepository
             return true;
         return false;
 
+    }
+
+    /**
+     * Obtener ciclovias cercanas a partir
+     * https://github.com/alexpechkarev/geometry-library#isLocationOnEdge
+     * @param double latitude
+     * @param double longitude
+     * @param decimal rango
+     * @return Collection ciclovias
+     */
+    public function nearBikeways($latitude, $longitude, $rango)
+    {
+        $bikewaysID = $this->getAllBikewaysID();
+        $ciclovias_total= $bikewaysID->count();
+        $nearID_array = array();
+        for ($index_bikewaysID=0; $index_bikewaysID < $ciclovias_total; $index_bikewaysID++) { 
+            $ciclovia = Ciclovia::findOrFail($bikewaysID[$index_bikewaysID]->id);
+
+                $poly_nodes =  \GeometryLibrary\PolyUtil::decode($ciclovia->encodepath);
+                if(\GeometryLibrary\PolyUtil::isLocationOnEdge(
+                    ['lat' => $latitude, 'lng'=> $longitude],
+                    $poly_nodes,
+                    $rango))
+                {
+                    array_push($nearID_array,$bikewaysID[$index_bikewaysID]->id);
+                }
+            
+
+        }
+
+
+        $ciclovias= Ciclovia::whereIn('id', $nearID_array)
+                    ->get();
+        $ciclovia_response=new Collection;
+        foreach ($ciclovias as $key=> $ciclovia)
+        {
+            $route_array=[];
+            $route_array['id']=$ciclovia->id;
+            $route_array['name']=$ciclovia->name;
+            $route_array['encodepath']=$ciclovia->encodepath;
+            $route_array['color']=$ciclovia->color;
+            $ciclovia_response->push($route_array);
+        }
+        //$response['data']=$ciclovia_response;
+        
+        return $ciclovia_response;
     }
 }

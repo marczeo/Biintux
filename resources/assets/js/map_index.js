@@ -5,6 +5,8 @@
 * @version 0.1
 */
 var rutasTemporales=[];
+var cicloviasTemporales=[];
+var estacionesMibiciTemporales=[];
 var map;
 var infowindow;
 var infoWindow_currentPosition;
@@ -263,51 +265,16 @@ function moveMarkerEvent(event) {
     processData: false,
     success: function(data){
 
-      /*Quitar todas las rutas actuales del mapa*/
-      for (i=0; i<rutasTemporales.length; i++) 
-      {                           
-        rutasTemporales[i].setMap(null); //or line[i].setVisible(false);
-      }
-      rutasTemporales=[];
+      resetMap();
+
       $parseData=JSON.parse(data);
-      if($parseData.data.length==0)
+      if($parseData.data.length==0 && $parseData.bikeway.length==0 && $parseData.mibici.length==0)
         alert("No hay rutas cercanas, intenta aumentando el rango.");
       else{
-        $.each($parseData.data, function(i, item) {
-          for (var i = 0; i < item.paths.length; i++) {
-            var points = google.maps.geometry.encoding.decodePath(item.paths[i].encodepath);
 
-            var lineSymbol = {
-              path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
-              scale: 2.2,
-              strokeColor: "#FFF",
-              strokeOpacity: 1
-            };
-
-            var routePath = new google.maps.Polyline({
-              path: points,
-              interpolate: true,
-              icons: [{
-                icon: lineSymbol,
-                offset: '50%',
-                repeat: '240px'
-              }],
-              strokeColor: item.color,
-              strokeOpacity: 0.7,
-              strokeWeight: 8
-            });
-            google.maps.event.addListener(routePath, 'mouseover', function(event) {
-              infowindow.open(map);
-              infowindow.setContent(item.name);
-              infowindow.setPosition(event.latLng);
-            });
-            google.maps.event.addListener(routePath, 'mouseout', function() {
-              infowindow.close();
-            });
-            routePath.setMap(map);
-            rutasTemporales.push(routePath);
-          }
-        });
+        draw_rutas($parseData.data);
+        draw_bikeways($parseData.bikeway);
+        draw_mibici($parseData.mibici);
       }
     },
     error: function (response) {
@@ -324,6 +291,127 @@ function moveMarkerEvent(event) {
   circle.bindTo('center', markerPosition, 'position');
   if(circle.getMap() == null) circle.setMap(map);
  }
+function resetMap()
+{
+  /*Quitar todas las rutas actuales del mapa*/
+  for (i=0; i<rutasTemporales.length; i++) 
+  {
+    rutasTemporales[i].setMap(null); //or line[i].setVisible(false);
+  }
+  for (i=0; i<cicloviasTemporales.length; i++) 
+  {
+    cicloviasTemporales[i].setMap(null); //or line[i].setVisible(false);
+  }
+  for (i=0; i<estacionesMibiciTemporales.length; i++) 
+  {
+    estacionesMibiciTemporales[i].setMap(null); //or line[i].setVisible(false);
+  }
+  rutasTemporales=[];
+  cicloviasTemporales=[];
+  estacionesMibiciTemporales=[];
+}
+function draw_rutas(rutas){
+  $.each(rutas, function(i, item) {
+    for (var i = 0; i < item.paths.length; i++) {
+      var points = google.maps.geometry.encoding.decodePath(item.paths[i].encodepath);
+
+      var lineSymbol = {
+        path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
+        scale: 2.2,
+        strokeColor: "#FFF",
+        strokeOpacity: 1
+      };
+
+      var routePath = new google.maps.Polyline({
+        path: points,
+        interpolate: true,
+        icons: [{
+          icon: lineSymbol,
+          offset: '50%',
+          repeat: '240px'
+        }],
+        strokeColor: item.color,
+        strokeOpacity: 0.7,
+        strokeWeight: 8
+      });
+      google.maps.event.addListener(routePath, 'mouseover', function(event) {
+        infowindow.open(map);
+        infowindow.setContent(item.name);
+        infowindow.setPosition(event.latLng);
+      });
+      google.maps.event.addListener(routePath, 'mouseout', function() {
+        infowindow.close();
+      });
+      routePath.setMap(map);
+      rutasTemporales.push(routePath);
+    }
+  });
+}
+function draw_bikeways(ciclovias)
+{
+  $.each(ciclovias, function(i, item) {
+      var points = google.maps.geometry.encoding.decodePath(item.encodepath);
+
+      var lineSymbol = {
+        path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
+        scale: 2.2,
+        strokeColor: "#FFF",
+        strokeOpacity: 1
+      };
+
+      var routePath = new google.maps.Polyline({
+        path: points,
+        interpolate: true,
+        icons: [{
+          icon: lineSymbol,
+          offset: '50%',
+          repeat: '240px'
+        }],
+        strokeColor: item.color,
+        strokeOpacity: 0.7,
+        strokeWeight: 8
+      });
+      google.maps.event.addListener(routePath, 'mouseover', function(event) {
+        infowindow.open(map);
+        infowindow.setContent(item.name);
+        infowindow.setPosition(event.latLng);
+      });
+      google.maps.event.addListener(routePath, 'mouseout', function() {
+        infowindow.close();
+      });
+      routePath.setMap(map);
+      rutasTemporales.push(routePath);
+  });
+}
+function draw_mibici(estaciones)
+{
+    $.each(estaciones, function(i, item) {
+
+      var myLatLng = new google.maps.LatLng( item.latitude, item.longitude);
+
+              var marker = new google.maps.Marker
+              ({
+                position: myLatLng,
+                icon: '/images/mibici.svg',
+                label: "",
+                map: map,
+                draggable: false,
+                title: item.name,
+                
+          
+              });
+      google.maps.event.addListener(marker, 'mouseover', function(event) {
+        infowindow.open(map);
+        infowindow.setContent(item.name);
+        infowindow.setPosition(event.latLng);
+      });
+      google.maps.event.addListener(marker, 'mouseout', function() {
+        infowindow.close();
+      });
+      marker.setMap(map);
+      estacionesMibiciTemporales.push(marker);
+  });
+}
 google.maps.event.addDomListener(window, 'load', initialize);
 
 $( "#rango" ).change(function() {

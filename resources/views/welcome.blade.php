@@ -90,9 +90,9 @@
               <li>
                 <div class="form-group row">
                   <div>
-                    <label class="col-xs-4"><input type="checkbox" name="preferences[]" value="bus"><img src="/images/bus.png"  width="25" height="25"><span class="text-desktop">Camiones</span></label>
-                    <label class="col-xs-4"><input type="checkbox" name="preferences[]" value="bikeway"><img src="/images/cycling.png"  width="25" height="25"><span class="text-desktop">Ciclovías</span></label>
-                    <label class="col-xs-4"><input type="checkbox" name="preferences[]" value="mibici"><img src="/images/mibici.png"  width="25" height="25"><span class="text-desktop">Estaciones Mibici</span></label>
+                    <label class="col-xs-4"><input type="checkbox" name="preferences[]" value="bus" checked="checked"><img src="/images/bus.png"  width="25" height="25"><span class="text-desktop">Camiones</span></label>
+                    <label class="col-xs-4"><input type="checkbox" name="preferences[]" value="bikeway" ><img src="/images/cycling.png"  width="25" height="25"><span class="text-desktop">Ciclovías</span></label>
+                    <label class="col-xs-4"><input type="checkbox" name="preferences[]" value="mibici" ><img src="/images/mibici.png"  width="25" height="25"><span class="text-desktop">Estaciones Mibici</span></label>
                   </div>
                 </div>
               </li>

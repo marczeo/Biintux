@@ -44,4 +44,35 @@ class MibiciRepository
         $response['data']=$estaciones_response;
         return json_encode($response);
     }
+
+    /**
+     * Obtener estaciones cercanas a un punto
+     * https://github.com/alexpechkarev/geometry-library#isLocationOnEdge
+     * @param double latitude
+     * @param double longitude
+     * @param decimal rango
+     * @return Collection rutas
+     */
+    public function nearStations($latitude, $longitude, $rango)
+    {
+        $estaciones= Node::where('type', $this->typeNode)->orderBy('id','asc')->get();
+        $estaciones_total=$estaciones->count();
+
+        $mibici_response=new Collection;
+        foreach ($estaciones as $key=> $estacion)
+        {
+            if(\GeometryLibrary\SphericalUtil::computeDistanceBetween(['lat' => $latitude, 'lng' => $longitude], ['lat' => $estacion->latitude, 'lng' => $estacion->longitude]) < $rango){
+                $mibici_array=[];
+                $mibici_array['id']=$estacion->id;
+                $mibici_array['name']=$estacion->description;
+                $mibici_array['longitude']=$estacion->longitude;
+                $mibici_array['latitude']=$estacion->latitude;
+                $mibici_array['color']=$estacion->color;
+                $mibici_response->push($mibici_array);
+            }
+        }
+        //$response['data']=$mibici_response;
+        
+        return $mibici_response;
+    }
 }

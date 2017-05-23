@@ -87,7 +87,7 @@ class RouteRepository
      * @param Route $route
      * @return json
     */
-    public function geRouteNodes($route)
+    public function getRouteNodes($route)
     {
         try {
             $paths = new Collection;
@@ -269,7 +269,6 @@ class RouteRepository
             $route_array['name']=$route->name;
             $route_array['type']=$route->type;
             $route_array['type_read']=trans('route.'.$route->type);
-            //$route_array['name']=$route->name;
             $route_array['paths']=$route->paths;
             $route_array['color']=$route->color;
             $route_response->push($route_array);
@@ -325,8 +324,8 @@ class RouteRepository
             $route_array['color']=$route->color;
             $route_response->push($route_array);
         }
-        $response['data']=$route_response;
+        //$response['data']=$route_response;
         
-        return $response;
+        return $route_response;
     }
 }

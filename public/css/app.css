@@ -7699,7 +7699,7 @@ footer {
   height: 40px;
 }
 
-input {
+input[type=search] {
   -webkit-appearance: searchfield;
 }
 

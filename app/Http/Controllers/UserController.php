@@ -112,13 +112,15 @@ class UserController extends Controller
 
     /**
      * Delete user from database.
-     *
+     * @param User $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-    	$user=User::findOrFail($id);
-    	$user->delete();
+    	if($this->usersDAO->deleteUser($user))
+            flash('Usuario eliminado con exito', 'success');
+        else
+            flash('Ocurrio un error, vuelta a intentar. Es posible que tenga alguna relación con otros usuarios', 'danger');
         return redirect('/user');
     }
 

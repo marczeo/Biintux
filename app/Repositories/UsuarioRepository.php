@@ -8,6 +8,7 @@ use App\Driver;
 use App\Rel_concessionaire;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
+use Illuminate\Database\QueryException;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Validator;
@@ -128,7 +129,10 @@ class UsuarioRepository
     }
 
     /**
-     *Update user
+     * Update user
+     * @param Request $request
+     * @param User $user
+     * @return bolean
      */
     public function updateUser(Request $request, User $user)
     {
@@ -152,6 +156,21 @@ class UsuarioRepository
         }
         
         return true;
+    }
+
+    /**
+     * Eliminar usuario
+     * @param User $user
+     * @param boolean
+    */
+    public function deleteUser(User $user)
+    {
+        try {
+            $user->delete();
+            return true;
+        } catch (\Illuminate\Database\QueryException $e) {
+            return false;
+        }
     }
 
     /**

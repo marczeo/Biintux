@@ -20,7 +20,7 @@ class SetApplicationLanguage
         
         if(Session::get('lang') == "")
         {
-            App::setLocale('en');
+            App::setLocale('es');
         }
         else
         {

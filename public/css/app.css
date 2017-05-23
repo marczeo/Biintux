@@ -7699,6 +7699,14 @@ footer {
   height: 40px;
 }
 
+input {
+  -webkit-appearance: searchfield;
+}
+
+input[type=search]::-webkit-search-cancel-button {
+  -webkit-appearance: searchfield-cancel-button;
+}
+
 #wrapper {
   min-height: 100%;
   height: 100%;

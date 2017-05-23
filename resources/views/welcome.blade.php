@@ -32,7 +32,7 @@
               <li>
                 <div class="form-group">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Origin" name="origin">
+                    <input type="search" class="form-control" placeholder="Origin" name="origin">
                     <div class="input-group-btn">
                       <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                     </div>
@@ -42,7 +42,7 @@
               <li>
                 <div class="form-group">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Destination" name="destination">
+                    <input type="search" class="form-control" placeholder="Destination" name="destination">
                     <div class="input-group-btn">
                       <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                     </div>
@@ -70,7 +70,7 @@
               <li>              
                 <div class="form-group">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Cerca de mi ubicación" name="origin" id="originNear_formatted_address">
+                    <input type="search" class="form-control" placeholder="Cerca de mi ubicación" name="origin" id="originNear_formatted_address">
                     <input type="hidden" name="originNear_lat" id="originNear_lat">
                     <input type="hidden" name="originNear_lng" id="originNear_lng">
                     <div class="input-group-btn">
@@ -107,7 +107,7 @@
                 {{ csrf_field() }}
                 {{ method_field('POST') }}
                 <div class="input-group">
-                  <input type="text" class="form-control" placeholder="¿Qué ruta desea buscar?" name="origin">
+                  <input type="search" class="form-control" placeholder="¿Qué ruta desea buscar?" name="origin">
                   <div class="input-group-btn">
                     <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                   </div>

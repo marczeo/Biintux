@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8">
+    <meta name="description" content="Aplicación para ayudar en el uso del transporte público">
+    <meta name="keywords" content="transporte,Guadalajara,Tlaquepaque,llegar,ayuda,zmg">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 

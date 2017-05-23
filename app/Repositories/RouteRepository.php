@@ -191,7 +191,7 @@ class RouteRepository
             $route->delete();
             return true;
         }
-        catch(ModelNotFoundException $e)
+        catch(QueryException $e)
         {
             //dd(get_class_methods($e)); // lists all available methods for exception object
             return false;

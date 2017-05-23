@@ -168,7 +168,7 @@ class UsuarioRepository
         try {
             $user->delete();
             return true;
-        } catch (\Illuminate\Database\QueryException $e) {
+        } catch (QueryException $e) {
             return false;
         }
     }

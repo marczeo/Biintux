@@ -7688,6 +7688,17 @@ button.close {
   }
 }
 
+footer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #222222;
+  text-align: center;
+  height: 40px;
+}
+
 #wrapper {
   min-height: 100%;
   height: 100%;
@@ -7699,7 +7710,7 @@ button.close {
 }
 
 #main-wrapper {
-  height: 100%;
+  height: calc(100% - 40px);
   overflow-y: auto;
   padding: 50px 0 0px 0;
 }
@@ -7753,11 +7764,18 @@ button.close {
 }
 
 @media (max-width: 992px) {
+  #main-wrapper {
+    height: 100%;
+    margin-bottom: 40px;
+  }
   #sidebar-wrapper {
     position: static;
     height: auto;
     max-height: 300px;
     border-right: 0;
+  }
+  .text-desktop {
+    display: none;
   }
 }
 

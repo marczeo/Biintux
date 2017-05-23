@@ -184,6 +184,15 @@ function initialize() {
   autocomplete.setTypes([]);
   //FIN UBICACION A BUSCAR
 }
+function handleLocationError(browserHasGeolocation, pos) {
+
+  alert(browserHasGeolocation ?
+                        'Error: The Geolocation service failed.' :
+                        'Error: Your browser doesn\'t support geolocation.');
+  markerPosition.setPosition(new google.maps.LatLng( 20.659699, -103.349609));
+  markerPosition.setVisible(true);
+  getStreetName(new google.maps.LatLng( 20.659699, -103.349609), "originNear_formatted_address");
+}
 function getCurrentPosition()
 {
   // Try HTML5 geolocation.
@@ -202,19 +211,14 @@ function getCurrentPosition()
       document.getElementById('originNear_lng').value=position.coords.longitude;
       map.setCenter(pos);
     }, function() {
-      handleLocationError(true, infoWindow_currentPosition, map.getCenter());
+      handleLocationError(true, map.getCenter());
     });
   } else {
     // Browser doesn't support Geolocation
-    handleLocationError(false, infoWindow_currentPosition, map.getCenter());
+    handleLocationError(false, map.getCenter());
   }
 }
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-  infoWindow_currentPosition.setPosition(pos);
-  infoWindow_currentPosition.setContent(browserHasGeolocation ?
-                        'Error: The Geolocation service failed.' :
-                        'Error: Your browser doesn\'t support geolocation.');
-}
+
 /*
  * Get street name from position
 */

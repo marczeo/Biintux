@@ -26,28 +26,39 @@
         {{-- Para viajar, poner inicio y fin --}}
         <div class="tab-pane active" id="home" role="tabpanel">
           <ul class="nav list-group">
-            <li>
-              <form class="col-xs-12" role="search" method="POST" action="route/search" onsubmit="return submit_form(this);">
-                {{ csrf_field() }}
-                {{ method_field('POST') }}
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Origin" name="origin">
-                  <div class="input-group-btn">
-                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            <form class="col-xs-12" role="search" method="POST" action="route/search" onsubmit="return submit_form(this);">
+              {{ csrf_field() }}
+              {{ method_field('POST') }}
+              <li>
+                <div class="form-group">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Origin" name="origin">
+                    <div class="input-group-btn">
+                      <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
                   </div>
                 </div>
-              </form>
-            </li>
-            <li>
-              <form class="col-xs-12" role="search">
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Destination" name="destination">
-                  <div class="input-group-btn">
-                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+              </li>
+              <li>
+                <div class="form-group">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Destination" name="destination">
+                    <div class="input-group-btn">
+                      <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
                   </div>
                 </div>
-              </form>
-            </li>
+              </li>
+              <li>
+                <div class="form-group row">
+                  <div>
+                    <label class="col-xs-4"><input type="checkbox" name="preferences[]" value="bus"><img src="/images/bus.png"  width="25" height="25"><span class="text-desktop">Camiones</span></label>
+                    <label class="col-xs-4"><input type="checkbox" name="preferences[]" value="bikeway"><img src="/images/cycling.png"  width="25" height="25"><span class="text-desktop">Ciclovías</span></label>
+                    <label class="col-xs-4"><input type="checkbox" name="preferences[]" value="mibici"><img src="/images/mibici.png"  width="25" height="25"><span class="text-desktop">Estaciones Mibici</span></label>
+                  </div>
+                </div>
+              </li>
+            </form>
           </ul>
         </div>
         {{-- Buscar rutas cercanas a un punto --}}
@@ -57,12 +68,14 @@
               {{ csrf_field() }}
               {{ method_field('POST') }}
               <li>              
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Cerca de mi ubicación" name="origin" id="originNear_formatted_address">
-                  <input type="hidden" name="originNear_lat" id="originNear_lat">
-                  <input type="hidden" name="originNear_lng" id="originNear_lng">
-                  <div class="input-group-btn">
-                    <button class="btn btn-default" type="submit" ><i class="glyphicon glyphicon-search"></i></button>
+                <div class="form-group">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Cerca de mi ubicación" name="origin" id="originNear_formatted_address">
+                    <input type="hidden" name="originNear_lat" id="originNear_lat">
+                    <input type="hidden" name="originNear_lng" id="originNear_lng">
+                    <div class="input-group-btn">
+                      <button class="btn btn-default" type="submit" ><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
                   </div>
                 </div>
               </li>
@@ -72,6 +85,15 @@
                     <input type="number" class="form-control" placeholder="Rango" name="rango" id="rango" min="10" value="50">
                   </div>
                   <label class="col-form-label col-xs-3" for="">Metros</label>
+                </div>
+              </li>
+              <li>
+                <div class="form-group row">
+                  <div>
+                    <label class="col-xs-4"><input type="checkbox" name="preferences[]" value="bus"><img src="/images/bus.png"  width="25" height="25"><span class="text-desktop">Camiones</span></label>
+                    <label class="col-xs-4"><input type="checkbox" name="preferences[]" value="bikeway"><img src="/images/cycling.png"  width="25" height="25"><span class="text-desktop">Ciclovías</span></label>
+                    <label class="col-xs-4"><input type="checkbox" name="preferences[]" value="mibici"><img src="/images/mibici.png"  width="25" height="25"><span class="text-desktop">Estaciones Mibici</span></label>
+                  </div>
                 </div>
               </li>
             </form>
@@ -105,7 +127,7 @@
 </div>
 @endsection
 @section('scriptsBottom')
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCk3aVE_atNGMx06dHKbmU6RMCgAOMMWEQ&signed_in=true&libraries=geometry,places"></script>
+    <script sync src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCk3aVE_atNGMx06dHKbmU6RMCgAOMMWEQ&signed_in=false&libraries=geometry,places"></script>
     <script src="/js/map_index.js"></script>
     <script type="text/javascript">
       //Utilizar tabs

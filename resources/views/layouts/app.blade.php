@@ -155,6 +155,7 @@
         </nav>
 
         @yield('content')
+        <footer>Biintux &#174; 2017</footer>
     </div>
 
     <!-- Scripts -->

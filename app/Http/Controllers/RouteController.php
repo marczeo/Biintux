@@ -178,22 +178,21 @@ class RouteController extends Controller
         foreach ($routes as $key=> $route)
         {
             $route_array=[];
-            $nodos = new Collection;
-            $rel_routes=$route->rel_route;
-            foreach ($rel_routes as $key => $rel_route) {
+            /*$nodos = new Collection;
+            $paths=$route->paths;
+            foreach ($paths->rel_routes as $key => $rel_route) {
                 $nodo=[];
                 $nodo['longitude']=$rel_route->start_node->longitude;
                 $nodo['latitude']=$rel_route->start_node->latitude;
                 $nodos->push($nodo);
-            }
+            }*/
             $route_array['id']=$route->id;
             $route_array['name']=$route->name;
             $route_array['type']=$route->type;
             $route_array['type_read']=trans('route.'.$route->type);
-            //$route_array['name']=$route->name;
             $route_array['paths']=$route->paths;
             $route_array['color']=$route->color;
-            $route_array['nodos']=$nodos;
+            //$route_array['nodos']=$nodos;
             $route_response->push($route_array);
         }
         $response['data']=$route_response;
@@ -206,6 +205,14 @@ class RouteController extends Controller
     */
     public function getNearRoutes(Request $request)
     {
+        if($request -> preferences != NULL){
+         $affiliations="";
+         foreach ($request->preferences as $key) {
+            $affiliations.=$key.",";
+         }
+         $affiliations = trim($affiliations, ',');
+         //return $affiliations;
+       }
         //$response = $this->rutasDAO->nearRoutesNodes($request->originNear_lat, $request->originNear_lng, $request->rango);
         $response = $this->rutasDAO->nearRoutes($request->originNear_lat, $request->originNear_lng, $request->rango);
         return json_encode($response);

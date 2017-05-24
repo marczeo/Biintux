@@ -17,7 +17,15 @@ Route::get('/download', function ()
 {
         return view('download');
 });
-
+Route::get('/getApp',function()
+{
+    $path = public_path();
+    $path.='\\biintux.apk';
+    return response()->file($path,[
+        'Content-Type'=>'application/vnd.android.package-archive',
+        'Content-Disposition'=> 'attachment; filename="biintux.apk"',
+        ]);
+});
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');

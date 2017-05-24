@@ -10,16 +10,42 @@
 .background-download
 {
 	background: url('../images/patterns/old_moon.png');
+	height: calc(100% - 40px);
+    padding: 54px 0 0px 0;
+    position: fixed;
 }
-.donwload-right
+.download-left
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-flow: column;
+	align-content: center;
+	height: 100%;
+}
+.download-right
 {
 	display: flex;
 	/* justify-content: flex-end; */
 	/* align-content: flex-end; */
 	align-items: flex-end;
 	max-width: 100%;
-	height: calc(100% - 40px);
+	height: 100%;
 	img{
 		max-width: 100%;
+	}
+}
+.google-icon
+{
+	width: 100px;
+}
+@media (max-width: 992px) {
+	.download-left
+	{
+		height: auto;
+	}
+	.download-right
+	{
+		height: auto;
 	}
 }

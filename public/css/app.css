@@ -7801,9 +7801,24 @@ input[type=search]::-webkit-search-cancel-button {
 
 .background-download {
   background: url("../images/patterns/old_moon.png");
+  height: calc(100% - 40px);
+  padding: 54px 0 0px 0;
+  position: fixed;
 }
 
-.donwload-right {
+.download-left {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  flex-flow: column;
+  align-content: center;
+  height: 100%;
+}
+
+.download-right {
   display: -webkit-box;
   display: flex;
   /* justify-content: flex-end; */
@@ -7811,11 +7826,24 @@ input[type=search]::-webkit-search-cancel-button {
   -webkit-box-align: end;
   align-items: flex-end;
   max-width: 100%;
-  height: calc(100% - 40px);
+  height: 100%;
 }
 
-.donwload-right img {
+.download-right img {
   max-width: 100%;
+}
+
+.google-icon {
+  width: 100px;
+}
+
+@media (max-width: 992px) {
+  .download-left {
+    height: auto;
+  }
+  .download-right {
+    height: auto;
+  }
 }
 
 /*# sourceMappingURL=app.css.map */

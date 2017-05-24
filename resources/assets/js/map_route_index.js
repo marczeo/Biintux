@@ -26,7 +26,7 @@ function initialize() {
     type: "GET",
     success:function(data) 
     {
-      $parseData=JSON.parse(data);
+      $parseData=data;
       $.each($parseData.data, function(i, item) {
         for (var i = 0; i < item.paths.length; i++) {
           var instring = google.maps.geometry.encoding.decodePath(item.paths[i].encodepath);

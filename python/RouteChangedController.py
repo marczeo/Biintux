@@ -44,7 +44,7 @@ class RouteChangedController(Thread):
 		self.id_route = id_route
 #		self.id_user = id_user
 		self.args = args # [id_Bus,id_route]
-       		self.kwargs = kwargs
+       	self.kwargs = kwargs
 
 	def dbObject(self,query):
 

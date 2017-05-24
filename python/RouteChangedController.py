@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 import sys
 import logging
@@ -37,9 +37,9 @@ class RouteChangedController(Thread):
 	def __init__(self,id_Bus, id_route, group=None, target=None, name=None, args=(), kwargs=None, verbose=None):
 		
 		'''Constructor'''
-	      	Thread.__init__(self, group=group, target=target, name=name, verbose=verbose)        	
-		#self.daemon = True
-        	self.cancelled = False
+	    Thread.__init__(self, group=group, target=target, name=name, verbose=verbose)        	
+		self.daemon = True
+        self.cancelled = False
 		self.id_Bus = id_Bus
 		self.id_route = id_route
 #		self.id_user = id_user

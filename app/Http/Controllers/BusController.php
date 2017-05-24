@@ -62,7 +62,7 @@ class BusController extends Controller
     public function create()
     {
         $routeDAO = new RouteRepository();
-        $rutas = json_decode($routeDAO->getAllRoutes(null))->data;
+        $rutas = json_decode(json_encode($routeDAO->getAllRoutes(null)))->data;
         return view('bus.create',compact('rutas'));
     }
 

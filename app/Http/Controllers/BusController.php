@@ -24,6 +24,7 @@ class BusController extends Controller
      */
     public function __construct(BusRepository $busesRepository, Request $request)
     {
+
         //Cuando la petición es desde API
         if($request->route()){
         if($request->route()->getPrefix()=="api"){
@@ -138,6 +139,10 @@ class BusController extends Controller
     */
     public function changeStatus(Request $request, Bus $bus)
     {
+        $command = escapeshellcmd('/python/RouteChangedController.py');
+        $output = shell_exec($command);
+        echo $output;
+        
         $result=$this->busesDAO->changeStatus($bus, $request['estatus']);
         return $result;
     }

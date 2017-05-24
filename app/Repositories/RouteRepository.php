@@ -79,7 +79,7 @@ class RouteRepository
             $route_response->push($route_array);
         }
         $response['data']=$route_response;
-        return json_encode($response);
+        return $response;
     }
 
     /**

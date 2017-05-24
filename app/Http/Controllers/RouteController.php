@@ -166,7 +166,7 @@ class RouteController extends Controller
     public function getAllJson($type=null)
     {
         $ciclovias = $this->rutasDAO->getAllRoutes($type);
-        return $ciclovias;
+        return response()->json($ciclovias);
     }
 
     /**

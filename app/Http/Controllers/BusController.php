@@ -140,16 +140,19 @@ class BusController extends Controller
     */
     public function changeStatus(Request $request, Bus $bus)
     {
+        $id_Route = Rel_concessionaire::where('concessionaire_id',$bus->concessionaire_id);
 
-        $id_Route = Rel_concessionaire::where('concessionaire_id',$bus->concessionaire_id)
-
-        //$command = exec("python /python/RouteChangedController.py  $id_Bus");
+        $output = array($bus, $id_Route->route_id)
 
         // /var/www/vhosts/biintux.me/httpdocs/Biintux/python/RouteChangedController.py
 
-        $command = escapeshellcmd("python /python/RouteChangedController.py $bus $id_Route->route_id");
-        $output = shell_exec($command);
-        echo $output;
+        $command = exec('python /python/RouteChangedController.py ' . escapeshellarg(json_encode($output)));
+
+        //$command = escapeshellcmd("python /python/RouteChangedController.py  ");
+
+        $resultData = json_decode($command, true);
+    
+        dd($command);
 
         $result=$this->busesDAO->changeStatus($bus, $request['estatus']);
         return $result;

@@ -147,42 +147,42 @@ function initialize() {
   getCurrentPosition();
   //Input para ingresar la ubicacion a buscar
   var input = /** @type {!HTMLInputElement} */(
-            document.getElementById('originNear_formatted_address'));
+    document.getElementById('originNear_formatted_address'));
   var autocomplete = new google.maps.places.Autocomplete(input);
 
   autocomplete.addListener('place_changed', function() {
-          var place = autocomplete.getPlace();
-          if (!place.geometry) {
-            // User entered the name of a Place that was not suggested and
-            // pressed the Enter key, or the Place Details request failed.
-            window.alert("No details available for input: '" + place.name + "'");
-            return;
-          }
+    var place = autocomplete.getPlace();
+    if (!place.geometry) {
+      // User entered the name of a Place that was not suggested and
+      // pressed the Enter key, or the Place Details request failed.
+      window.alert("No details available for input: '" + place.name + "'");
+      return;
+    }
 
-          // If the place has a geometry, then present it on a map.
-          if (place.geometry.viewport) {
-            map.fitBounds(place.geometry.viewport);
-          } else {
-            map.setCenter(place.geometry.location);
-            map.setZoom(17);  // Why 17? Because it looks good.
-          }
-          markerPosition.setPosition(place.geometry.location);
-          markerPosition.setVisible(true);
-          console.log(place.geometry.location);
-          //Update form inputs
-          document.getElementById(markerPosition.myData+'_'+'lat').value = place.geometry.location.lat();
-          document.getElementById(markerPosition.myData+'_'+'lng').value = place.geometry.location.lng();
-          var address = '';
-          if (place.address_components) {
-            address = [
-              (place.address_components[0] && place.address_components[0].short_name || ''),
-              (place.address_components[1] && place.address_components[1].short_name || ''),
-              (place.address_components[2] && place.address_components[2].short_name || '')
-            ].join(' ');
-          }
+    // If the place has a geometry, then present it on a map.
+    if (place.geometry.viewport) {
+      map.fitBounds(place.geometry.viewport);
+    } else {
+      map.setCenter(place.geometry.location);
+      map.setZoom(17);  // Why 17? Because it looks good.
+    }
+    markerPosition.setPosition(place.geometry.location);
+    markerPosition.setVisible(true);
+    console.log(place.geometry.location);
+    //Update form inputs
+    document.getElementById(markerPosition.myData+'_'+'lat').value = place.geometry.location.lat();
+    document.getElementById(markerPosition.myData+'_'+'lng').value = place.geometry.location.lng();
+    var address = '';
+    if (place.address_components) {
+      address = [
+        (place.address_components[0] && place.address_components[0].short_name || ''),
+        (place.address_components[1] && place.address_components[1].short_name || ''),
+        (place.address_components[2] && place.address_components[2].short_name || '')
+      ].join(' ');
+    }
 
-          infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-        });
+    infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+  });
   autocomplete.setTypes([]);
   //FIN UBICACION A BUSCAR
 }

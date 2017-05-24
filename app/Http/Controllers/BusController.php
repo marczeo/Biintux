@@ -5,7 +5,7 @@ use App\Repositories\BusRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Repositories\RouteRepository;
-use App\Rel_concessionaire
+use App\Rel_concessionaire;
 use App\Bus;
 
 class BusController extends Controller

@@ -5,6 +5,7 @@ use App\Repositories\BusRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Repositories\RouteRepository;
+use App\Rel_concessionaire
 use App\Bus;
 
 class BusController extends Controller
@@ -139,10 +140,17 @@ class BusController extends Controller
     */
     public function changeStatus(Request $request, Bus $bus)
     {
-        $command = escapeshellcmd('/python/RouteChangedController.py');
+
+        $id_Route = Node::Where('type','mibici')->get(); 
+
+        //$command = exec("python /python/RouteChangedController.py  $id_Bus");
+
+        // /var/www/vhosts/biintux.me/httpdocs/Biintux/python/RouteChangedController.py
+
+        $command = escapeshellcmd("python /python/RouteChangedController.py $bus $id_Route");
         $output = shell_exec($command);
         echo $output;
-        
+
         $result=$this->busesDAO->changeStatus($bus, $request['estatus']);
         return $result;
     }

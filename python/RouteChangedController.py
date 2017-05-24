@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import sys
 import logging
 import geopy
 import LatLon
@@ -13,9 +14,9 @@ from threading import Thread
 logging.basicConfig(filename='records.log', level=logging.INFO)
 #Mientras que la ruta este activa
 
-db = MySQLdb.connect(host = "localhost", user = "biintux", passwd = "My9y7h!5", db = "admin_biintux")
+#db = MySQLdb.connect(host = "localhost", user = "biintux", passwd = "My9y7h!5", db = "admin_biintux")
 
-cursor = db.cursor(MySQLdb.cursors.DictCursor)
+#cursor = db.cursor(MySQLdb.cursors.DictCursor)
 
 sqlQuery = ""
 
@@ -33,7 +34,7 @@ class RouteChangedController(Thread):
 	global nodes
 
 
-	def __init__(self,id_Bus, id_route, id_user, group=None, target=None, name=None, args=(), kwargs=None, verbose=None):
+	def __init__(self,id_Bus, id_route, group=None, target=None, name=None, args=(), kwargs=None, verbose=None):
 		
 		'''Constructor'''
 	      	Thread.__init__(self, group=group, target=target, name=name, verbose=verbose)        	
@@ -41,9 +42,25 @@ class RouteChangedController(Thread):
         	self.cancelled = False
 		self.id_Bus = id_Bus
 		self.id_route = id_route
-		self.id_user = id_user
+#		self.id_user = id_user
 		self.args = args # [id_Bus,id_route]
        		self.kwargs = kwargs
+
+	def dbObject(self,query):
+
+		db = MySQLdb.connect(host = "localhost", user = "biintux", passwd = "My9y7h!5", db = "admin_biintux")
+
+		cursor = db.cursor(MySQLdb.cursors.DictCursor)
+		
+		cursor.execute(query)
+		
+		rows = cursor.fetchall()
+		
+		cursor.close()
+		
+		db.close()
+
+		return rows
 
 	
 	def getNodes(self):
@@ -51,41 +68,31 @@ class RouteChangedController(Thread):
 		sqlQuery = "SELECT nd.`latitude`, nd.`longitude`"\
 				" FROM admin_biintux.`nodes` nd inner join rel_route rr"\
 				" WHERE rr.start_node_id = nd.id AND rr.route_id = " + str(self.id_route)			
-		
-		cursor.execute(sqlQuery)
-		
-		rows = cursor.fetchall()
+
+		rows = self.dbObject(sqlQuery)
 
 		tmp = []
 
 		for row in rows:
 
 			tmp.append([row['latitude'],row['longitude']])
-		
+
+#		print("Ruta obtenida...")
+
 		return tmp        	
 
 	def keep_going(self):
 
-#		cursor.close()
-		
-		sqlQuery = "SELECT `enabled` FROM admin_biintux.`route_car` WHERE `id` = " +  str(self.id_Bus) # + str(self.args[0])
+		sqlQuery = "SELECT `enabled` FROM admin_biintux.`route_car` WHERE `id` = " +  str(self.id_Bus)
 
-		cursor = db.cursor(MySQLdb.cursors.DictCursor)
-
-		cursor.execute(sqlQuery)
-		
-		rows = cursor.fetchall()
+		rows =  self.dbObject(sqlQuery)
 
 		for row in rows:
-#			print (row['enabled'])
+
 			if (row['enabled'] != 1):
-			#	print("False")
 				return False
 			else:
-			#	print("True")
 				return True
-
-		cursor.close()
 
 	def run(self):
 
@@ -95,38 +102,44 @@ class RouteChangedController(Thread):
 		
 		while (self.keep_going() == True): 
 
-			# Cambiar por consulta a la base de datos para saber si la ruta esta activa
+			currentLatLng = self.getLatLng(self.id_Bus)
 
-			if(self.proximity(self.getLatLng(self.id_Bus),nodes) == False):			
+			if(self.proximity(currentLatLng,nodes) == True):
+							
+				if(len(alternRoute) == 0):
+				
+					alternRoute.append(currentLatLng)				
+				else:
+					alternRoute.pop()
+					alternRoute.append(currentLatLng)
 
-				print("No en ruta...")
-
-				#time.sleep(30)
+			#if(self.proximity(self.getLatLng(self.id_Bus),nodes) == False):			
+			else:
+#				print("No en ruta...")
 
 				flagGenerateDeviation = False
 
-				#Obtenemos la posicion del camion y los nodos de la ruta, y si el nodo se aleja entonces:
+				alternRoute.append(currentLatLng)
 				
-				alternRoute.append(self.findNearestPoint(self.getLatLng(self.id_Bus),nodes))
-				
-				for i in range(0,3):
+				#cambiar 3 a 5 para evitar errores 3=prueba 5=estable
+				for i in range(0,2):
 					
-					#pause = raw_input(";3; -> " + str(i))
-						
-					time.sleep(10)
+					time.sleep(2)
+
+					var = self.getLatLng(self.id_Bus)					
 					
-					# Rango de toletancia				
-
-					if(self.proximity(self.getLatLng(self.id_Bus),nodes) == False):
+					if(self.proximity(var,nodes) == False):
 						
-						print ("Entro...")
+#						print ("Todavia fuera...")
 
-						# Si el camion aun no regresa a la ruta
-						
-						alternRoute.append(self.getLatLng(self.id_Bus))
+						if(alternRoute[-1][0] != var[0] and alternRoute[-1][1] != var[1]):						
+						  	
+							print (str(alternRoute[-1][0]) +  " - " + str(alternRoute[-1][1]) +  " --- " +  str(var[0]) +  " - " +  str(var[1]))
+								
+							alternRoute.append(var)
 					else:
 
-						print ("Salio...")
+#						print ("Regreso a ruta...")
 
 						del alternRoute[:] # Removemos la ruta temporal
 
@@ -135,66 +148,98 @@ class RouteChangedController(Thread):
 					flagGenerateDeviation = True # En caso de que la ruta NO se estabilizara
 				
 				if (flagGenerateDeviation == True): # Si se genero desviacion
+					
+#					print("Desviacion creada...")
 				
 					timeToHold = 1.0 # Seconds
-						
-					while(self.proximity(self.getLatLng(self.id_Bus),nodes) == False):
-						
-						alternRoute.append(self.getLatLng(self.id_Bus))
+
+					currentLatLng = self.getLatLng(self.id_Bus)					
+	
+					while(self.proximity(currentLatLng,nodes) == False):
+
+						if(alternRoute[-1][0] != currentLatLng[0] and alternRoute[-1][1] != currentLatLng[1]):						
+
+							alternRoute.append(currentLatLng)
 						
 						time.sleep(timeToHold) # Wait
+						
+						currentLatLng = self.getLatLng(self.id_Bus)
 					
+					alternRoute.append(currentLatLng)					
+	
+					print (len(alternRoute))
+
 					self.saveInDatabase(alternRoute)
 
 					del alternRoute[:]
-	
-			#pause = raw_input("Enter")			
-			
-			time.sleep(10)
-			
-			cursor.close()			
+
+#					print ("Borrada...")
+			time.sleep(10)			
 
 		logging.info("Bus "+ str(self.id_Bus) +"\'s backtrace suspended at "+ str(datetime.now()))
 
-		db.close()
-
 	def getLatLng(self,id_Bus):
 
-		try:
-#			cursor.close()
-			
-			sqlQuery = "SELECT dl.`latitude`, dl.`longitude`"\
-					" FROM admin_biintux.`device_location` dl inner join admin_biintux.`driver` d"\
-					" WHERE d.user_id = dl.user_id AND d.route_car_id = " + str(id_Bus) + " ORDER BY dl.id"\
-					" DESC LIMIT 1"
-			
-					
-			cursor = db.cursor(MySQLdb.cursors.DictCursor)
+		try:			
+			sqlQuery = "SELECT dl.`latitude`, dl.`longitude` FROM admin_biintux.`device_location` dl"\
+					" INNER JOIN admin_biintux.`devices` de INNER JOIN admin_biintux.`driver` dr"\
+					" WHERE dl.`device_id` = de.`id` AND de.`user_id` = dr.`user_id`"\
+					" AND dr.`route_car_id` = " + str(id_Bus)  + " ORDER BY dl.id DESC LIMIT 1" 
 
-			cursor.execute(sqlQuery)
+			row = self.dbObject(sqlQuery)		
 
-			row = cursor.fetchone()		
+			Lat = 0
+			Lng = 0			
 
-			Lat = row['latitude']
-			Lng = row['longitude']
+			for r in row:
+				Lat = r['latitude']
+				Lng = r['longitude']
 		
-			print ("lat: " + str(Lat) + ", Lng: " + str(Lng))	
+#				print ("lat: " + str(Lat) + ", Lng: " + str(Lng))	
 		
-			tmp = [Lat, Lng]
-			
-			cursor.close()			
+			tmp = [Lat, Lng]			
 		
 			return tmp
+
 		except Exception:
 
 			print("An Exception has ocurred...")	
 			
 			cursor.close()
 
+			db.close()
+
 			pass
-	#def saveInDatabase(alternRoute):
+
+	def saveInDatabase(self, alternRoute):
 		
-	######
+		db = MySQLdb.connect(host = "localhost", user = "biintux", passwd = "My9y7h!5", db = "admin_biintux")
+
+		cursor = db.cursor(MySQLdb.cursors.DictCursor)
+		
+		sqlQuery="INSERT INTO deviation (route_id) values ("+str(self.id_route)+")"
+
+		cursor.execute(sqlQuery)
+
+		lastID = cursor.lastrowid
+
+#		print("New id: "+str(lastID))		
+
+		for node in alternRoute:
+
+			query = "INSERT INTO deviation_nodes (deviation_id,latitude,longitude)"\
+					" values ("+ str(lastID)+","+str(node[0])+","+str(node[1])+")"
+			
+			cursor.execute(query)
+		
+#		print("Nodos guardados...")
+
+		db.commit()
+
+		cursor.close()
+
+		db.close()	
+
 		
 	def proximity(self, point, poly):
 	
@@ -357,5 +402,7 @@ class RouteChangedController(Thread):
 
 if __name__ == "__main__":
 
-	r = RouteChangedController(1, 1, 3)
-	r.start()
+	logging.info("Parametros de bd: "+sys.argv[1]+","+sys.argv[2])
+
+#	r = RouteChangedController(1, 1, 3)
+#	r.start()

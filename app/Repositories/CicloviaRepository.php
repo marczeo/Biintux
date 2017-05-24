@@ -76,7 +76,7 @@ class CicloviaRepository
             $ciclovia_response->push($ciclovia_array);
         }
         $response['data']=$ciclovia_response;
-        return json_encode($response);
+        return $response;
     }
 
     /**

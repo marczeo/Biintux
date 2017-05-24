@@ -137,6 +137,6 @@ class CicloviaController extends Controller
     public function getAllJson()
     { 
         $ciclovias = $this->cicloviasDAO->getAllCiclovias();
-        return $ciclovias;
+        return response()->json($ciclovias);
     }
 }

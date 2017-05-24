@@ -139,15 +139,18 @@
         map.setCenter(markerPosition.getPosition());
         switch(opcion) {
           case "viajar":
+            markerPosition.setVisible(false);
             map.setZoom(13);
             if(circle.getMap() != null) circle.setMap(null);
           break;
           case "cercana":
+            markerPosition.setVisible(true);
             getCurrentPosition();
             map.setZoom(18);
             draw_circle();
           break;
           case "buscar":
+            markerPosition.setVisible(true);
             getCurrentPosition();
             map.setZoom(13);
             if(circle.getMap() != null) circle.setMap(null);

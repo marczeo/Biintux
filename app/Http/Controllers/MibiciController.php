@@ -33,8 +33,7 @@ class MibiciController extends Controller
     public function getAll()
     { 
         $mibicis = Node::Where('type','mibici')->get(); 
-        //dd($mibicis);  
-        return $mibicis;
+        return response()->json($mibicis);
     }
     
     public function create()

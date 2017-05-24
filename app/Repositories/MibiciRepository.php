@@ -42,7 +42,7 @@ class MibiciRepository
             $estaciones_response->push($estacion_array);
         }
         $response['data']=$estaciones_response;
-        return json_encode($response);
+        return $response;
     }
 
     /**

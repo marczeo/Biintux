@@ -141,13 +141,13 @@ class BusController extends Controller
     public function changeStatus(Request $request, Bus $bus)
     {
 
-        $id_Route = Node::Where('type','mibici')->get(); 
+        $id_Route = Rel_concessionaire::where('concessionaire_id',$bus->concessionaire_id)
 
         //$command = exec("python /python/RouteChangedController.py  $id_Bus");
 
         // /var/www/vhosts/biintux.me/httpdocs/Biintux/python/RouteChangedController.py
 
-        $command = escapeshellcmd("python /python/RouteChangedController.py $bus $id_Route");
+        $command = escapeshellcmd("python /python/RouteChangedController.py $bus $id_Route->route_id");
         $output = shell_exec($command);
         echo $output;
 

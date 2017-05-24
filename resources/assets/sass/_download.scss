@@ -1,0 +1,25 @@
+.download-wrapper
+{
+	height: calc(100% - 40px);
+	position: absolute;
+}
+.text-white
+{
+	color: white;
+}
+.background-download
+{
+	background: url('../images/patterns/old_moon.png');
+}
+.donwload-right
+{
+	display: flex;
+	/* justify-content: flex-end; */
+	/* align-content: flex-end; */
+	align-items: flex-end;
+	max-width: 100%;
+	height: calc(100% - 40px);
+	img{
+		max-width: 100%;
+	}
+}

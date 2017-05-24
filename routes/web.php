@@ -13,6 +13,10 @@ Route::get('/', function ()
 {
         return view('welcome');
 });
+Route::get('/download', function () 
+{
+        return view('download');
+});
 
 Auth::routes();
 

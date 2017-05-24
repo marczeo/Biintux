@@ -7830,7 +7830,7 @@ input[type=search]::-webkit-search-cancel-button {
 }
 
 .download-right img {
-  max-width: 100%;
+  max-width: 90%;
 }
 
 .google-icon {

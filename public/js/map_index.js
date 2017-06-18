@@ -12,6 +12,8 @@ var infowindow;
 var infoWindow_currentPosition;
 var geocoder;
 var markerPosition;
+var markerPosition_origin;
+var markerPosition_destiny;
 var circle;
 function initialize() {
   var myLatLng = new google.maps.LatLng( 20.659699, -103.349609);
@@ -33,10 +35,27 @@ function initialize() {
   markerPosition=new google.maps.Marker({
     map: map,
     draggable: true,
-    title: 'Su ubicaciónn!',
+    title: 'Su ubicación!',
     myData: 'originNear'
   });
   markerPosition.addListener('dragend', moveMarkerEvent);
+
+  markerPosition_origin= new google.maps.Marker({
+    map:map,
+    draggable:true,
+    title: 'Origen',
+    myData: 'originRoute'
+  })
+  markerPosition_origin.addListener('dragend',moveMarkerEvent);
+  
+  markerPosition_destiny= new google.maps.Marker({
+    map:map,
+    draggable:true,
+    title: 'Destino',
+    myData: 'destinyRoute',
+    icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+  })
+  markerPosition_destiny.addListener('dragend',moveMarkerEvent);
   /*RUTAS*/
     /*$.ajax(
   {
@@ -150,6 +169,15 @@ function initialize() {
     document.getElementById('originNear_formatted_address'));
   var autocomplete = new google.maps.places.Autocomplete(input);
 
+  var input_origin = /** @type {!HTMLInputElement} */(
+    document.getElementById('originRoute_formatted_address'));
+  var autocomplete_origin = new google.maps.places.Autocomplete(input_origin);
+
+  var input_destiny = /** @type {!HTMLInputElement} */(
+    document.getElementById('destinyRoute_formatted_address'));
+  var autocomplete_destiny = new google.maps.places.Autocomplete(input_destiny);
+
+
   autocomplete.addListener('place_changed', function() {
     var place = autocomplete.getPlace();
     if (!place.geometry) {
@@ -184,6 +212,78 @@ function initialize() {
     infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
   });
   autocomplete.setTypes([]);
+
+  autocomplete_origin.addListener('place_changed', function() {
+    var place = autocomplete_origin.getPlace();
+    if (!place.geometry) {
+      // User entered the name of a Place that was not suggested and
+      // pressed the Enter key, or the Place Details request failed.
+      window.alert("No details available for input: '" + place.name + "'");
+      return;
+    }
+
+    // If the place has a geometry, then present it on a map.
+    if (place.geometry.viewport) {
+      map.fitBounds(place.geometry.viewport);
+    } else {
+      map.setCenter(place.geometry.location);
+      map.setZoom(13); 
+    }
+    markerPosition_origin.setPosition(place.geometry.location);
+    markerPosition_origin.setVisible(true);
+    console.log(place.geometry.location);
+    //Update form inputs
+    document.getElementById(markerPosition_origin.myData+'_'+'lat').value = place.geometry.location.lat();
+    document.getElementById(markerPosition_origin.myData+'_'+'lng').value = place.geometry.location.lng();
+    map.setZoom(13); 
+    var address = '';
+    if (place.address_components) {
+      address = [
+        (place.address_components[0] && place.address_components[0].short_name || ''),
+        (place.address_components[1] && place.address_components[1].short_name || ''),
+        (place.address_components[2] && place.address_components[2].short_name || '')
+      ].join(' ');
+    }
+
+    infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+  });
+  autocomplete_origin.setTypes([]);
+
+  autocomplete_destiny.addListener('place_changed', function() {
+    var place = autocomplete_destiny.getPlace();
+    if (!place.geometry) {
+      // User entered the name of a Place that was not suggested and
+      // pressed the Enter key, or the Place Details request failed.
+      window.alert("No details available for input: '" + place.name + "'");
+      return;
+    }
+
+    // If the place has a geometry, then present it on a map.
+    if (place.geometry.viewport) {
+      map.fitBounds(place.geometry.viewport);
+    } else {
+      map.setCenter(place.geometry.location);
+      map.setZoom(13);
+    }
+    markerPosition_destiny.setPosition(place.geometry.location);
+    markerPosition_destiny.setVisible(true);
+    console.log(place.geometry.location);
+    //Update form inputs
+    document.getElementById(markerPosition_destiny.myData+'_'+'lat').value = place.geometry.location.lat();
+    document.getElementById(markerPosition_destiny.myData+'_'+'lng').value = place.geometry.location.lng();
+    map.setZoom(13); 
+    var address = '';
+    if (place.address_components) {
+      address = [
+        (place.address_components[0] && place.address_components[0].short_name || ''),
+        (place.address_components[1] && place.address_components[1].short_name || ''),
+        (place.address_components[2] && place.address_components[2].short_name || '')
+      ].join(' ');
+    }
+
+    infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+  });
+  autocomplete_destiny.setTypes([]);
   //FIN UBICACION A BUSCAR
 }
 function handleLocationError(browserHasGeolocation, pos) {

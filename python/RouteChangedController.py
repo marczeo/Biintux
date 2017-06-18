@@ -9,6 +9,7 @@ import MySQLdb
 import math
 from datetime import datetime
 from threading import Thread
+import json
 
 #logging.basicConfig(level=logging.DEBUG,format='[%(levelname)s] (%(threadName)-10s) %(message)s', )
 logging.basicConfig(filename='records.log', level=logging.INFO)
@@ -37,14 +38,14 @@ class RouteChangedController(Thread):
 	def __init__(self,id_Bus, id_route, group=None, target=None, name=None, args=(), kwargs=None, verbose=None):
 		
 		'''Constructor'''
-	    Thread.__init__(self, group=group, target=target, name=name, verbose=verbose)        	
+		Thread.__init__(self, group=group, target=target, name=name, verbose=verbose)        	
 		self.daemon = True
-        self.cancelled = False
+       		self.cancelled = False
 		self.id_Bus = id_Bus
 		self.id_route = id_route
 #		self.id_user = id_user
 		self.args = args # [id_Bus,id_route]
-       	self.kwargs = kwargs
+		self.kwargs = kwargs
 
 	def dbObject(self,query):
 
@@ -217,7 +218,7 @@ class RouteChangedController(Thread):
 
 		cursor = db.cursor(MySQLdb.cursors.DictCursor)
 		
-		sqlQuery="INSERT INTO deviation (route_id) values ("+str(self.id_route)+")"
+		sqlQuery="INSERT INTO deviations (route_id) values ("+str(self.id_route)+")"
 
 		cursor.execute(sqlQuery)
 
@@ -227,7 +228,7 @@ class RouteChangedController(Thread):
 
 		for node in alternRoute:
 
-			query = "INSERT INTO deviation_nodes (deviation_id,latitude,longitude)"\
+			query = "INSERT INTO device_location (deviation_id,latitude,longitude)"\
 					" values ("+ str(lastID)+","+str(node[0])+","+str(node[1])+")"
 			
 			cursor.execute(query)
@@ -402,7 +403,21 @@ class RouteChangedController(Thread):
 
 if __name__ == "__main__":
 
-	logging.info("Parametros de bd: "+sys.argv[1]+","+sys.argv[2])
+	try:
+    		data = json.loads(sys.argv[1])
+    		route_id = int(data[0])
+		cons_id = int(data[1])
+#		logging.info("Parametros de bd: " + data[0] + ", " + data[1])
+		print json.dumps(str(data[0])+ " - " + str(data[1]))
+#	        r = RouteChangedController(1, 1, 3)
+#      		r.start()
+
+
+
+
+	except (ValueError, TypeError, IndexError, KeyError) as e:
+    		print json.dumps({'error': str(e)})
+     		sys.exit(1)
 
 #	r = RouteChangedController(1, 1, 3)
 #	r.start()

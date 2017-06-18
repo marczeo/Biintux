@@ -127,34 +127,33 @@ class BusController extends Controller
     }
 
     public function getAllJson()
-    { 
+    {
         $buses = $this->busesDAO->getAllBuses();
         return $buses;
     }
 
     /**
      * Change status -> enabled or disabled a bus
-     * 
+     *
      * @param \Illuminate\Http\Request  $request
      * @return json
     */
     public function changeStatus(Request $request, Bus $bus)
     {
-        $id_Route = Rel_concessionaire::where('concessionaire_id',$bus->concessionaire_id);
+        $id_Route = Rel_concessionaire::where('concessionaire_id',$bus->concessionaire_id)->get();
 
-        $output = array($bus, $id_Route->route_id)
+	$output = array($bus->concessionaire->id, $bus->concessionaire->rel_concessionaire->route->id);
 
-        // /var/www/vhosts/biintux.me/httpdocs/Biintux/python/RouteChangedController.py
+	$jsondata = json_encode($output);
 
-        $command = exec('python /python/RouteChangedController.py ' . escapeshellarg(json_encode($output)));
+	$command = escapeshellcmd('/usr/bin/python /var/www/vhosts/biintux.me/httpdocs/Biintux/python/RouteChangedController.py'). ' ' . escapeshellarg( $jsondata );
 
-        //$command = escapeshellcmd("python /python/RouteChangedController.py  ");
+	$output = shell_exec($command);
 
-        $resultData = json_decode($command, true);
-    
-        dd($command);
+	echo $output;
 
         $result=$this->busesDAO->changeStatus($bus, $request['estatus']);
+
         return $result;
     }
 }

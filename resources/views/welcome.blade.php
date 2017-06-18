@@ -26,23 +26,24 @@
         {{-- Para viajar, poner inicio y fin --}}
         <div class="tab-pane active" id="home" role="tabpanel">
           <ul class="nav list-group">
-            <form class="col-xs-12" role="search" method="POST" action="route/search" onsubmit="return submit_form(this);">
+            <form class="col-xs-12" role="search" method="POST" action="route/searchRoute" onsubmit="return submit_form(this);">
               {{ csrf_field() }}
               {{ method_field('POST') }}
               <li>
                 <div class="form-group">
-                  <div class="input-group">
-                    <input type="search" class="form-control" placeholder="Origin" name="origin">
-                    <div class="input-group-btn">
-                      <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                    </div>
-                  </div>
+                  
+                    <input type="search" class="form-control" placeholder="Origin" name="origin" id="originRoute_formatted_address">
+                    <input type="hidden" name="originRoute_lat" id="originRoute_lat">
+                    <input type="hidden" name="originRoute_lng" id="originRoute_lng">
+                  
                 </div>
               </li>
               <li>
                 <div class="form-group">
                   <div class="input-group">
-                    <input type="search" class="form-control" placeholder="Destination" name="destination">
+                    <input type="search" class="form-control" placeholder="Destination" name="destination" id="destinyRoute_formatted_address">
+                    <input type="hidden" name="destinyRoute_lat" id="destinyRoute_lat">
+                    <input type="hidden" name="destinyRoute_lng" id="destinyRoute_lng">
                     <div class="input-group-btn">
                       <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                     </div>
@@ -52,7 +53,7 @@
               <li>
                 <div class="form-group row">
                   <div>
-                    <label class="col-xs-4"><input type="checkbox" name="preferences[]" value="bus"><img src="/images/bus.png"  width="25" height="25"><span class="text-desktop">Camiones</span></label>
+                    <label class="col-xs-4"><input type="checkbox" name="preferences[]" value="bus" checked="checked"><img src="/images/bus.png"  width="25" height="25"><span class="text-desktop">Camiones</span></label>
                     <label class="col-xs-4"><input type="checkbox" name="preferences[]" value="bikeway"><img src="/images/cycling.png"  width="25" height="25"><span class="text-desktop">Ciclovías</span></label>
                     <label class="col-xs-4"><input type="checkbox" name="preferences[]" value="mibici"><img src="/images/mibici.png"  width="25" height="25"><span class="text-desktop">Estaciones Mibici</span></label>
                   </div>
@@ -139,18 +140,24 @@
         map.setCenter(markerPosition.getPosition());
         switch(opcion) {
           case "viajar":
+            markerPosition_origin.setVisible(true);
+            markerPosition_destiny.setVisible(true);
             markerPosition.setVisible(false);
             map.setZoom(13);
             if(circle.getMap() != null) circle.setMap(null);
           break;
           case "cercana":
             markerPosition.setVisible(true);
+            markerPosition_origin.setVisible(false);
+            markerPosition_destiny.setVisible(false);
             getCurrentPosition();
             map.setZoom(18);
             draw_circle();
           break;
           case "buscar":
             markerPosition.setVisible(true);
+            markerPosition_origin.setVisible(false);
+            markerPosition_destiny.setVisible(false);
             getCurrentPosition();
             map.setZoom(13);
             if(circle.getMap() != null) circle.setMap(null);

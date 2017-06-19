@@ -328,4 +328,91 @@ class RouteRepository
         
         return $route_response;
     }
+
+    /**
+     * Obtener rutas cercanas a partir
+     * https://github.com/alexpechkarev/geometry-library#isLocationOnEdge
+     * @param double latitude
+     * @param double longitude
+     * @param decimal rango
+     * @return Collection rutas
+     */
+    public function customRoutes($latitude_origen, $longitude_origen, $latitude_destino, $longitude_destino, $rango)
+    {
+        $rutasID = $this->getAllRoutesID();
+        $routes_total= $rutasID->count();
+
+        $near_origin = new Collection;
+        $near_destiny= new Collection;
+        $near_merge= new Collection;
+        for ($index_rutasID=0; $index_rutasID < $routes_total; $index_rutasID++) { 
+            $ruta_nodos = Route::findOrFail($rutasID[$index_rutasID]->id)->paths;
+            foreach ($ruta_nodos as $ruta) {
+                $poly_nodes =  \GeometryLibrary\PolyUtil::decode($ruta->encodepath);
+                
+                $temporal=\GeometryLibrary\PolyUtil::isLocationOnEdge_custom(
+                    ['lat' => $latitude_origen, 'lng'=> $longitude_origen],
+                    $poly_nodes,
+                    $rango);
+                if($temporal)
+                {
+                    $near_node=[];
+                    $near_node['ruta_id']=$rutasID[$index_rutasID]->id;
+                    $near_node['lat']=$temporal['lat'];
+                    $near_node['lng']=$temporal['lng'];
+                    $near_origin->push($near_node);
+                    break;
+                }
+            }
+        }
+
+        for ($index_rutasID=0; $index_rutasID < $routes_total; $index_rutasID++) { 
+            $ruta_nodos = Route::findOrFail($rutasID[$index_rutasID]->id)->paths;
+            foreach ($ruta_nodos as $ruta) {
+                $poly_nodes =  \GeometryLibrary\PolyUtil::decode($ruta->encodepath);
+                
+                $temporal=\GeometryLibrary\PolyUtil::isLocationOnEdge_custom(
+                    ['lat' => $latitude_destino, 'lng'=> $longitude_destino],
+                    $poly_nodes,
+                    $rango);
+                if($temporal)
+                {
+                    $near_node=[];
+                    $near_node['ruta_id']=$rutasID[$index_rutasID]->id;
+                    $near_node['lat']=$temporal['lat'];
+                    $near_node['lng']=$temporal['lng'];
+                    $near_destiny->push($near_node);
+                    break;
+                }
+            }
+        }
+
+
+        foreach ($near_origin as $value) {
+            if($near_destiny->contains('ruta_id', $value['ruta_id']))
+            {
+                $near_merge->push($value);
+                $near_merge->push($near_destiny->where('ruta_id',$value['ruta_id'])->all());
+            }
+        }
+        dd($near_merge);
+
+        $routes= Route::whereIn('id', $near_origin)
+                    ->get();
+        $route_response=new Collection;
+        foreach ($routes as $key=> $route)
+        {
+            $route_array=[];
+            $route_array['id']=$route->id;
+            $route_array['name']=$route->name;
+            $route_array['type']=$route->type;
+            $route_array['type_read']=trans('route.'.$route->type);
+            $route_array['paths']=$route->paths;
+            $route_array['color']=$route->color;
+            $route_response->push($route_array);
+        }
+        //$response['data']=$route_response;
+        
+        return $route_response;
+    }
 }

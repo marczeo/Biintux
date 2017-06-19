@@ -38,12 +38,14 @@ class RouteController extends Controller
             else{#Peticion desde web
                 $this->middleware('auth',['except' =>[
                     'search',
-                    'getNearRoutes']]);
+                    'getNearRoutes',
+                    'getCustomRoutes']]);
                 $this->middleware('admin',['except' => [
                     'show',
                     'getAllJson',
                     'search',
-                    'getNearRoutes'
+                    'getNearRoutes',
+                    'getCustomRoutes'
                     ]]);
             }
         }
@@ -233,6 +235,20 @@ class RouteController extends Controller
        }
         return json_encode($response);
         
+    }
+
+    /**
+     * Obtener rutas personalizadas
+    */
+    public function getCustomRoutes(Request $request)
+    {
+        $origin_lat=$request->originRoute_lat;
+        $origin_lng=$request->originRoute_lng;
+        $destiny_lat=$request->destinyRoute_lat;
+        $destiny_lng=$request->destinyRoute_lng;
+        $rango=50;
+        
+        $this->rutasDAO->customRoutes($origin_lat, $origin_lng, $destiny_lat, $destiny_lng,50);
     }
 
     /**

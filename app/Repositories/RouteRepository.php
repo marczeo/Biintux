@@ -10,6 +10,7 @@ use App\Path;
 use Illuminate\Support\Collection;
 use DB;
 use Illuminate\Database\QueryException;
+use App\GeometryLibrary\PolyUtil;
 class RouteRepository
 {
     /**
@@ -345,12 +346,12 @@ class RouteRepository
         $near_origin = new Collection;
         $near_destiny= new Collection;
         $near_merge= new Collection;
+
         for ($index_rutasID=0; $index_rutasID < $routes_total; $index_rutasID++) { 
             $ruta_nodos = Route::findOrFail($rutasID[$index_rutasID]->id)->paths;
             foreach ($ruta_nodos as $ruta) {
-                $poly_nodes =  \GeometryLibrary\PolyUtil::decode($ruta->encodepath);
-                
-                $temporal=\GeometryLibrary\PolyUtil::isLocationOnEdge_custom(
+                $poly_nodes = PolyUtil::decode($ruta->encodepath);
+                $temporal=PolyUtil::isLocationOnEdge_custom(
                     ['lat' => $latitude_origen, 'lng'=> $longitude_origen],
                     $poly_nodes,
                     $rango);
@@ -369,9 +370,9 @@ class RouteRepository
         for ($index_rutasID=0; $index_rutasID < $routes_total; $index_rutasID++) { 
             $ruta_nodos = Route::findOrFail($rutasID[$index_rutasID]->id)->paths;
             foreach ($ruta_nodos as $ruta) {
-                $poly_nodes =  \GeometryLibrary\PolyUtil::decode($ruta->encodepath);
+                $poly_nodes =  PolyUtil::decode($ruta->encodepath);
                 
-                $temporal=\GeometryLibrary\PolyUtil::isLocationOnEdge_custom(
+                $temporal=PolyUtil::isLocationOnEdge_custom(
                     ['lat' => $latitude_destino, 'lng'=> $longitude_destino],
                     $poly_nodes,
                     $rango);
@@ -391,8 +392,15 @@ class RouteRepository
         foreach ($near_origin as $value) {
             if($near_destiny->contains('ruta_id', $value['ruta_id']))
             {
-                $near_merge->push($value);
-                $near_merge->push($near_destiny->where('ruta_id',$value['ruta_id'])->all());
+                $destino_tmp=$near_destiny->where('ruta_id',$value['ruta_id'])->all();
+                
+                $newMerge=[];
+                $newMerge['id_route']=$value['ruta_id'];
+                $newMerge['nodos']=['origen'=>['lat'=>$value['lat'], 'lng'=>$value['lng']],
+                                    'destino'=>['lat'=>$destino_tmp[1]['lat'],'lng'=>$destino_tmp[1]['lng']]
+                                    ];
+                $near_merge->push($newMerge);
+
             }
         }
         dd($near_merge);

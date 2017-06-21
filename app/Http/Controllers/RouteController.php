@@ -246,6 +246,7 @@ class RouteController extends Controller
         $response['data']=[];
         $response['bikeway']=[];
         $response['mibici']=[];
+        $response['custom']=[];
         $origin_lat=$request->originRoute_lat;
         $origin_lng=$request->originRoute_lng;
         $destiny_lat=$request->destinyRoute_lat;
@@ -253,7 +254,6 @@ class RouteController extends Controller
         $rango=50;
         $response['custom']= $this->rutasDAO->customRoutes($origin_lat, $origin_lng, $destiny_lat, $destiny_lng,50);
         return json_encode($response);
-        $this->rutasDAO->customRoutes($origin_lat, $origin_lng, $destiny_lat, $destiny_lng,50);
     }
 
     /**

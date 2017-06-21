@@ -242,12 +242,17 @@ class RouteController extends Controller
     */
     public function getCustomRoutes(Request $request)
     {
+        $response=[];
+        $response['data']=[];
+        $response['bikeway']=[];
+        $response['mibici']=[];
         $origin_lat=$request->originRoute_lat;
         $origin_lng=$request->originRoute_lng;
         $destiny_lat=$request->destinyRoute_lat;
         $destiny_lng=$request->destinyRoute_lng;
         $rango=50;
-        
+        $response['custom']= $this->rutasDAO->customRoutes($origin_lat, $origin_lng, $destiny_lat, $destiny_lng,50);
+        return json_encode($response);
         $this->rutasDAO->customRoutes($origin_lat, $origin_lng, $destiny_lat, $destiny_lng,50);
     }
 

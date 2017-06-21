@@ -369,13 +369,14 @@ function moveMarkerEvent(event) {
       resetMap();
 
       $parseData=JSON.parse(data);
-      if($parseData.data.length==0 && $parseData.bikeway.length==0 && $parseData.mibici.length==0)
+      if($parseData.data.length==0 && $parseData.bikeway.length==0 && $parseData.mibici.length==0 && $parseData.custom.length==0)
         alert("No hay rutas cercanas, intenta aumentando el rango.");
       else{
 
         draw_rutas($parseData.data);
         draw_bikeways($parseData.bikeway);
         draw_mibici($parseData.mibici);
+        draw_custom($parseData.custom);
       }
     },
     error: function (response) {
@@ -446,6 +447,48 @@ function draw_rutas(rutas){
       routePath.setMap(map);
       rutasTemporales.push(routePath);
     }
+  });
+}
+function draw_custom(rutas){
+  $.each(rutas, function(i, item) {
+      //var points = google.maps.geometry.encoding.decodePath(item.encodepath);
+      var points = [];
+      console.log(item.encodepath.length);
+      for (var i = 0; i < item.encodepath.length; i++) {
+
+        points.push(new google.maps.LatLng(item.encodepath[i].lat, item.encodepath[i].lng));
+      }
+      
+      console.log(points);
+      var lineSymbol = {
+        path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
+        scale: 2.2,
+        strokeColor: "#FFF",
+        strokeOpacity: 1
+      };
+
+      var routePath = new google.maps.Polyline({
+        path: points,
+        interpolate: true,
+        icons: [{
+          icon: lineSymbol,
+          offset: '50%',
+          repeat: '240px'
+        }],
+        strokeColor: item.color,
+        strokeOpacity: 0.7,
+        strokeWeight: 8
+      });
+      google.maps.event.addListener(routePath, 'mouseover', function(event) {
+        infowindow.open(map);
+        infowindow.setContent(item.name);
+        infowindow.setPosition(event.latLng);
+      });
+      google.maps.event.addListener(routePath, 'mouseout', function() {
+        infowindow.close();
+      });
+      routePath.setMap(map);
+      rutasTemporales.push(routePath);
   });
 }
 function draw_bikeways(ciclovias)

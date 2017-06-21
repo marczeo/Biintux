@@ -156,7 +156,10 @@ class PolyUtil {
      */
     public static function isLocationOnPath($point, $polyline, $tolerance = self::DEFAULT_TOLERANCE, $geodesic = true) {
         return self::isLocationOnEdgeOrPath($point, $polyline, false, $geodesic, $tolerance);
-    }    
+    }
+    public static function isLocationOnPath_custom($point, $polyline, $tolerance = self::DEFAULT_TOLERANCE, $geodesic = true) {
+        return self::isLocationOnEdgeOrPath_custom($point, $polyline, false, $geodesic, $tolerance);
+    }
     
     
     private static function isLocationOnEdgeOrPath($point, $poly, $closed, $geodesic, $toleranceEarth) {
@@ -347,14 +350,14 @@ class PolyUtil {
         if ($havDist13 > $term || $havDist23 > $term) {
             return false;
         }
-        /*if ($havDist12 < 0.74) {
+        if ($havDist12 < 0.74) {
             return true;
-        }*/
+        }
         $cosCrossTrack = 1 - 2 * $havCrossTrack;
         $havAlongTrack13 = ($havDist13 - $havCrossTrack) / $cosCrossTrack;
         $havAlongTrack23 = ($havDist23 - $havCrossTrack) / $cosCrossTrack;
         $sinSumAlongTrack = MathUtil::sinSumFromHav($havAlongTrack13, $havAlongTrack23);
-        //return $sinSumAlongTrack > 0;  // Compare with half-circle == PI using sign of sin().
+        return $sinSumAlongTrack > 0;  // Compare with half-circle == PI using sign of sin().
         return false;
     }
     

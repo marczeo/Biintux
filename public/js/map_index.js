@@ -306,11 +306,17 @@ function getCurrentPosition()
       };
 
       markerPosition.setPosition(pos);
-      markerPosition.setVisible(true);
+      markerPosition.setVisible(false);
+      markerPosition_origin.setPosition(pos);
+      markerPosition_origin.setVisible(true);
       
       getStreetName(pos, "originNear_formatted_address");
       document.getElementById('originNear_lat').value=position.coords.latitude;
       document.getElementById('originNear_lng').value=position.coords.longitude;
+
+      getStreetName(pos, "originRoute_formatted_address");
+      document.getElementById('originRoute_lat').value=position.coords.latitude;
+      document.getElementById('originRoute_lng').value=position.coords.longitude;
       map.setCenter(pos);
     }, function() {
       handleLocationError(true, map.getCenter());
@@ -369,7 +375,8 @@ function moveMarkerEvent(event) {
       resetMap();
 
       $parseData=JSON.parse(data);
-      if($parseData.data.length==0 && $parseData.bikeway.length==0 && $parseData.mibici.length==0 && $parseData.custom.length==0)
+
+      if($parseData.data.length==0 && $parseData.bikeway.length==0 && $parseData.mibici.length==0 && $parseData.custom==null)
         alert("No hay rutas cercanas, intenta aumentando el rango.");
       else{
 
@@ -450,6 +457,7 @@ function draw_rutas(rutas){
   });
 }
 function draw_custom(rutas){
+  
   $.each(rutas, function(i, item) {
       //var points = google.maps.geometry.encoding.decodePath(item.encodepath);
       var points = [];

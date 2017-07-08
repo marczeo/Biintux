@@ -440,7 +440,7 @@ class RouteRepository
             }
             return $route_response;
         }
-
+        return $route_response;
         #buscar transbordos
         $latitude_origin_tmp=($latitude_origen+$latitude_destino)/2;
         $longitude_origin_tmp=($longitude_origen+$longitude_destino)/2;

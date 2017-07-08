@@ -11,6 +11,7 @@ use Illuminate\Support\Collection;
 use DB;
 use Illuminate\Database\QueryException;
 use App\GeometryLibrary\PolyUtil;
+use App\GeometryLibrary\SphericalUtil;
 class RouteRepository
 {
     /**
@@ -440,6 +441,111 @@ class RouteRepository
             return $route_response;
         }
 
+        #buscar transbordos
+        $latitude_origin_tmp=($latitude_origen+$latitude_destino)/2;
+        $longitude_origin_tmp=($longitude_origen+$longitude_destino)/2;
+        $latitude_destiny_tmp=($latitude_origen+$latitude_destino)/2;;
+        $longitude_destiny_tmp=($longitude_origen+$longitude_destino)/2;
+
+        while ($near_merge->count()==0) {
+
+            $latitude_origin_tmp=($latitude_origen+$latitude_origin_tmp)/2;
+            $longitude_origin_tmp=($longitude_origen+$longitude_origin_tmp)/2;
+            $latitude_destiny_tmp=($latitude_destino+$latitude_destiny_tmp)/2;
+            $longitude_destiny_tmp=($longitude_destino+$longitude_destiny_tmp)/2;
+
+            
+            #Recorrer todas las rutas
+            for ($index_rutasID=0; $index_rutasID < $routes_total; $index_rutasID++) { 
+                $ruta_derroteros = Route::findOrFail($rutasID[$index_rutasID]->id)->paths;
+                #Recorrer cada derrotero (Usualmente son dos por ruta)
+                foreach ($ruta_derroteros as $derrotero) {
+                    $derrotero_nodes = PolyUtil::decode($derrotero->encodepath);
+
+                    #Si hay ruta cercana al nodo origen: array con lat,lng. Sino false
+                    $temporal_origin=PolyUtil::isLocationOnPath_custom(
+                        ['lat' => $latitude_origin_tmp, 'lng'=> $longitude_origin_tmp],
+                        $derrotero_nodes,
+                        $rango);
+                    #Validar que haya ruta cercana al origen y que no se haya guardado dicha ruta
+                    if($temporal_origin && !$near_origin->contains('path_id', $derrotero->id))
+                    {
+                        #Agregar id_ruta y el nodo de la ruta cercano al punto de origen
+                        $near_node=[];
+                        $near_node['route_id']=$rutasID[$index_rutasID]->id;
+                        $near_node['path_id']=$derrotero->id;
+                        $near_node['lat']=$temporal_origin['lat'];
+                        $near_node['lng']=$temporal_origin['lng'];
+                        $near_origin->push($near_node);
+                        
+                    }
+
+                    #Si hay ruta cercana al nodo de destino: array con lat,lng. Sino false
+                    $temporal_destiny=PolyUtil::isLocationOnPath_custom(
+                        ['lat' => $latitude_destiny_tmp, 'lng'=> $longitude_destiny_tmp],
+                        $derrotero_nodes,
+                        $rango);
+                    #Validar que exista ruta cercana al destino y no se haya guardado dicha rua
+                    if($temporal_destiny && !$near_destiny->contains('path_id', $derrotero->id))
+                    {
+                        #Agregar id_ruta y el nodo de la ruta cercano al punto de destino
+                        $near_node=[];
+                        $near_node['route_id']=$rutasID[$index_rutasID]->id;
+                        $near_node['path_id']=$derrotero->id;
+                        $near_node['lat']=$temporal_destiny['lat'];
+                        $near_node['lng']=$temporal_destiny['lng'];
+                        $near_destiny->push($near_node);
+                        
+                    }
+                }
+            }
+
+            #Encontrar rutas que se encuentren cerca tanto de origen como destino. Indica que un solo camión hace el recorrido
+            foreach ($near_origin as $value) {
+                if($near_destiny->contains('route_id', $value['route_id']) && $near_destiny->contains('path_id', $value['path_id']))
+                {
+
+                    $destino_tmp=$near_destiny->where('path_id',$value['path_id'])->all();
+                    $destino_array=[];
+                    foreach ($destino_tmp as $temp) {
+                        $destino_array['route_id']=$temp['route_id'];
+                        $destino_array['lat']=$temp['lat'];
+                        $destino_array['lng']=$temp['lng'];
+                    }
+                    
+                    $newMerge=[];
+                    $newMerge['route_id']=$value['route_id'];
+                    $newMerge['nodos']=['origen'=>['lat'=>$value['lat'], 'lng'=>$value['lng']],
+                                        'destino'=>['lat'=>$destino_array['lat'],'lng'=>$destino_array['lng']]
+                                        ];
+                    $newMerge['path_id']=$value['path_id'];
+                    $near_merge->push($newMerge);
+
+                }
+            }
+
+            $route_response=new Collection;
+            #Un solo camion me lleva al destino
+            if($near_merge->count())
+            {
+                
+                foreach ($near_merge as $merge) {
+                    $encode=$this->truncateRoute($merge,$latitude_origen, $longitude_origen, $latitude_destino, $longitude_destino);
+                    if(count($encode)>0){
+
+                        $route=Route::where('id',$merge['route_id'])->first();
+                        $route_array=[];
+                        $route_array['id']=$route->id;
+                        $route_array['name']=$route->name;
+                        
+                        $route_array['encodepath']=$encode;
+                        $route_array['color']=$route->color;
+                        $route_response->push($route_array);
+                    }
+                }
+                return $route_response;
+            }
+        }
         
     }
 
@@ -456,7 +562,7 @@ class RouteRepository
 
         foreach ($paths as $path) {
             $path_nodes = PolyUtil::decode($path->encodepath);
-            $ruta_truncada->push(['lat'=>$latitude_origen,'lng'=>$longitude_origen]);
+            //$ruta_truncada->push(['lat'=>$latitude_origen,'lng'=>$longitude_origen]);
             foreach ($path_nodes as $node) {
                 if($node['lat']==$ruta['nodos']['origen']['lat'] && $node['lng']==$ruta['nodos']['origen']['lng']){
                     $copiar=true;
@@ -472,8 +578,8 @@ class RouteRepository
                     break;
                 }
             }
-            $ruta_truncada->push(['lat'=>$latitude_destino,'lng'=>$longitude_destino]);
-            if($ruta_truncada->count()==2)
+            //$ruta_truncada->push(['lat'=>$latitude_destino,'lng'=>$longitude_destino]);
+            if($ruta_truncada->count()==0)
                 $ruta_truncada=new Collection;
             
         }

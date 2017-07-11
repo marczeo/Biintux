@@ -306,9 +306,9 @@ function getCurrentPosition()
       };
 
       markerPosition.setPosition(pos);
-      markerPosition.setVisible(false);
+      markerPosition.setVisible(true);
       markerPosition_origin.setPosition(pos);
-      markerPosition_origin.setVisible(true);
+      //markerPosition_origin.setVisible(true);
       
       getStreetName(pos, "originNear_formatted_address");
       document.getElementById('originNear_lat').value=position.coords.latitude;
@@ -348,6 +348,7 @@ function getStreetName(position, IDInput) {
 }
 function moveMarkerEvent(event) {
   var idMarker=this.myData+'_';
+  console.log(idMarker);
   //Update form inputs
   document.getElementById(idMarker+'lat').value = event.latLng.lat();
   document.getElementById(idMarker+'lng').value = event.latLng.lng();

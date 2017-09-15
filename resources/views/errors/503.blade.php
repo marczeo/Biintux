@@ -10,7 +10,7 @@
             }
 
             body {
-                background-color: #5d4d92;
+                background-color: #827777;
                 margin: 0;
                 padding: 0;
                 width: 100%;
